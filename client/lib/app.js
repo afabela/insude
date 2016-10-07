@@ -1,5 +1,5 @@
 
-angular.module('verificaciones',
+angular.module('insude',
   [
     'angular-meteor',    
     'ngAnimate',

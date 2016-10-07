@@ -1,5 +1,5 @@
 angular
-  .module('verificaciones')
+  .module('insude')
   .controller('LoginCtrl', LoginCtrl);
  
 function LoginCtrl($scope, $meteor, $reactive, $state, toastr) {

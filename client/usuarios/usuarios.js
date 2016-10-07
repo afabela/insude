@@ -1,5 +1,5 @@
 angular
-.module("verificaciones")
+.module("insude")
 .controller("UsuariosCtrl", UsuariosCtrl);
 function UsuariosCtrl($scope, $meteor, $reactive,  $state, $stateParams, toastr) {
 

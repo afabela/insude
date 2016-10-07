@@ -1,4 +1,4 @@
-angular.module("verificaciones").run(function ($rootScope, $state, toastr) {
+angular.module("insude").run(function ($rootScope, $state, toastr) {
   $rootScope.$on('$stateChangeError', function (event, toState, toParams, fromState, fromParams, error) {
     switch(error) {
       case "AUTH_REQUIRED":
@@ -17,7 +17,7 @@ angular.module("verificaciones").run(function ($rootScope, $state, toastr) {
   });
 });
 
-angular.module('verificaciones').config(['$injector', function ($injector) {
+angular.module('insude').config(['$injector', function ($injector) {
   var $stateProvider = $injector.get('$stateProvider');
   var $urlRouterProvider = $injector.get('$urlRouterProvider');
   var $locationProvider = $injector.get('$locationProvider');
@@ -95,94 +95,4 @@ angular.module('verificaciones').config(['$injector', function ($injector) {
 	      }]
 	    }
     }) 
-    .state('root.folios', {
-      url: '/folios',
-      templateUrl: 'client/folios/folios.ng.html',
-      controller: 'FoliosCtrl as fo',
-      resolve: {
-	      "currentUser": ["$meteor", function($meteor){
-	        return $meteor.requireUser();
-	      }]
-	    }
-    })
-    .state('root.buscarfolio', {
-      url: '/buscarfolios',
-      templateUrl: 'client/folios/buscarFolio.ng.html',
-      controller: 'buscarFolioCtrl as bf',
-      resolve: {
-	      "currentUser": ["$meteor", function($meteor){
-	        return $meteor.requireUser();
-	      }]
-	    }
-    })
-    .state('root.importarfolios', {
-      url: '/importarFolios',
-      templateUrl: 'client/importarFolios/importarFolios.ng.html',
-      controller: 'importarFoliosCtrl as imf',
-      resolve: {
-	      "currentUser": ["$meteor", function($meteor){
-	        return $meteor.requireUser();
-	      }]
-	    }
-    })
-    .state('root.asignafolios', {
-      url: '/asignaFolios',
-      templateUrl: 'client/asignaFolios/asignafolios.ng.html',
-      controller: 'asignaFoliosCtrl as af',
-      resolve: {
-	      "currentUser": ["$meteor", function($meteor){
-	        return $meteor.requireUser();
-	      }]
-	    }
-    })
-    .state('root.asignafoliosdetalle', {
-      url: '/asignaFolios/:id',
-      templateUrl: 'client/asignaFolios/asignafoliosdetalle.ng.html',
-      controller: 'asignaFoliosDetalleCtrl as afd',
-      resolve: {
-	      "currentUser": ["$meteor", function($meteor){
-	        return $meteor.requireUser();
-	      }]
-	    }
-    })
-    .state('root.verificacion', {
-      url: '/verificacion/',
-      templateUrl: 'client/verificacion/verificacion.ng.html',
-      controller: 'verificacionCtrl as ver',
-      resolve: {
-	      "currentUser": ["$meteor", function($meteor){
-	        return $meteor.requireUser();
-	      }]
-	    }
-    })
-    .state('root.verificaciondetalle', {
-      url: '/verificacion/:id/:op',
-      templateUrl: 'client/verificacion/verificaciondetalle.ng.html',
-      controller: 'verificacionDetalleCtrl as vd',
-      resolve: {
-	      "currentUser": ["$meteor", function($meteor){
-	        return $meteor.requireUser();
-	      }]
-	    }
-    })
-    .state('root.panelFolios', {
-      url: '/folios/:id',
-      templateUrl: 'client/folios/panelFolios.ng.html',
-      controller: 'panelFoliosCtrl as pf',
-      resolve: {
-	      "currentUser": ["$meteor", function($meteor){
-	        return $meteor.requireUser();
-	      }]
-	    }
-    })
-    .state('root.panelFoliosAnalista', {
-      url: '/analista/:id',
-      templateUrl: 'client/analista/panelFoliosAnalista.ng.html',
-      controller: 'panelFoliosAnalistaCtrl as pfa',
-      resolve: {
-	      "currentUser": ["$meteor", function($meteor){
-	        return $meteor.requireUser();
-	      }]
-	    }
-    })
 }]);     
