@@ -1,0 +1,76 @@
+<!-- Menú de Administrador -->
+<section id="administrador" data-widget-grid="data-widget-grid" ng-if="currentUser.roles[0] == 'admin'">
+	<h1>Super Administrador</h1>
+  <div class="row">
+    <div class="col-sm-12">
+      <div data-widget-color="blue" data-widget-colorbutton="false" data-widget-editbutton="false" data-widget-deletebutton="false" data-jarvis-widget="data-jarvis-widget">
+        <header>
+          <h2>Opciones</h2>
+        </header>
+        <div>
+          <div class="widget-body">
+						<div class="row">
+							<div class="col-sm-3">
+								<a ui-sref="root.usuarios" href="javascript:void(0);" class="btn btn-labeled btn-warning btn-block" style="text-align: left"> <span class="btn-label"><i class="fa fa-lg fa-fw fa-users"></i></span>Usuarios</a>
+							</div>			
+						</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Menú de Coordinador -->
+<section id="Coordinador" data-widget-grid="data-widget-grid" ng-if="currentUser.roles[0] == 'Coordinador'">
+  <div class="row">
+    <div class="col-sm-12">
+      <div data-widget-color="blue" data-widget-colorbutton="false" data-widget-editbutton="false" data-widget-deletebutton="false" data-widget-fullscreenbutton="false" data-jarvis-widget="data-jarvis-widget">
+        <header>
+          <h2>Opciones del sistema</h2>
+        </header>
+        <div>
+          <div class="widget-body">
+						<div class="row">
+							<div class="col-sm-3">
+								<a ui-sref="root.importarfolios" href="javascript:void(0);" class="btn btn-labeled btn-warning btn-block" style="text-align: left"> <span class="btn-label"><i class="fa fa-lg fa-fw fa-arrow-circle-up"></i></span>Importar Folios</a>
+							</div>
+							<div class="col-sm-3">
+								<a ui-sref="root.folios" href="javascript:void(0);" class="btn btn-labeled btn-warning btn-block" style="text-align: left"> <span class="btn-label"><i class="fa fa-lg fa-fw fa-folder-open"></i></span>Crear Folio</a>
+							</div>
+	          </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Menú de Logistica -->
+<section id="Logistica" data-widget-grid="data-widget-grid" ng-if="currentUser.roles[0] == 'Logistica'">
+	<div ng-if="currentUser.roles[0] == 'Logistica'">
+		<div ng-include ="client/folios/panelFolios.ng.html"></div>
+	</div>
+	
+
+  <div class="row">
+    <div class="col-sm-12">
+      <div data-widget-color="blue" data-widget-colorbutton="false" data-widget-editbutton="false" data-widget-deletebutton="false" data-widget-fullscreenbutton="false" data-jarvis-widget="data-jarvis-widget">
+        <header>
+          <h2>Opciones del sistema</h2>
+        </header>
+        <div>
+          <div class="widget-body">
+						<div class="row">
+							<div class="col-sm-3">
+								<a ui-sref="root.asignafolios" href="javascript:void(0);" class="btn btn-labeled btn-warning btn-block" style="text-align: left"> <span class="btn-label"><i class="fa fa-lg fa-fw fa-users"></i></span>Asigna Folios</a>
+							</div>		
+						</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+  
+ 

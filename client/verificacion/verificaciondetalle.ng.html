@@ -1,0 +1,259 @@
+<div class="container" style="margin-left:0px">
+<div class="row">
+	<div class="col-sm-12">
+		<form name="form" class="form-horizontal" role="form" novalidate >			
+			<h4>Datos del Folio</h4>
+			<div class="well">	    
+		    <div class="row">
+		    	<div class="col-sm-4"> 					    
+			    	<label>Folio</label>
+			    	<input name="folio" type="text" class="form-control" placeholder="Folio" ng-model="vd.folio.folio" disabled="true">
+		    	</div>
+		    	<div class="col-sm-4">					    
+			    	<label>Fecha</label>
+			    	<input name="fecha" type="date" format="dd/MM/yyyy" class="form-control" placeholder="Fecha" ng-model="vd.folio.fecha" disabled="true">
+		    	</div>	
+		    	<div class="col-sm-4">					    
+			    	<label>Zona</label>
+			    	<input name="zona" type="text" class="form-control" placeholder="Zona" ng-model="vd.folio.zona" disabled="">
+		    	</div>		    				    	    
+		    </div>
+			</div>
+			<h4>Datos del Cliente</h4>
+			<div class="well">
+		    <div class="row">
+					<div class="col-sm-4">					    
+			    	<label>Nombre</label>
+			    	<input name="nombre" type="text" class="form-control" placeholder="Nombre" ng-model="vd.folio.nombre" disabled="true">
+		    	</div>
+		    	<div class="col-sm-2">					    
+			    	<label>Teléfono del Cliente</label>
+			    	<input name="telefono" type="text" class="form-control" placeholder="Teléfono" ng-model="vd.folio.telefono" disabled="true">
+		    	</div>
+		    	<div class="col-sm-2">					    
+			    	<label>Plan</label>
+			    	<input type="text" class="form-control" placeholder="Plan" ng-model="vd.folio.plan" disabled=""> 
+		    	</div>
+		    	<div class="col-sm-4">
+						<label for="ciudad">Ciudad</label>
+				    <select name="tipo" ng-model="vd.folio.ciudad" class="form-control" required="" disabled="true">
+						  <option value="CULIACAN">CULIACAN</option>
+						  <option value="MAZATLAN">MAZATLAN</option>
+						  <option value="LOS MOCHIS">LOS MOCHIS</option>
+						  <option value="AHOME">AHOME</option>
+						  <option value="CONCORDIA">CONCORDIA</option>
+						  <option value="COSTA RICA">COSTA RICA</option>
+						  <option value="SINALOA D LEYVA">SINALOA D LEYVA</option>					  
+						</select>
+					</div>			
+		    </div>
+		    <div class="row">
+		    	<div class="col-sm-6">					    
+			    	<label>Domicilio</label>
+			    	<input name="domicilio" type="text" class="form-control" placeholder="Domicilio" ng-model="vd.folio.domicilio" disabled="true">
+		    	</div>
+		    	<div class="col-sm-6">					    
+			    	<label>Refencia de Ubicación</label>
+			    	<input name="referencia" type="text" class="form-control" placeholder="Referencia de ubicación" ng-model="vd.folio.referencia" disabled="true">	
+		    	</div>	    	
+		    </div>	
+		    <div class="row">	
+		    	<div class="col-sm-10">					    
+			    	<label>Comentarios</label>
+			    	<input type="textarea" class="form-control" placeholder="Comentarios" ng-model="vd.folio.comentarios" disabled="true">
+		    	</div>
+		    </div>	
+			</div>  
+			<h4>Datos de la Visita</h4>
+			<div class="well">
+		    <div class="row">
+					<div class="col-sm-4" ng-class="form.fechavisita.$invalid == true && vd.validation == true ? 'has-error':''" valida>
+						<label for="fecha">Fecha Visita *</label>
+						<input name="fechavisita" date-time format="dd/MM/yyyy" class="form-control" view="year" max-view="year" min-view="date" ng-model="vd.folio.fechavisita" required="" ng-disabled="(vd.folio.estatus=='No Visitó')"/>
+					</div>	
+					<div class="col-sm-4" valida>					    
+			    	<label>Quíen Atendio *</label>
+			    	<input name="atendio" type="text" class="form-control" placeholder="Atendió" ng-model="vd.folio.atendio" required="" ng-disabled="(vd.folio.estatus=='No Visitó')">
+		    	</div>
+					<div class="col-sm-4" valida>					    
+			    	<label>Parentesco *</label>
+			    	<input name="parentesco" type="text" class="form-control" placeholder="Parentesco" ng-model="vd.folio.parentesco" required="">
+		    	</div>
+		    </div>
+		    <div class="row">
+		    	<div class="col-sm-4" valida>					    
+			    	<label>Identificación *</label>
+			    	<input name="identificacion" type="text" class="form-control" placeholder="Identificación" ng-model="vd.folio.identificacion" required="">
+		    	</div>
+		    	<div class="col-sm-4" valida>					    
+			    	<label>Medidor CFE *</label>
+			    	<input name="medidor" type="text" class="form-control" placeholder="Identificación" ng-model="vd.folio.medidor" required="">
+		    	</div>
+		    	<div class="col-sm-4">					    
+			    	<label>Vivienda *</label>	
+			    	<br />		    	
+			      <label>
+		          <input type="radio" name="vivienda" value="baja" ng-model="vd.folio.vivienda">
+		             Baja
+		        </label>
+		        <label>
+		            <input type="radio" name="vivienda" value="media" ng-model="vd.folio.vivienda">
+									 Media
+			      </label>
+			      <label>
+			        <input type="radio" name="vivienda" value="mediaalta" ng-model="vd.folio.vivienda">
+			  	       Media Alta
+			      </label>
+			      <label>
+			        <input type="radio" name="vivienda" value="alta" ng-model="vd.folio.vivienda">
+			           Alta
+			      </label>
+		    	</div>
+		    </div>
+		    <div class="row">
+		    	<div class="col-sm-2" valida>					    
+			    	<label>Color Casa *</label>
+			    	<input name="colorcasa" type="text" class="form-control" placeholder="Color Casa" ng-model="vd.folio.colorcasa" required="">
+		    	</div>
+		    	<div class="col-sm-2" valida>					    
+			    	<label>Pisos *</label>
+			    	<input name="pisos" type="number" min="0" class="form-control" placeholder="Pisos" ng-model="vd.folio.pisos" required="">
+		    	</div>
+		    	<div class="col-sm-2" valida>					    
+			    	<label>Puerta Color *</label>
+			    	<input name="puertacolor" type="text" class="form-control" placeholder="Puerta Color" ng-model="vd.folio.puertacolor" required="">
+		    	</div>
+		    	<div class="col-sm-2">					    
+			    	<label>Cochera *</label>	
+			    	<br />		    	
+			      <label>
+		          <input type="radio" name="cochera" value="baja" ng-model="vd.folio.cochera">
+		             Si
+		        </label>
+		        <label>
+		            <input type="radio" name="cochera" value="media" ng-model="vd.folio.cochera">
+									 No
+			      </label>
+		    	</div>
+		    	<div class="col-sm-2">					    
+			    	<label>Barandal Color</label>
+			    	<input name="barandalcolor" type="text" class="form-control" placeholder="Barandal Color" ng-model="vd.folio.barandalcolor" required="">
+		    	</div>
+		    </div>
+		    <div class="row">
+		    	<div class="col-sm-2">					    
+			    	<label>Calle Pavimentada *</label>	
+			    	<br />		    	
+			      <label>
+		          <input type="radio" name="pavimentada" value="baja" ng-model="vd.folio.pavimentada">
+		             Si
+		        </label>
+		        <label>
+		            <input type="radio" name="pavimentada" value="media" ng-model="vd.folio.pavimentada">
+									 No
+			      </label>
+		    	</div>
+		    	<div class="col-sm-2" valida>					    
+			    	<label>Personas Habitan *</label>
+			    	<input name="personashabitan" type="number" min="0" class="form-control" ng-model="vd.folio.personashabitan" required="">
+		    	</div>
+		    	<div class="col-sm-2" valida>					    
+			    	<label>Años viviendo *</label>
+			    	<input name="aniosviviendo" type="number" min="0" class="form-control" ng-model="vd.folio.aniosviviendo" required="">
+		    	</div>
+		    	<div class="col-sm-4">					    
+			    	<label>Zona Colonia *</label>	
+			    	<br />		    	
+			      <label>
+		          <input type="radio" name="zonacolonia" value="baja" ng-model="vd.folio.zonacolonia">
+		             Baja
+		        </label>
+		        <label>
+		            <input type="radio" name="zonacolonia" value="media" ng-model="vd.folio.zonacolonia">
+									 Media
+			      </label>
+			      <label>
+			        <input type="radio" name="zonacolonia" value="mediaalta" ng-model="vd.folio.zonacolonia">
+			  	       Media Alta
+			      </label>
+			      <label>
+			        <input type="radio" name="zonacolonia" value="alta" ng-model="vd.folio.zonacolonia">
+			           Alta
+			      </label>
+		    	</div>
+		    	<div class="col-sm-2">					    
+			    	<label>Casa *</label>	
+			    	<br />		    	
+			      <label>
+		          <input type="radio" name="casa" value="baja" ng-model="vd.folio.casa">
+		             Propia
+		        </label>
+		        <label>
+		            <input type="radio" name="casa" value="media" ng-model="vd.folio.casa">
+									 Renta
+			      </label>
+		    	</div>
+		    </div>
+		    <div class="row">
+		    	<div class="col-sm-8">					    
+			    	<label>Referencia Vecinales</label>
+			    	<input name="referenciaVecinales" type="text" class="form-control" placeholder="Domicilio" ng-model="vd.folio.referenciaVecinales">
+		    	</div>
+		    	<div class="col-sm-8">					    
+			    	<label>Comentarios</label>
+			    	<input name="comentariosvisita" type="text" class="form-control" placeholder="Comentarios" ng-model="vd.folio.comentariovisita">
+		    	</div>
+		    </div>
+		    <div class="row">
+		    	<div class="col-sm-4">
+						<label for="verificacionEstatus">Verificación Estatus</label>
+						<select ng-model="vd.folio.estatus" class="form-control" ng-change="vd.getRazones(vd.folio)">
+							<option ng-repeat="folio in vd.folios" value="{{folio.id}}" ng-selected="vd.folio.estatus == folio.id">{{folio.nombre}}</option>
+				    </select>
+					</div>
+					<div class="col-sm-4">
+						<label for="verificacionRazon">Razón</label>
+		    		<select name="verificacionRazon" ng-model="vd.folio.verificacionRazon" class="form-control" required="" >
+			    		<option ng-repeat="razon in vd.razones" value="{{razon.nombre}}">{{razon.nombre}}</option>
+		    		</select>
+					</div>		
+		    </div>
+			</div> 	
+			<h4>Datos de la Visita</h4>
+			<div class="well">
+				<div class="row">
+					<div class="col-sm-6">
+						<label>Evidencia 1</label>
+						<div>
+							Agregar Imagen 1: 
+							<input type="file" id="fileInput1">
+							<div id="fileDisplayArea1" style="display: none;" ></div>
+						</div>
+						<img class="thumbnail" src="{{vd.folio.Imagen1}}" width="200" height="200"/>
+					</div>
+					<div class="col-sm-6">
+						<label>Evidencia 2</label>
+						<div>
+							Agregar Imagen 2: 
+							<input type="file" id="fileInput2">
+							<div id="fileDisplayArea2" style="display: none;" ></div>
+						</div>
+						<img class="thumbnail" src="{{vd.folio.Imagen2}}" width="200" height="200"/>
+					</div>
+				</div>
+			</div>
+			<canvas id="myCanvas"  >
+				Sorry, your browser does not support HTML5 canvas technology.
+			</canvas>
+			
+			
+			<div class="row">
+				<div class="col-sm-12">
+					<input type="submit" ng-click="vd.actualizar(vd.folio,form)" value="Actualizar" class="btn btn-primary" ng-show="vd.op==1" valida-form formulario="form"/>	
+					<input type="submit" ng-click="vd.finalizar(vd.folio._id)" value="Finalizar" class="btn btn-primary" ng-show="vd.op==2" valida-form formulario="form"/>
+				</div>
+			</div>	  
+		</form>
+	</div>
+</div>
+</div>
