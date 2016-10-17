@@ -94,5 +94,85 @@ angular.module('insude').config(['$injector', function ($injector) {
 	        return $meteor.requireUser();
 	      }]
 	    }
+    })
+    .state('root.municipios', {
+      url: '/municipios',
+      templateUrl: 'client/municipios/municipios.ng.html',
+      controller: 'MunicipiosCtrl as mun',
+      resolve: {
+	      "currentUser": ["$meteor", function($meteor){
+	        return $meteor.requireUser();
+	      }]
+	    }
+    })
+    .state('root.eventos', {
+      url: '/eventos',
+      templateUrl: 'client/eventos/eventos.ng.html',
+      controller: 'EventosCtrl as eve',
+      resolve: {
+	      "currentUser": ["$meteor", function($meteor){
+	        return $meteor.requireUser();
+	      }]
+	    }
+    })
+    .state('root.deportes', {
+      url: '/deportes',
+      templateUrl: 'client/deportes/deportes.ng.html',
+      controller: 'DeportesCtrl as dep',
+      resolve: {
+	      "currentUser": ["$meteor", function($meteor){
+	        return $meteor.requireUser();
+	      }]
+	    }
+    })
+    .state('root.categorias', {
+      url: '/categorias',
+      templateUrl: 'client/categorias/categorias.ng.html',
+      controller: 'CategoriasCtrl as cat',
+      resolve: {
+	      "currentUser": ["$meteor", function($meteor){
+	        return $meteor.requireUser();
+	      }]
+	    }
+    })
+    .state('root.pruebas', {
+      url: '/pruebas/:id/:evento_id/:deporte_id/:categoria_id/:rama_id',
+      templateUrl: 'client/pruebas/pruebas.ng.html',
+      controller: 'PruebasCtrl as pru',
+      resolve: {
+	      "currentUser": ["$meteor", function($meteor){
+	        return $meteor.requireUser();
+	      }]
+	    }
     }) 
+    .state('root.ramas', {
+      url: '/ramas',
+      templateUrl: 'client/ramas/ramas.ng.html',
+      controller: 'RamasCtrl as ram',
+      resolve: {
+	      "currentUser": ["$meteor", function($meteor){
+	        return $meteor.requireUser();
+	      }]
+	    }
+    })
+    .state('root.modalidaddeportivas', {
+      url: '/modalidaddeportivas',
+      templateUrl: 'client/modalidaddeportivas/modalidaddeportivas.ng.html',
+      controller: 'ModalidadDeportivaCtrl as mod',
+      resolve: {
+	      "currentUser": ["$meteor", function($meteor){
+	        return $meteor.requireUser();
+	      }]
+	    }
+    }) 
+    .state('root.participantes', {
+      url: '/participantes',
+      templateUrl: 'client/participantes/participantes.ng.html',
+      controller: 'ParticipantesCtrl as par',
+      resolve: {
+	      "currentUser": ["$meteor", function($meteor){
+	        return $meteor.requireUser();
+	      }]
+	    }
+    })
 }]);     

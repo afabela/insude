@@ -9,11 +9,18 @@ function UsuariosCtrl($scope, $meteor, $reactive,  $state, $stateParams, toastr)
 	this.subscribe('usuarios',()=>{
 			return [{}]
 	});
+	
+	this.subscribe('municipios',()=>{
+			return [{estatus: true}]
+	});
 
   this.helpers({
 	  usuarios : () => {
 		  return Meteor.users.find({});
 	  },
+	  municipios: () => {
+		 	return Municipios.find(); 
+	  }
   });
   
   this.nuevo = true;  
@@ -88,6 +95,15 @@ function UsuariosCtrl($scope, $meteor, $reactive,  $state, $stateParams, toastr)
 			$meteor.getPicture().then(function(data){
 			rc.usuario.fotografia = data;
 		});
+	};
+	
+	this.getMunicipio = function(municipio_id)
+	{		
+			var municipio = Municipios.findOne({_id:municipio_id});
+
+			if (municipio)
+				 return municipio.nombre;
+				 
 	};
 
 };

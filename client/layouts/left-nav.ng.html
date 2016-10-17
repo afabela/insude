@@ -29,37 +29,71 @@ A LA BARRA LATERAL
 <nav>
 	<ul data-smart-menu>
 	
-		 <!--
+
      <li data-ui-sref-active="active">
-     	 <a ui-sref="root.importarfolios" tilte="Verificaciones" ng-if="currentUser.roles[0] == 'Coordinador'">
-      	  <i class="fa fa-lg fa-fw fa-arrow-circle-up"></i>
-					<span class="menu-item-parent">Importar Folios</span>
+     	 <a ui-sref="root.usuarios" tilte="Insude" ng-if="currentUser.roles[0] == 'admin'">
+      	  <i class="fa fa-lg fa-fw fa-users"></i>
+					<span class="menu-item-parent">Usuarios</span>
 			 </a>
 		 </li>
 
 		 <li data-ui-sref-active="active">
-      <a ui-sref="root.folios" tilte="Verificaciones" ng-if="currentUser.roles[0] == 'Coordinador'">
+      <a ui-sref="root.municipios" tilte="Insude" ng-if="currentUser.roles[0] == 'admin'">
         <i class="fa fa-lg fa-fw fa-folder-open"></i>
-        <span class="menu-item-parent">Crear folio</span>
+        <span class="menu-item-parent">Municipios</span>
       </a>
-    </li>
+     </li>
+     
+      <li data-ui-sref-active="active">
+      <a ui-sref="root.ramas" tilte="Insude" ng-if="currentUser.roles[0] == 'admin'">
+        <i class="fa fa-lg fa-fw fa-folder-o"></i>
+        <span class="menu-item-parent">Ramas</span>
+      </a>
+     </li>
     
      <li data-ui-sref-active="active">
-      <a ui-sref="root.panelFolios" tilte="Verificaciones" ng-if="currentUser.roles[0] == 'Coordinador' || currentUser.roles[0] == 'Logistica'">
+      <a ui-sref="root.modalidaddeportivas" tilte="Insude" ng-if="currentUser.roles[0] == 'admin'">
         <i class="fa fa-lg fa-fw fa-folder-o"></i>
-        <span class="menu-item-parent">Panel de Folios</span>
+        <span class="menu-item-parent">Modalidad Deportiva</span>
       </a>
-    </li>
-    
-    
-    <li data-ui-sref-active="active">
-      <a ui-sref="root.buscarfolio" tilte="Verificaciones" ng-if="currentUser.roles[0] == 'Coordinador'">
+     </li>
+   
+     <li data-ui-sref-active="active">
+      <a ui-sref="root.eventos" tilte="Insude" ng-if="currentUser.roles[0] == 'admin'">
         <i class="fa fa-lg fa-fw fa-folder-o"></i>
-        <span class="menu-item-parent">Buscar Folio</span>
+        <span class="menu-item-parent">Eventos</span>
       </a>
-    </li>
-    -->
-    
+     </li>
+     
+     <li data-ui-sref-active="active">
+      <a ui-sref="root.deportes" tilte="Insude" ng-if="currentUser.roles[0] == 'admin'">
+        <i class="fa fa-lg fa-fw fa-folder-o"></i>
+        <span class="menu-item-parent">Deportes</span>
+      </a>
+     </li>
+     
+     <li data-ui-sref-active="active">
+      <a ui-sref="root.categorias" tilte="Insude" ng-if="currentUser.roles[0] == 'admin'">
+        <i class="fa fa-lg fa-fw fa-folder-o"></i>
+        <span class="menu-item-parent">Categorias</span>
+      </a>
+     </li>
+     
+     <li data-ui-sref-active="active">
+      <a ui-sref="root.pruebas" tilte="Insude" ng-if="currentUser.roles[0] == 'admin'">
+        <i class="fa fa-lg fa-fw fa-folder-o"></i>
+        <span class="menu-item-parent">Pruebas</span>
+      </a>
+     </li>
+		 
+		   <li data-ui-sref-active="active">
+      <a ui-sref="root.participantes" tilte="Insude" ng-if="currentUser.roles[0] == 'DelegadoMunicipal'">
+        <i class="fa fa-lg fa-fw fa-folder-o"></i>
+        <span class="menu-item-parent">Participantes</span>
+      </a>
+     </li>
+
+        
     
    <!--
     <li data-menu-collapse data-ui-sref-active="active">
