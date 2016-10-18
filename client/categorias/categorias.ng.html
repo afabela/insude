@@ -1,41 +1,5 @@
 <h2>Categorias</h2>
 <form name="form" class="form-horizontal" role="form" novalidate>
-<div class="well">	    
-	<div class="row">
-		<div class="col-sm-4" valida>
-			<label >Evento *</label>
-			<select name="evento" class="form-control select2" placeholder="Seleccione" ng-model="cat.categoria.evento_id" required>
-				<option  value="{{evento._id}}" ng-repeat="evento in cat.eventos">
-					{{evento.nombre}}
-				</option>
-			</select>
-	  </div>
-		<div class="col-sm-2" valida>
-			<label >Deporte *</label>
-			<select name="deporte" class="form-control select2" placeholder="Seleccione" ng-model="cat.categoria.deporte_id" required>
-				<option  value="{{deporte._id}}" ng-repeat="deporte in cat.deportes">
-					{{deporte.nombre}}
-				</option>
-			</select>
-		</div>
-		<div class="col-sm-2" valida>
-			<label >Rama *</label>
-			<select name="rama" class="form-control select2" placeholder="Seleccione" ng-model="cat.categoria.rama_id" required>
-				<option  value="{{rama._id}}" ng-repeat="rama in cat.ramas">
-					{{rama.nombre}}
-				</option>
-			</select>
-		</div>	
-		<div class="col-sm-2" valida>
-			<label >Modalidad Deportiva *</label>
-			<select name="modalidaddeportiva" class="form-control select2" placeholder="Seleccione" ng-model="cat.categoria.modalidaddeportiva_id" required>
-				<option  value="{{modalidaddeportiva._id}}" ng-repeat="modalidaddeportiva in cat.modalidaddeportivas">
-					{{modalidaddeportiva.nombre}}
-				</option>
-			</select>
-		</div>
-	</div>
-</div>	  	
 <div class="row">
 	<div class="col-sm-12">
 		<a class="btn btn-{{cat.nuevo == true ? 'primary' : 'danger'}}" role="button" data-toggle="collapse" 
@@ -43,21 +7,55 @@
 		  {{cat.nuevo == true ? 'Nuevo' : 'Cancelar'}}
 		</a>
 		<div class="collapse" id="collapseExample">
-		  	<div class="well">	    
-			    <div class="row">
-			    	<div class="col-sm-4" valida>
-				    	<label>Nombre *</label>
-					    <input name="nombre" type="text" class="form-control" ng-model="cat.categoria.nombre" required>
-			    	</div>
-			    	<div class="col-sm-2" valida>
-				    	<label>Año Inicio *</label>
-					    <input name="anioinicio" type="number" max="9999" min="1000" class="form-control" ng-model="cat.categoria.anioinicio" required>
-			    	</div>
-			    	<div class="col-sm-2" valida>
-				    	<label>Año Fin *</label>
-					    <input name="aniofin" type="number" max="9999" min="1000" class="form-control" ng-model="cat.categoria.aniofin" required>
-			    	</div>	    	
-			    </div>
+		  		<div class="well">	    
+				    <div class="row">
+				    	<div class="col-sm-4" valida>
+					    	<label>Nombre *</label>
+						    <input name="nombre" type="text" class="form-control" ng-model="cat.categoria.nombre" required>
+				    	</div>
+				    	<div class="col-sm-2" valida>
+					    	<label>Año Inicio *</label>
+						    <input name="anioinicio" type="number" max="9999" min="1000" class="form-control" ng-model="cat.categoria.anioinicio" required>
+				    	</div>
+				    	<div class="col-sm-2" valida>
+					    	<label>Año Fin *</label>
+						    <input name="aniofin" type="number" max="9999" min="1000" class="form-control" ng-model="cat.categoria.aniofin" required>
+				    	</div>
+				    </div>
+						<div class="row">
+				    	<div class="col-sm-4" valida>
+								<label >Evento</label>
+								<select name="evento" class="form-control select2" placeholder="Seleccione" ng-model="cat.categoria.evento_id" required>
+									<option  value="{{evento._id}}" ng-repeat="evento in cat.eventos">
+										{{evento.nombre}}
+									</option>
+								</select>
+						  </div> 		
+				    	<div class="col-sm-2" valida>
+								<label >Deporte</label>
+								<select name="deporte" class="form-control select2" placeholder="Seleccione" ng-model="cat.categoria.deporte_id" required>
+									<option  value="{{deporte._id}}" ng-repeat="deporte in cat.deportes">
+										{{deporte.nombre}}
+									</option>
+								</select>
+							</div>
+							<div class="col-sm-2" valida>
+								<label >Rama</label>
+								<select name="rama" class="form-control select2" placeholder="Seleccione" ng-model="cat.categoria.rama_id" required>
+									<option  value="{{rama._id}}" ng-repeat="rama in cat.ramas">
+										{{rama.nombre}}
+									</option>
+								</select>
+							</div>	
+							<div class="col-sm-2" valida>
+								<label >Modalidad Deportiva</label>
+								<select name="modalidaddeportiva" class="form-control select2" placeholder="Seleccione" ng-model="cat.categoria.modalidaddeportiva_id" required>
+									<option  value="{{modalidaddeportiva._id}}" ng-repeat="modalidaddeportiva in cat.modalidaddeportivas">
+										{{modalidaddeportiva.nombre}}
+									</option>
+								</select>
+							</div>
+			    </div>  
 					<div class="row">	
 						<h3>Registros</h3>
 						<div class="col-sm-2" valida>
@@ -84,10 +82,45 @@
 <div class="well">	    
 	<div class="row">
 		<div class="col-md-4">
+				<label >Buscar</label>
 				<div class="icon-addon addon-md">
-					<input type="text" class="form-control" placeholder="Buscar... Categoria" ng-model="query">
+					<input type="text" class="form-control" placeholder="Categoria" ng-model="query">
 					<label for="buscar" class="glyphicon glyphicon-search" rel="tooltip" title="" data-original-title="Buscar"></label>
 	      </div>
+		</div>
+		<div class="col-sm-4">
+			<label >Evento</label>
+			<select name="buscarevento" class="form-control select2" placeholder="Seleccione" ng-model="cat.buscar.buscarEvento_id">
+				<option  value="{{evento._id}}" ng-repeat="evento in cat.eventos">
+					{{evento.nombre}}
+				</option>
+			</select>
+	  </div>
+		<div class="col-sm-2">
+			<label >Deporte</label>
+			<select name="buscardeporte" class="form-control select2" placeholder="Seleccione" ng-model="cat.buscar.buscarDeporte_id">
+				<option  value="{{deporte._id}}" ng-repeat="deporte in cat.deportesBuscar">
+					{{deporte.nombre}}
+				</option>
+			</select>
+		</div>
+	</div>	
+	<div class="row">	
+		<div class="col-sm-2">
+			<label >Rama</label>
+			<select name="rama" class="form-control select2" placeholder="Seleccione" ng-model="cat.buscar.buscarRama_id">
+				<option  value="{{rama._id}}" ng-repeat="rama in cat.ramas">
+					{{rama.nombre}}
+				</option>
+			</select>
+		</div>	
+		<div class="col-sm-2">
+			<label >Modalidad Deportiva</label>
+			<select name="modalidaddeportiva" class="form-control select2" placeholder="Seleccione" ng-model="cat.buscar.buscarModalidaddeportiva_id">
+				<option  value="{{modalidaddeportiva._id}}" ng-repeat="modalidaddeportiva in cat.modalidaddeportivas">
+					{{modalidaddeportiva.nombre}}
+				</option>
+			</select>
 		</div>
 	</div>
 </div>

@@ -4,21 +4,22 @@ angular
  
 function CategoriasCtrl($scope, $meteor, $reactive, $state, toastr) {
 	$reactive(this).attach($scope);
+	
 	this.action = true;
-
+	this.buscar = {};
+	
 	this.subscribe('categorias',()=>{
-		return [{evento_id:  this.getReactively('categoria.evento_id')? this.getReactively('categoria.evento_id'):"" 
-						 ,deporte_id: this.getReactively('categoria.deporte_id')? this.getReactively('categoria.deporte_id'):""
-						 ,rama_id: 	 this.getReactively('categoria.rama_id')? this.getReactively('categoria.rama_id'):""
-						 //,modalidaddeportiva_id: this.getReactively('categoria.modalidaddeportiva_id')? this.getReactively('categoria.modalidaddeportiva_id'):""
-		}]
+		return [{evento_id:  this.getReactively('buscar.buscarEvento_id')? this.getReactively('buscar.buscarEvento_id'):"" 
+						 ,deporte_id: this.getReactively('buscar.buscarDeporte_id')? this.getReactively('buscar.buscarDeporte_id'):""
+						 ,rama_id: 	 this.getReactively('buscar.buscarRama_id')? this.getReactively('buscar.buscarRama_id'):""
+					}]
 	});
 	
 	this.subscribe('eventos',()=>{
 		return [{estatus: true}]
 	});
 	this.subscribe('deportes',()=>{
-		return [{estatus: true, evento_id: this.getReactively('categoria.evento_id')? this.getReactively('categoria.evento_id'):""}]
+		return [{estatus: true}]
 	});
 	this.subscribe('ramas',()=>{
 		return [{estatus: true}]
@@ -34,8 +35,11 @@ function CategoriasCtrl($scope, $meteor, $reactive, $state, toastr) {
 	  eventos : () => {
 		  return Eventos.find();
 	  },
+	  deportesBuscar : () => {
+		  return Deportes.find({evento_id: this.getReactively('buscar.buscarEvento_id')? this.getReactively('buscar.buscarEvento_id'):""});
+	  },
 	  deportes : () => {
-		  return Deportes.find();
+		  return Deportes.find({evento_id: this.getReactively('categoria.evento_id')? this.getReactively('categoria.evento_id'):""});
 	  },
 	  ramas : () => {
 		  return Ramas.find();
@@ -50,11 +54,7 @@ function CategoriasCtrl($scope, $meteor, $reactive, $state, toastr) {
   {
     this.action = true;
     this.nuevo = !this.nuevo;
-    this.categoria.nombre = "";
-    this.categoria.anioinicio = 0;
-    this.categoria.aniofin = 0;
-    this.categoria.registrospermitidos = 0;		
-		this.categoria.registrossustituciones = 0;
+    this.categoria = {};
   };
 	
   this.guardar = function(categoria,form)

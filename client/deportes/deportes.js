@@ -7,7 +7,7 @@ function DeportesCtrl($scope, $meteor, $reactive, $state, toastr) {
 	this.action = true;
 	
 	this.subscribe('deportes',()=>{
-		return [{evento_id: this.getReactively('deporte.evento_id')? this.getReactively('deporte.evento_id'):""}]
+		return [{evento_id: this.getReactively('deporte.buscarEvento_id')? this.getReactively('deporte.buscarEvento_id'):""}]
 	});
 	
 	this.subscribe('eventos',()=>{

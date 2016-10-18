@@ -1,11 +1,15 @@
 angular
   .module('insude')
-  .controller('ParticipantesCtrl', ParticipantesCtrl);
+  .controller('ParticipantesNuevoCtrl', ParticipantesNuevoCtrl);
  
-function ParticipantesCtrl($scope, $meteor, $reactive, $state, toastr) {
+function ParticipantesNuevoCtrl($scope, $meteor, $reactive, $state, toastr, $stateParams) {
 	$reactive(this).attach($scope);
+	
+	
 	this.action = true;
 	this.participante = {}; 
+	
+	this.participante.evento_id = $stateParams.id;
 	
 	this.subscribe('ramas',()=>{
 		return [{estatus: true}]

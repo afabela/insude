@@ -4,17 +4,19 @@ angular
  
 function PruebasCtrl($scope, $meteor, $reactive, $state, toastr, $stateParams) {
 	$reactive(this).attach($scope);
+
+	
 	this.action = true;
-	this.prueba = {}; 
+	this.buscar = {}; 
 	
 	if ($stateParams.id)
 	{
+			
+			this.buscar.buscarEvento_id = $stateParams.evento_id;
+			this.buscar.buscarDeporte_id = $stateParams.deporte_id;
+			this.buscar.buscarCategoria_id = $stateParams.id;
+			this.buscar.buscarRama_id = $stateParams.rama_id;
 
-			//console.log(this.prueba);
-			this.prueba.categoria_id = $stateParams.id;
-			this.prueba.evento_id = $stateParams.evento_id;
-			this.prueba.deporte_id = $stateParams.deporte_id;
-			this.prueba.rama_id = $stateParams.rama_id;
 	}
 
 	this.subscribe('ramas',()=>{
@@ -27,21 +29,18 @@ function PruebasCtrl($scope, $meteor, $reactive, $state, toastr, $stateParams) {
 	
 	this.subscribe('deportes',()=>{
 		
-		return [{estatus: true, evento_id: this.getReactively('prueba.evento_id')? this.getReactively('prueba.evento_id'):""}]
+		return [{estatus: true}]
 	});
 	
 	this.subscribe('categorias',()=>{
-		return [{estatus: true
-						 ,evento_id:  this.getReactively('prueba.evento_id')? this.getReactively('prueba.evento_id'):"" 
-						 ,deporte_id: this.getReactively('prueba.deporte_id')? this.getReactively('prueba.deporte_id'):""
-		}]
+		return [{estatus: true}]
 	});
 	
 	this.subscribe('pruebas',()=>{
-		return [{evento_id:  this.getReactively('prueba.evento_id')? this.getReactively('prueba.evento_id'):"" 
-						 ,deporte_id: this.getReactively('prueba.deporte_id')? this.getReactively('prueba.deporte_id'):""			
-						 ,categoria_id: this.getReactively('prueba.categoria_id')? this.getReactively('prueba.categoria_id'):""
-						 ,rama_id: this.getReactively('prueba.rama_id')? this.getReactively('prueba.rama_id'):""			
+		return [{evento_id:  this.getReactively('buscar.buscarEvento_id')? this.getReactively('buscar.buscarEvento_id'):"" 
+						 ,deporte_id: this.getReactively('buscar.buscarDeporte_id')? this.getReactively('buscar.buscarDeporte_id'):""			
+						 ,categoria_id: this.getReactively('buscar.buscarCategoria_id')? this.getReactively('buscar.buscarCategoria_id'):""
+						 ,rama_id: this.getReactively('buscar.buscarRama_id')? this.getReactively('buscar.buscarRama_id'):""			
 		}]
 	});
 	
@@ -50,11 +49,21 @@ function PruebasCtrl($scope, $meteor, $reactive, $state, toastr, $stateParams) {
 	  eventos : () => {
 		  return Eventos.find();
 	  },
+	  deportesBuscar : () => {
+		  return Deportes.find({evento_id: this.getReactively('buscar.buscarEvento_id')? this.getReactively('buscar.buscarEvento_id'):""});
+	  },
 	  deportes : () => {
-		  return Deportes.find();
+		  return Deportes.find({evento_id: this.getReactively('prueba.evento_id')? this.getReactively('prueba.evento_id'):""});
+	  },
+	  categoriasBuscar : () => {
+		  return Categorias.find({evento_id:  this.getReactively('buscar.buscarEvento_id')? this.getReactively('buscar.buscarEvento_id'):"" 
+						 									,deporte_id: this.getReactively('buscar.buscarDeporte_id')? this.getReactively('buscar.buscarDeporte_id'):""
+		  });
 	  },
 	  categorias : () => {
-		  return Categorias.find();
+		  return Categorias.find({evento_id:  this.getReactively('prueba.evento_id')? this.getReactively('prueba.evento_id'):"" 
+						 									,deporte_id: this.getReactively('prueba.deporte_id')? this.getReactively('prueba.deporte_id'):""
+		  });
 	  },
 	  pruebas : () => {
 		  return Pruebas.find();
@@ -69,12 +78,11 @@ function PruebasCtrl($scope, $meteor, $reactive, $state, toastr, $stateParams) {
   {
     this.action = true;
     this.nuevo = !this.nuevo;
-    this.prueba.nombre = "";
+    this.prueba = {};
   };
 	
   this.guardar = function(prueba,form)
 	{
-			console.log(prueba);
 			if(form.$invalid){
 	      toastr.error('Error al guardar los datos.');
 	      return;

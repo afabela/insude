@@ -1,17 +1,5 @@
-<h2>Deportes</h2>
+<h2>Deportes</h2>  	
 <form name="form" class="form-horizontal" role="form" novalidate>
-<div class="well">	    
-	<div class="row">
-		<div class="col-sm-4" valida>
-			<label >Evento *</label>
-				<select name="evento" class="form-control select2" placeholder="Seleccione" ng-model="dep.deporte.evento_id" required>
-					<option  value="{{evento._id}}" ng-repeat="evento in dep.eventos">
-						{{evento.nombre}}
-					</option>
-				</select>
-	  </div>
-	</div>
-</div>	  	
 <div class="row">
 	<div class="col-sm-12">
 		<a class="btn btn-{{dep.nuevo == true ? 'primary' : 'danger'}}" role="button" data-toggle="collapse" 
@@ -25,6 +13,14 @@
 				    	<label>Nombre *</label>
 					    <input name="nombre" type="text" class="form-control" ng-model="dep.deporte.nombre" required>
 			    	</div>
+			    	<div class="col-sm-4" valida>
+							<label >Evento</label>
+								<select name="evento" class="form-control select2" placeholder="Seleccione" ng-model="dep.deporte.evento_id" required>
+									<option  value="{{evento._id}}" ng-repeat="evento in dep.eventos">
+										{{evento.nombre}}
+									</option>
+								</select>
+					  </div>
 			    </div>	
 				</div>
 				<div class="row">
@@ -41,11 +37,20 @@
 <div class="well">	    
 	<div class="row">
 		<div class="col-md-4">
+				<label >Buscar Deporte</label>
 				<div class="icon-addon addon-md">
-					<input type="text" class="form-control" placeholder="Buscar... Deporte" ng-model="query">
+					<input type="text" class="form-control" placeholder="..." ng-model="query">
 					<label for="buscar" class="glyphicon glyphicon-search" rel="tooltip" title="" data-original-title="Buscar"></label>
 	      </div>
 		</div>
+		<div class="col-sm-4" valida>
+			<label >Evento</label>
+				<select name="evento" class="form-control select2" placeholder="Seleccione" ng-model="dep.deporte.buscarEvento_id" required>
+					<option  value="{{evento._id}}" ng-repeat="evento in dep.eventos">
+						{{evento.nombre}}
+					</option>
+				</select>
+	  </div>
 	</div>
 </div>
 <!--/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////-->

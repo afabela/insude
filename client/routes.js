@@ -165,10 +165,30 @@ angular.module('insude').config(['$injector', function ($injector) {
 	      }]
 	    }
     }) 
-    .state('root.participantes', {
+    .state('root.participantesnuevo', {
+      url: '/participantesnuevo/:id',
+      templateUrl: 'client/participantes/participantesnuevo.ng.html',
+      controller: 'ParticipantesNuevoCtrl as pn',
+      resolve: {
+	      "currentUser": ["$meteor", function($meteor){
+	        return $meteor.requireUser();
+	      }]
+	    }
+    })
+    .state('root.listarparticipantes', {
       url: '/participantes',
-      templateUrl: 'client/participantes/participantes.ng.html',
-      controller: 'ParticipantesCtrl as par',
+      templateUrl: 'client/participantes/listarparticipantes.ng.html',
+      controller: 'ParticipantesListaCtrl as lp',
+      resolve: {
+	      "currentUser": ["$meteor", function($meteor){
+	        return $meteor.requireUser();
+	      }]
+	    }
+    })
+    .state('root.eventosmostrar', {
+      url: '/eventosmostrar',
+      templateUrl: 'client/participantes/eventosmostrar.ng.html',
+      controller: 'EventosMostarrCtrl as em',
       resolve: {
 	      "currentUser": ["$meteor", function($meteor){
 	        return $meteor.requireUser();
