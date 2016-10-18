@@ -31,7 +31,7 @@ function ParticipantesNuevoCtrl($scope, $meteor, $reactive, $state, toastr, $sta
 		}]
 	});
 	
-	this.subscribe('participantes',()=>{
+	this.subscribe('pruebas',()=>{
 		return [{evento_id:  this.getReactively('participante.evento_id')? this.getReactively('participante.evento_id'):"" 
 						 ,deporte_id: this.getReactively('participante.deporte_id')? this.getReactively('participante.deporte_id'):""			
 						 ,categoria_id: this.getReactively('participante.categoria_id')? this.getReactively('participante.categoria_id'):""
@@ -50,7 +50,7 @@ function ParticipantesNuevoCtrl($scope, $meteor, $reactive, $state, toastr, $sta
 	  categorias : () => {
 		  return Categorias.find();
 	  },
-	  participantes : () => {
+	  pruebas : () => {
 		  return Pruebas.find();
 	  },
 	  ramas : () => {
@@ -69,11 +69,12 @@ function ParticipantesNuevoCtrl($scope, $meteor, $reactive, $state, toastr, $sta
   this.guardar = function(participante,form)
 	{
 			console.log(participante);
-			if(form.$invalid){
+			
+			/*if(form.$invalid){
 	      toastr.error('Error al guardar los datos.');
 	      return;
 	    }
-			
+			*/
 			participante.estatus = true;
 			participante.usuarioInserto = Meteor.userId();
 			Pruebas.insert(participante);
@@ -81,7 +82,7 @@ function ParticipantesNuevoCtrl($scope, $meteor, $reactive, $state, toastr, $sta
 			participante = {};
 			$('.collapse').collapse('hide');
 			this.nuevo = true;
-			$state.go('root.participantes');
+			$state.go('root.participantesnuevo');
 			form.$setPristine();
 	    form.$setUntouched();
 	};

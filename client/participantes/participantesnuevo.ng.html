@@ -35,7 +35,7 @@
 
 				<div class="widget-body">	
 					<div class="row">
-						<form name="form" class="form-horizontal" role="form" novalidate>
+						<form name="form" class="form-horizontal" role="form" novalidate> 	
 							<div id="bootstrap-wizard-1" class="col-sm-12">
 								<div class="form-bootstrapWizard">
 									<ul class="bootstrapWizard form-wizard">
@@ -134,9 +134,7 @@
 															<div>
 																<input type="file" id="fileInput3">
 															</div>
-														</div>														
-														
-														
+														</div>								
 											    </div>
 										  	</div>	
 											</div>
@@ -174,7 +172,22 @@
 																</option>
 															</select>
 														</div>
-														
+														<div class="col-sm-4" valida>
+															<label >Rama *</label>
+															<select name="rama" class="form-control select2" placeholder="Seleccione" ng-model="pn.participante.rama_id" required>
+																<option  value="{{rama._id}}" ng-repeat="rama in pn.ramas">
+																	{{rama.nombre}}
+																</option>
+															</select>
+														</div>
+														<div class="col-sm-4" valida>
+															<label >Pruebas *</label>
+															<select name="prueba" class="form-control select2" placeholder="Seleccione" ng-model="pn.participante.prueba_id" required>
+																<option  value="{{prueba._id}}" ng-repeat="prueba in pn.pruebas">
+																	{{prueba.nombre}}
+																</option>
+															</select>
+														</div>
 														
 											    </div>
 										  	</div>	
@@ -190,7 +203,7 @@
 												<div class="text-center">
 													<h4>Click en Registrar para Finalizar</h4>
 													<br/>
-													<button ng-click="pn.guardar(pn.participante)" class="btn btn-lg btn-primary">Registrar</button>
+													<button type="submit" ng-click="pn.guardar(pn.participante)" class="btn btn-lg btn-primary" valida-form formulario="form">Registrar</button>
 													<br>
 													<br>
 												</div>												
