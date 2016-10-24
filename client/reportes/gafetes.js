@@ -1,8 +1,8 @@
 angular
   .module('insude')
-  .controller('CedulaCtrl', CedulaCtrl);
+  .controller('GafetesCtrl', GafetesCtrl);
  
-function CedulaCtrl($scope, $meteor, $reactive, $state, toastr, $stateParams) {
+function GafetesCtrl($scope, $meteor, $reactive, $state, toastr, $stateParams) {
 	$reactive(this).attach($scope);
 	
 	let rc = $reactive(this).attach($scope);

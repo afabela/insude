@@ -127,9 +127,9 @@
 											    	</div>
 											    </div>	
 											    <div class="row">
-												    <div class="col-sm-4">
+												    <div class="col-sm-4" valida>
 															<label>CURP *</label>												
-															<input name="curp" type="text" class="form-control" ng-model="pn.participante.curp">
+															<input name="curp" type="text" class="form-control" ng-model="pn.participante.curp" required>
 														</div>
 														<div class="col-sm-4" valida>
 													    <label for="formacionacademica">Formación Académica</label>
@@ -144,19 +144,13 @@
 															    <option value="Superior">Superior</option>
 															</select>
 											    	</div>
-											    	<div class="col-sm-4" valida>
-												    		
-											    	</div>	
-											    	
 											    </div>
 											    <div class="row">
 												    	<div class="col-sm-4">
 																<label>Foto</label>
-																<div>
-																	<input type="file" id="fileInput1">																
-																	<div id="fileDisplayArea1"></div>
-																 <!--<img class="thumbnail" src="{{pn.participante.foto}}" ng-if="{{pn.participante.foto}}" width="200" height="200"/>-->
-																</div>																
+																<input type="file" id="fileInput1">																
+																<div id="fileDisplayArea1"></div>
+																 <!--<img class="thumbnail" src="{{pn.participante.foto}}" ng-if="{{pn.participante.foto}}" width="200" height="200"/>-->										
 															</div>												    	
 											    </div>
 										  	</div>
