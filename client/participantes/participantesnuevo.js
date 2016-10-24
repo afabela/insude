@@ -5,6 +5,9 @@ angular
 function ParticipantesNuevoCtrl($scope, $meteor, $reactive, $state, toastr, $stateParams) {
 	$reactive(this).attach($scope);
 	
+	let rc = $reactive(this).attach($scope);
+	
+	Window = rc;
 	
 	this.action = true;
 	this.participante = {}; 
@@ -68,28 +71,35 @@ function ParticipantesNuevoCtrl($scope, $meteor, $reactive, $state, toastr, $sta
 	
   this.guardar = function(participante,form)
 	{
-			console.log(participante);
 			
-			/*if(form.$invalid){
+			
+			if(form.$invalid){
 	      toastr.error('Error al guardar los datos.');
 	      return;
 	    }
-			*/
+			
+			
+			participante.municipio_id = Meteor.user() != undefined ? Meteor.user().profile.municipio_id : "";
+			console.log(participante);
+			
+			participante.nombreCompleto = participante.nombre + " " + participante.apellidoPaterno + " " + participante.apellidoMaterno;
 			participante.estatus = true;
 			participante.usuarioInserto = Meteor.userId();
-			Pruebas.insert(participante);
+			Participantes.insert(participante);
 			toastr.success('Guardado correctamente.');
 			participante = {};
 			$('.collapse').collapse('hide');
 			this.nuevo = true;
-			$state.go('root.participantesnuevo');
+			$state.go('root.listarparticipantes');
+			
 			form.$setPristine();
 	    form.$setUntouched();
+	    
 	};
 	
 	this.editar = function(id)
 	{
-	    this.participante = Pruebas.findOne({_id:id});
+	    this.participante = Participantes.findOne({_id:id});
 	    this.action = false;
 	    $('.collapse').collapse('show');
 	    this.nuevo = false;
@@ -104,7 +114,7 @@ function ParticipantesNuevoCtrl($scope, $meteor, $reactive, $state, toastr, $sta
 		 	var idTemp = participante._id;
 			delete participante._id;		
 			participante.usuarioActualizo = Meteor.userId(); 
-			Pruebas.update({_id:idTemp},{$set:participante});
+			Participantes.update({_id:idTemp},{$set:participante});
 			toastr.success('Actualizado correctamente.');
 			//console.log(ciclo);
 			$('.collapse').collapse('hide');
@@ -115,13 +125,13 @@ function ParticipantesNuevoCtrl($scope, $meteor, $reactive, $state, toastr, $sta
 		
 	this.cambiarEstatus = function(id)
 	{
-			var participante = Pruebas.findOne({_id:id});
+			var participante = Participantes.findOne({_id:id});
 			if(participante.estatus == true)
 				participante.estatus = false;
 			else
 				participante.estatus = true;
 			
-			Pruebas.update({_id:id}, {$set : {estatus : participante.estatus}});
+			Participantes.update({_id:id}, {$set : {estatus : participante.estatus}});
 	};	
 
 	this.getEvento = function(evento_id)
@@ -150,6 +160,53 @@ function ParticipantesNuevoCtrl($scope, $meteor, $reactive, $state, toastr, $sta
 				 return categoria.nombre;
 				 
 	};
+	
+	this.AlmacenaImagen = function(imagen)
+	{
+			this.participante.foto = imagen;
+	}
+	
+	
+	$(document).ready( function() {
+		
+
+			$(".Mselect2").select2();
+					
+			var fileInput1 = document.getElementById('fileInput1');
+			var fileDisplayArea1 = document.getElementById('fileDisplayArea1');
+			
+			
+				//JavaScript para agregar la imagen 1
+			fileInput1.addEventListener('change', function(e) {
+				var file = fileInput1.files[0];
+				var imageType = /image.*/;
+	
+				if (file.type.match(imageType)) {
+					var reader = new FileReader();
+	
+					reader.onload = function(e) {
+						fileDisplayArea1.innerHTML = "";
+	
+						var img = new Image();
+						img.src = reader.result;
+						img.width =200;
+						img.height=200;
+	
+						rc.AlmacenaImagen(reader.result);
+						//this.folio.imagen1 = reader.result;
+						
+						fileDisplayArea1.appendChild(img);
+						//console.log(fileDisplayArea1);
+					}
+					
+					reader.readAsDataURL(file);	
+				} else {
+					fileDisplayArea1.innerHTML = "File not supported!";
+				}
+			});
+
+	});
+	
 	
 	
 };

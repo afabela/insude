@@ -178,7 +178,7 @@ angular.module('insude').config(['$injector', function ($injector) {
     .state('root.listarparticipantes', {
       url: '/participantes',
       templateUrl: 'client/participantes/listarparticipantes.ng.html',
-      controller: 'ParticipantesListaCtrl as lp',
+      controller: 'ListarParticipantesCtrl as lp',
       resolve: {
 	      "currentUser": ["$meteor", function($meteor){
 	        return $meteor.requireUser();
@@ -188,7 +188,37 @@ angular.module('insude').config(['$injector', function ($injector) {
     .state('root.eventosmostrar', {
       url: '/eventosmostrar',
       templateUrl: 'client/participantes/eventosmostrar.ng.html',
-      controller: 'EventosMostarrCtrl as em',
+      controller: 'EventosMostarCtrl as em',
+      resolve: {
+	      "currentUser": ["$meteor", function($meteor){
+	        return $meteor.requireUser();
+	      }]
+	    }
+    })
+    .state('root.cedula', {
+      url: '/cedula',
+      templateUrl: 'client/reportes/cedula.ng.html',
+      controller: 'CedulaCtrl as ced',
+      resolve: {
+	      "currentUser": ["$meteor", function($meteor){
+	        return $meteor.requireUser();
+	      }]
+	    }
+    })
+    .state('root.credenciales', {
+      url: '/credenciales',
+      templateUrl: 'client/reportes/credenciales.ng.html',
+      controller: 'CredencialesCtrl as cre',
+      resolve: {
+	      "currentUser": ["$meteor", function($meteor){
+	        return $meteor.requireUser();
+	      }]
+	    }
+    })
+    .state('root.gafetes', {
+      url: '/gafetes',
+      templateUrl: 'client/reportes/gafetes.ng.html',
+      controller: 'GafetesCtrl as gaf',
       resolve: {
 	      "currentUser": ["$meteor", function($meteor){
 	        return $meteor.requireUser();

@@ -1,8 +1,8 @@
 angular
   .module('insude')
-  .controller('EventosMostarrCtrl', EventosMostarrCtrl);
+  .controller('EventosMostarCtrl', EventosMostarCtrl);
  
-function EventosMostarrCtrl($scope, $meteor, $reactive, $state, toastr) {
+function EventosMostarCtrl($scope, $meteor, $reactive, $state, toastr) {
 	$reactive(this).attach($scope);
 	
 	this.subscribe('eventos',()=>{

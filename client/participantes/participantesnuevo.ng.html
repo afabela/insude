@@ -11,7 +11,7 @@
 </div>
 <div class="row">
 	<div class="col-sm-12">
-		<a class="btn btn-primary" ui-sref="root.listadoparticipantes">
+		<a class="btn btn-primary" ui-sref="root.listarparticipantes">
 		  Listar Participantes
 		</a>
 	</div>
@@ -82,19 +82,58 @@
 													    <label for="sexo">Sexo *</label>
 													    <select name="sexo" ng-model="pn.participante.sexo" data-placeholder="Seleccione" class="form-control" required>
 															    <option value=""></option>
-															    <option value="Masculino">Masculino</option>
-															    <option value="Femenino">Femenino</option>
+															    <option value="Hombre">Hombre</option>
+															    <option value="Mujer">Mujer</option>
+															</select>
+											    	</div>
+											    	<div class="col-sm-4" valida>
+													    <label for="estado">Estado *</label>
+													    <select name="estado" ng-model="pn.participante.estado" data-placeholder="Seleccione" class="form-control" required>
+															    <option value="AS">AGUASCALIENTES</option>
+																	<option value="BC">BAJA CALIFORNIA NTE.</option>
+																	<option value="BS">BAJA CALIFORNIA SUR</option>
+																	<option value="CC">CAMPECHE</option>
+																	<option value="CL">COAHUILA </option>
+																	<option value="CM">COLIMA </option>
+																	<option value="CS">CHIAPAS</option>
+																	<option value="CH">CHIHUAHUA</option>
+																	<option value="DF">DISTRITO FEDERAL</option>
+																	<option value="DG">DURANGO</option>
+																	<option value="GT">GUANAJUATO</option>
+																	<option value="GR">GUERRERO</option>
+																	<option value="HG">HIDALGO</option>
+																	<option value="JC">JALISCO</option>
+																	<option value="MC">MEXICO</option>
+																	<option value="MN">MICHOACAN</option>
+																	<option value="MS">MORELOS</option>
+																	<option value="NT">NAYARIT</option>
+																	<option value="NL">NUEVO LEON</option>
+																	<option value="OC">OAXACA</option>
+																	<option value="PL">PUEBLA</option>
+																	<option value="QT">QUERETARO</option>
+																	<option value="QR">QUINTANA ROO</option>
+																	<option value="SP">SAN LUIS POTOSI</option>
+																	<option value="SL">SINALOA</option>
+																	<option value="SR">SONORA</option>
+																	<option value="TC">TABASCO</option>
+																	<option value="TS">TAMAULIPAS</option>
+																	<option value="TL">TLAXCALA</option>
+																	<option value="VZ">VERACRUZ</option>
+																	<option value="YN">YUCATAN</option>
+																	<option value="ZS">ZACATECAS</option>
+																	<option value="SM">SERV. EXTERIOR MEXICANO </option>
+																	<option value="NE">NACIDO EN EL EXTRANJERO </option> 
 															</select>
 											    	</div>
 											    </div>	
 											    <div class="row">
-												    <div class="col-sm-4" valida>
+												    <div class="col-sm-4">
 															<label>CURP *</label>												
-															<input name="curp" type="text" class="form-control" ng-model="pn.participante.curp" required>
+															<input name="curp" type="text" class="form-control" ng-model="pn.participante.curp">
 														</div>
 														<div class="col-sm-4" valida>
 													    <label for="formacionacademica">Formación Académica</label>
-													    <select name="formacionacademica" ng-model="pn.participante.formacionacademica" data-placeholder="Seleccione" class="form-control" required>
+													    <select name="formacionacademica" ng-model="pn.participante.formacionacademica" data-placeholder="Seleccione" class="form-control">
 															    <option value=""></option>
 															    <option value="Doctorado">Doctorado</option>
 															    <option value="Maestria">Maestria</option>
@@ -105,6 +144,20 @@
 															    <option value="Superior">Superior</option>
 															</select>
 											    	</div>
+											    	<div class="col-sm-4" valida>
+												    		
+											    	</div>	
+											    	
+											    </div>
+											    <div class="row">
+												    	<div class="col-sm-4">
+																<label>Foto</label>
+																<div>
+																	<input type="file" id="fileInput1">																
+																	<div id="fileDisplayArea1"></div>
+																 <!--<img class="thumbnail" src="{{pn.participante.foto}}" ng-if="{{pn.participante.foto}}" width="200" height="200"/>-->
+																</div>																
+															</div>												    	
 											    </div>
 										  	</div>
 											</div>
@@ -151,9 +204,10 @@
 													    <label for="funcionespecifica">Función Especifica *</label>
 													    <select name="funcionespecifica" ng-model="pn.participante.funcionespecifica" data-placeholder="Seleccione" class="form-control" required>
 															    <option value=""></option>
-															    <option value="Entrenador">Entrenador</option>
-															    <option value="DelegadoPorDeporte">Delegado Por Deporte</option>
-															    <option value="AuxiliarGeneral">Auxiliar General</option>
+															    <option value="DEPORTISTA">Deportista</option>
+															    <option value="ENTRENADOR">Entrenador</option>
+															    <option value="DELEGADO POR DEPORTE">Delegado Por Deporte</option>
+															    <option value="AUXILIAR GENERAL">Auxiliar General</option>
 															</select>
 											    	</div>
 														<div class="col-sm-2" valida>
@@ -180,14 +234,15 @@
 																</option>
 															</select>
 														</div>
-														<div class="col-sm-4" valida>
-															<label >Pruebas *</label>
-															<select name="prueba" class="form-control select2" placeholder="Seleccione" ng-model="pn.participante.prueba_id" required>
+														<div class="col-sm-4" ng-show="pn.pruebas.length > 0">
+															<label >Pruebas</label>
+															<select multiple name="prueba" class="js-example-basic-single Mselect2" style="width: 200%; border: white 0px;" placeholder="Seleccione" ng-model="pn.participante.pruebas">
 																<option  value="{{prueba._id}}" ng-repeat="prueba in pn.pruebas">
 																	{{prueba.nombre}}
 																</option>
 															</select>
 														</div>
+														
 														
 											    </div>
 										  	</div>	
@@ -203,7 +258,7 @@
 												<div class="text-center">
 													<h4>Click en Registrar para Finalizar</h4>
 													<br/>
-													<button type="submit" ng-click="pn.guardar(pn.participante)" class="btn btn-lg btn-primary" valida-form formulario="form">Registrar</button>
+													<button type="submit" ng-click="pn.guardar(pn.participante, form)" class="btn btn-lg btn-primary" valida-form formulario="form">Registrar</button>
 													<br>
 													<br>
 												</div>												

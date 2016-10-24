@@ -86,13 +86,38 @@ A LA BARRA LATERAL
       </a>
      </li>
 		 
-		   <li data-ui-sref-active="active">
+		 <li data-ui-sref-active="active">
       <a ui-sref="root.eventosmostrar" tilte="Insude" ng-if="currentUser.roles[0] == 'DelegadoMunicipal'">
         <i class="fa fa-lg fa-fw fa-folder-o"></i>
         <span class="menu-item-parent">Eventos</span>
       </a>
      </li>
+     <li data-ui-sref-active="active">
+      <a ui-sref="root.credenciales" tilte="Insude" ng-if="currentUser.roles[0] == 'admin'">
+        <i class="fa fa-lg fa-fw fa-folder-o"></i>
+        <span class="menu-item-parent">Credenciales</span>
+      </a>
+     </li>
+     <li data-ui-sref-active="active">
+      <a ui-sref="root.gafetes" tilte="Insude" ng-if="currentUser.roles[0] == 'admin'">
+        <i class="fa fa-lg fa-fw fa-folder-o"></i>
+        <span class="menu-item-parent">Gafetes</span>
+      </a>
+     </li>
 
+     <li data-ui-sref-active="active">
+      <a ui-sref="root.listarparticipantes" tilte="Insude" ng-if="currentUser.roles[0] == 'DelegadoMunicipal'">
+        <i class="fa fa-lg fa-fw fa-folder-o"></i>
+        <span class="menu-item-parent">Lista Participantes</span>
+      </a>
+     </li>
+     <li data-ui-sref-active="active">
+      <a ui-sref="root.cedula" tilte="Insude" ng-if="currentUser.roles[0] == 'DelegadoMunicipal'">
+        <i class="fa fa-lg fa-fw fa-folder-o"></i>
+        <span class="menu-item-parent">Cédula</span>
+      </a>
+     </li>
+		 
         
     
    <!--
