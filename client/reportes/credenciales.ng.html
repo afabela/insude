@@ -1,32 +1,52 @@
-<div class="row">
-	<div class="col-xs-12 col-sm-7 col-md-7 col-lg-4">
-		<h1 class="alge-title txt-color-blueDark">
-			<i class="fa fa-list fa-fw "></i>
-				Credenciales
-		</h1>
-	</div>
-</div>
-<br>
-<div class="well">	    
-	<div class="row">
-		<div class="col-sm-4">
-			<label >Evento</label>
-			<select name="evento" class="form-control select2" placeholder="Seleccione" ng-model="cre.evento.evento_id">
-					<option  value="{{evento._id}}" ng-repeat="evento in cre.eventos">
-						{{evento.nombre}}
-					</option>
-			</select>
-		</div>
-		<div class="col-sm-4">
-			<label >Municipio</label>
-			<select name="municipio" class="form-control select2" placeholder="Seleccione" ng-model="cre.evento.municipio_id">
-					<option  value="{{municipio._id}}" ng-repeat="municipio in cre.municipios">
-						{{municipio.nombre}}
-					</option>
-			</select>
-		</div>
-	</div>
-</div>		
+<table class="table" align="center" border="1" >				
+	<tbody>
+		<tr ng-repeat="participante in cre.participantes"> 
+			<td colspan="2" style="padding: 0">
+				<table width="100%"> 
+					<tbody>
+						<tr>
+							<td width="40%">
+									<p>
+						         	<h6 style="margin: 0">CURP<small>{{participante.curp}}</small></h6>
+					          	<h6 style="margin: 0">Nombre<small>{{participante.nombre}} <br /> {{participante.apellidoPaterno}} {{participante.apellidoMaterno}}</small></h6>
+					            <h6 style="margin: 0">Deporte<small>{{participante.deporte_id}}</small></h6>
+					            <h6 style="margin: 0">Modalidad<small>{{participante.funcionespecifica}}</small></h6>
+											<h6 style="margin: 0">Vigencia<small>poner vigencia</small></h6>
+											<h6 style="margin: 0">Entidad<small>{{participante.municipio.nombre}}</small></h6>
+									</p>												
+							</td>
+							<td width="60%">
+									<!--<img src="{{ced.tieneFoto(participante.sexo, participante.foto)}}" alt="" class="img-rounded img-responsive" style="width:200px; height:200px;" />-->
+									<div style="position:relative; left:0; top:0;">
+									  <img src="{{cre.tieneFoto(participante.sexo, participante.foto)}}" style="position:relative; top:0; left:0;left:30; width:150px; height:150px;"/>
+									  <img src="/img/Insudecre.png" style="position:absolute; absolute; top: 30px; left: 100px;"/>
+									</div>
+							</td>
+						</tr>
+					</tbody>
+				</table>
+			</td>
+			<td align="center">
+					<p>
+             	<strong>INSITUTO SUDCALIFORNIANO DEL DEPORTE</strong>
+ 	     		</p>
+ 	     		<br/>
+ 	     		<br/>
+ 	     		<br/>
+ 	     		<br/>
+ 	     		<br/>
+ 			 		<br/>
+ 			 		<br/>
+ 			 		<br/>
+ 	     		<small><strong>wwww.insude.gob.mx</strong></small>
+			</td>
+		</tr>	
+	</tbody>
+</table>
+
+
+<!--
+
 <div class="container">
     <div class="row bootstrap snippets" ng-repeat="participante in cre.participantes">
         <div class="col-md-6 col-xs-10">
@@ -76,3 +96,5 @@
         </div>	        
     </div>
 </div>
+
+-->

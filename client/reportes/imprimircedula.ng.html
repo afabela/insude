@@ -1,0 +1,63 @@
+<!-- Tablas-->
+<table class="table" width="600" align="center" >
+	<tbody>
+		<tr ng-repeat="participante in impced.participantes"> 
+			<td>
+					<img src="{{impced.tieneFoto(participante.sexo, participante.foto)}}" alt="" class="img-rounded img-responsive" style="width:100px; height:100px;" />
+			</td>	
+			<td>
+					<p>
+	            <span>{{participante.nombre}}</span>
+						  <br />
+							<span>{{participante.apellidoPaterno}} {{participante.apellidoMaterno}}</span>
+					</p>
+					<p>
+	            {{participante.fechaNacimiento.getUTCDate() +"-"+ (participante.fechaNacimiento.getUTCMonth()+1) +"-"+ participante.fechaNacimiento.getUTCFullYear()}}
+	            <br />
+              {{participante.sexo}}
+              <br />
+              {{participante.curp}}
+              <br />
+              <cite>{{participante.municipio.nombre}}<i class="glyphicon glyphicon-map-marker"></i></cite>
+              <br />
+              <span>{{participante.evento.nombre}}</span>
+          </p>
+			</td>
+			<td>
+					<p>
+             	<span>{{participante.funcionespecifica}}</span>
+              <br />
+              <span>{{participante.categoria.nombre}}</span>
+              <br />
+              <span>{{participante.deporte.nombre}}</span>
+              <br />
+			        <ol>
+			          <li ng-repeat="prueba in participante.pruebasNombre">
+			             	(&nbsp;&nbsp;&nbsp;) {{prueba.nombre}}
+			          </li>
+		          </ol>
+	     		</p>		
+			</td>
+			<td>
+					<ol>
+              <li>(&nbsp;&nbsp;&nbsp;) Acta de Nacimiento</li>
+              <li>(&nbsp;&nbsp;&nbsp;) Const. Médica</li>
+              <li>(&nbsp;&nbsp;&nbsp;) CURP</li>
+              <li>(&nbsp;&nbsp;&nbsp;) SIRED</li>
+              <li>(&nbsp;&nbsp;&nbsp;) FOTOS</li>
+          </ol>			
+			</td>
+		</tr>	
+	</tbody>
+</table>
+
+
+
+
+
+
+
+
+
+
+

@@ -1,31 +1,3 @@
-<!--
-EJEMPLO DE COMO AGREGAR ELEMENTOS
-A LA BARRA LATERAL
-
-<ul data-smart-menu>
-  <li data-ui-sref-active="active">
-    <a data-ui-sref="app.dashboard" title="Dashboard">
-      <i class="fa fa-lg fa-fw fa-home"></i>
-      <span class="menu-item-parent">Dashboard</span>
-    </a>
-  </li>
-  <li data-menu-collapse>
-    <a href="#">
-      <i class="fa fa-lg fa-fw fa-bar-chart-o"></i>
-      <span class="menu-item-parent">Graphs</span>
-    </a>
-    <ul>
-      <li data-ui-sref-active="active">
-         <a data-ui-sref="app.graphs.flot">Flot Chart</a>
-      </li>
-      <li data-ui-sref-active="active">
-          <a data-ui-sref="app.graphs.morris">Morris Charts</a>
-      </li>
-    </ul>
-  </li>
-</ul>
--->
-
 <nav>
 	<ul data-smart-menu>
 	
@@ -93,18 +65,11 @@ A LA BARRA LATERAL
       </a>
      </li>
      <li data-ui-sref-active="active">
-      <a ui-sref="root.credenciales" tilte="Insude" ng-if="currentUser.roles[0] == 'admin'">
+      <a ui-sref="root.impresiones" tilte="Insude" ng-if="currentUser.roles[0] == 'admin'">
         <i class="fa fa-lg fa-fw fa-folder-o"></i>
-        <span class="menu-item-parent">Credenciales</span>
+        <span class="menu-item-parent">Impresiones</span>
       </a>
      </li>
-     <li data-ui-sref-active="active">
-      <a ui-sref="root.gafetes" tilte="Insude" ng-if="currentUser.roles[0] == 'admin'">
-        <i class="fa fa-lg fa-fw fa-folder-o"></i>
-        <span class="menu-item-parent">Gafetes</span>
-      </a>
-     </li>
-
      <li data-ui-sref-active="active">
       <a ui-sref="root.listarparticipantes" tilte="Insude" ng-if="currentUser.roles[0] == 'DelegadoMunicipal'">
         <i class="fa fa-lg fa-fw fa-folder-o"></i>

@@ -1,8 +1,8 @@
 angular
   .module('insude')
-  .controller('CedulaCtrl', CedulaCtrl);
+  .controller('imprimirCedulaCtrl', imprimirCedulaCtrl);
  
-function CedulaCtrl($scope, $meteor, $reactive, $state, toastr, $stateParams) {
+function imprimirCedulaCtrl($scope, $meteor, $reactive, $state, toastr, $stateParams) {
 	$reactive(this).attach($scope);
 	
 	let rc = $reactive(this).attach($scope);
@@ -17,17 +17,18 @@ function CedulaCtrl($scope, $meteor, $reactive, $state, toastr, $stateParams) {
   this.buscar.nombre = '';
 	this.validation = false;
 	
+	this.evento_id = $stateParams.evento;
 	
 	let part = this.subscribe('participantes',()=>{
 		return [{estatus: true
 					  ,$and:[ {municipio_id : Meteor.user() != undefined ? Meteor.user().profile.municipio_id : ""}
-										,{evento_id: this.getReactively('evento.evento_id')!= undefined ? this.getReactively('evento.evento_id'): "" }]
+										,{evento_id: $stateParams.evento}]
 			}]
 	});
 	
 	this.subscribe('buscarNombre',()=>{
 		return [{$and:[ {municipio_id : Meteor.user() != undefined ? Meteor.user().profile.municipio_id : ""}
-										,{evento_id: this.getReactively('evento.evento_id')!= undefined ? this.getReactively('evento.evento_id'): "" }]}]
+										,{evento_id: $stateParams.evento }]}]
 	});
 	
 	this.subscribe('municipios',()=>{
@@ -39,17 +40,17 @@ function CedulaCtrl($scope, $meteor, $reactive, $state, toastr, $stateParams) {
 	});
 	
 	this.subscribe('deportes',()=>{
-		return [{evento_id: this.getReactively('evento.evento_id')? this.getReactively('evento.evento_id'):""}]
+		return [{evento_id: $stateParams.evento}]
 	});
 	
 	this.subscribe('categorias',()=>{
 		return [{estatus: true
-						 ,evento_id:  this.getReactively('evento.evento_id')? this.getReactively('evento.evento_id'):""
+						 ,evento_id:  $stateParams.evento
 		}]
 	});
 	
 	this.subscribe('pruebas',()=>{
-		return [{evento_id:  this.getReactively('evento.evento_id')? this.getReactively('evento.evento_id'):"" 
+		return [{evento_id:  $stateParams.evento 
 		}]
 	});
 

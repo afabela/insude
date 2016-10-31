@@ -1,8 +1,8 @@
 angular
   .module('insude')
-  .controller('CedulaCtrl', CedulaCtrl);
+  .controller('ImpresionesCtrl', ImpresionesCtrl);
  
-function CedulaCtrl($scope, $meteor, $reactive, $state, toastr, $stateParams) {
+function ImpresionesCtrl($scope, $meteor, $reactive, $state, toastr, $stateParams) {
 	$reactive(this).attach($scope);
 	
 	let rc = $reactive(this).attach($scope);
@@ -20,13 +20,14 @@ function CedulaCtrl($scope, $meteor, $reactive, $state, toastr, $stateParams) {
 	
 	let part = this.subscribe('participantes',()=>{
 		return [{estatus: true
-					  ,$and:[ {municipio_id : Meteor.user() != undefined ? Meteor.user().profile.municipio_id : ""}
+					  ,$and:[ {municipio_id: this.getReactively('evento.municipio_id')!= undefined ? this.getReactively('evento.municipio_id'): ""}
 										,{evento_id: this.getReactively('evento.evento_id')!= undefined ? this.getReactively('evento.evento_id'): "" }]
 			}]
 	});
 	
+	
 	this.subscribe('buscarNombre',()=>{
-		return [{$and:[ {municipio_id : Meteor.user() != undefined ? Meteor.user().profile.municipio_id : ""}
+		return [{$and:[ {municipio_id : this.getReactively('evento.municipio_id')!= undefined ? this.getReactively('evento.municipio_id'): ""}
 										,{evento_id: this.getReactively('evento.evento_id')!= undefined ? this.getReactively('evento.evento_id'): "" }]}]
 	});
 	
@@ -91,12 +92,12 @@ function CedulaCtrl($scope, $meteor, $reactive, $state, toastr, $stateParams) {
 		}
 		
 	});
-	
+
 	this.tieneFoto = function(sexo, foto){
 	  if(foto === undefined){
-		  if(sexo === "Hombre")
+		  if(sexo === "Masculino")
 			  return "img/badmenprofile.jpeg";
-			else if(sexo === "Mujer"){
+			else if(sexo === "Femenino"){
 				return "img/badgirlprofile.jpeg";
 			}else{
 				return "img/badprofile.jpeg";

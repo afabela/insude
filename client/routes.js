@@ -205,8 +205,18 @@ angular.module('insude').config(['$injector', function ($injector) {
 	      }]
 	    }
     })
-    .state('root.credenciales', {
-      url: '/credenciales',
+    .state('anon.imprimircedula', {
+      url: '/cedula/:evento/:municipio',
+      templateUrl: 'client/reportes/imprimircedula.ng.html',
+      controller: 'imprimirCedulaCtrl as impced',
+      resolve: {
+	      "currentUser": ["$meteor", function($meteor){
+	        return $meteor.requireUser();
+	      }]
+	    }
+    })
+    .state('anon.credenciales', {
+      url: '/credenciales/:evento/:municipio',
       templateUrl: 'client/reportes/credenciales.ng.html',
       controller: 'CredencialesCtrl as cre',
       resolve: {
@@ -215,10 +225,20 @@ angular.module('insude').config(['$injector', function ($injector) {
 	      }]
 	    }
     })
-    .state('root.gafetes', {
-      url: '/gafetes',
+    .state('anon.gafetes', {
+      url: '/gafetes/:evento/:municipio',
       templateUrl: 'client/reportes/gafetes.ng.html',
       controller: 'GafetesCtrl as gaf',
+      resolve: {
+	      "currentUser": ["$meteor", function($meteor){
+	        return $meteor.requireUser();
+	      }]
+	    }
+    })
+    .state('root.impresiones', {
+      url: '/impresiones',
+      templateUrl: 'client/reportes/impresiones.ng.html',
+      controller: 'ImpresionesCtrl as imp',
       resolve: {
 	      "currentUser": ["$meteor", function($meteor){
 	        return $meteor.requireUser();

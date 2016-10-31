@@ -9,6 +9,9 @@ function CredencialesCtrl($scope, $meteor, $reactive, $state, toastr, $statePara
 	
 	window.rc = rc;
 	
+	console.log($stateParams.evento);
+	console.log($stateParams.municipio);
+		
   this.action = true;
   this.participante = {};
   this.participante.profile = {};
@@ -17,11 +20,15 @@ function CredencialesCtrl($scope, $meteor, $reactive, $state, toastr, $statePara
   this.buscar.nombre = '';
 	this.validation = false;
 	
+	this.evento_id = $stateParams.evento;
+	this.municipio_id = $stateParams.municipio;
+
 	
-	this.subscribe('participantes',()=>{
+	
+	let part = this.subscribe('participantes',()=>{
 		return [{estatus: true
-					  ,$and:[ {municipio_id : this.getReactively('evento.municipio_id')!= undefined ? this.getReactively('evento.municipio_id'): "" }
-										,{evento_id: this.getReactively('evento.evento_id')!= undefined ? this.getReactively('evento.evento_id'): "" }]
+					  ,$and:[ {municipio_id : $stateParams.municipio}
+										,{evento_id:  $stateParams.evento}]
 			}]
 	});
 	/*
@@ -74,61 +81,24 @@ function CredencialesCtrl($scope, $meteor, $reactive, $state, toastr, $statePara
 		pruebas : () => {
 			return Pruebas.find();
 		},
+		todosParticipantes : () => {
+			if(part.ready()){
+				_.each(rc.participantes, function(participante){
+					participante.municipio = Municipios.findOne(participante.municipio_id);
+					participante.evento = Eventos.findOne(participante.evento_id);
+					participante.deporte = Deportes.findOne(participante.deporte_id);
+					participante.categoria = Categorias.findOne(participante.categoria_id);	
+					
+					participante.pruebasNombre = [];
+					_.each(participante.pruebas, function(prueba){
+							participante.pruebasNombre.push(Pruebas.findOne(prueba, { fields : { nombre : 1}}))
+					})
+					
+				})
+			}
+		}
 	});
 	
-	this.getMunicipio = function(id)
-	{		
-		//console.log(usuario_id);
-			var municipio = Municipios.findOne({_id:id});
-
-			if (municipio)
-				 return municipio.nombre;
-				 
-	};
-	
-	this.getEvento = function(id)
-	{		
-		//console.log(usuario_id);
-			var evento = Eventos.findOne({_id:id});
-
-			if (evento)
-				 return evento.nombre;
-				 
-	};
-	
-	
-	this.getDeporte = function(id)
-	{		
-		//console.log(usuario_id);
-			var deporte = Deportes.findOne({_id:id});
-
-			if (deporte)
-				 return deporte.nombre;
-				 
-	};
-	
-	
-	this.getCategoria = function(id)
-	{		
-		//console.log(usuario_id);
-			var categoria = Categorias.findOne({_id:id});
-
-			if (categoria)
-				 return categoria.nombre;
-				 
-	};
-	
-	
-	this.getPrueba = function(id)
-	{		
-		//console.log(usuario_id);
-			var prueba = Pruebas.findOne({_id:id});
-
-			if (prueba)
-				 return prueba.nombre;
-				 
-	};
-
 	this.tieneFoto = function(sexo, foto){
 	  if(foto === undefined){
 		  if(sexo === "Masculino")

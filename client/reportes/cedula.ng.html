@@ -9,16 +9,78 @@
 <br>
 <div class="well">	    
 	<div class="row">
-		<div class="col-sm-4" valida>
+		<div class="col-sm-4">
 			<label >Evento</label>
-			<select name="evento" class="form-control select2" placeholder="Seleccione" ng-model="ced.evento.evento_id" required>
+			<select name="evento" class="form-control select2" placeholder="Seleccione" ng-model="ced.evento.evento_id">
 					<option  value="{{evento._id}}" ng-repeat="evento in ced.eventos">
 						{{evento.nombre}}
 					</option>
 			</select>
 		</div>
+		<div class="col-sm-4">
+				<a class="btn btn-primary" ui-sref="anon.imprimircedula({evento:ced.evento.evento_id})" target="_blank">
+				  Imprimir
+				</a>
+		</div>
 	</div>
 </div>		
+
+<!-- Tablas-->
+<table class="table" width="600" align="center" >
+	<tbody>
+		<tr ng-repeat="participante in ced.participantes"> 
+			<td>
+					<img src="{{ced.tieneFoto(participante.sexo, participante.foto)}}" alt="" class="img-rounded img-responsive" style="width:100px; height:100px;" />
+			</td>	
+			<td>
+					<p>
+	            <span>{{participante.nombre}}</span>
+						  <br />
+							<span>{{participante.apellidoPaterno}} {{participante.apellidoMaterno}}</span>
+					</p>
+					<p>
+	            <i class="glyphicon glyphicon-gift"></i>{{participante.fechaNacimiento.getUTCDate() +"-"+ (participante.fechaNacimiento.getUTCMonth()+1) +"-"+ participante.fechaNacimiento.getUTCFullYear()}}
+	            <br />
+              <i class="glyphicon glyphicon-user"></i>{{participante.sexo}}
+              <br />
+              <i class="glyphicon glyphicon-file"></i>{{participante.curp}}
+              <br />
+              <cite>{{participante.municipio.nombre}}<i class="glyphicon glyphicon-map-marker"></i></cite>
+          </p>
+          <p>
+	           	<span>{{participante.evento.nombre}}</span>
+          </p>				
+			</td>
+			<td>
+					<p>
+             	<span>{{participante.funcionespecifica}}</span>
+              <br />
+              <span>{{participante.categoria.nombre}}</span>
+              <br />
+              <span>{{participante.deporte.nombre}}</span>
+              <br />
+			        <ol>
+			          <li ng-repeat="prueba in participante.pruebasNombre">
+			             	(&nbsp;&nbsp;&nbsp;) {{prueba.nombre}}
+			          </li>
+		          </ol>
+	     		</p>		
+			</td>
+			<td>
+					<ol>
+              <li>(&nbsp;&nbsp;&nbsp;) Acta de Nacimiento</li>
+              <li>(&nbsp;&nbsp;&nbsp;) Const. Médica</li>
+              <li>(&nbsp;&nbsp;&nbsp;) CURP</li>
+              <li>(&nbsp;&nbsp;&nbsp;) SIRED</li>
+              <li>(&nbsp;&nbsp;&nbsp;) FOTOS</li>
+          </ol>			
+			</td>
+		</tr>	
+	</tbody>
+</table>
+
+
+<!--
 <div class="container">
     <div class="row" ng-repeat="participante in ced.participantes">
         <div class="col-sm-12 col-md-12">
@@ -40,23 +102,23 @@
                             <br />
                             <i class="glyphicon glyphicon-file"></i>{{participante.curp}}
                             <br />
-                            <cite>{{ced.getMunicipio(participante.municipio_id)}}<i class="glyphicon glyphicon-map-marker"></i></cite>
+                            <cite>{{participante.municipio.nombre}}<i class="glyphicon glyphicon-map-marker"></i></cite>
                         </p>
                         <p>
-	                        	<span>{{ced.getEvento(participante.evento_id)}}</span>
+	                        	<span>{{participante.evento.nombre}}</span>
                         </p>
                     </div>
                     <div class="col-sm-3">
 	                   		<p>
                         	<span>{{participante.funcionespecifica}}</span>
                         	<br />
-                        	<span>{{ced.getCategoria(participante.categoria_id)}}</span>
+                        	<span>{{participante.categoria.nombre}}</span>
                         	<br />
-                        	<span>{{ced.getDeporte(participante.deporte_id)}}</span>
+                        	<span>{{participante.deporte.nombre}}</span>
                         	<br />
 			                    <ol>
-			                      <li ng-repeat="prueba in participante.pruebas">
-			                         	(&nbsp;&nbsp;&nbsp;) {{ced.getPrueba(prueba)}}
+			                      <li ng-repeat="prueba in participante.pruebasNombre">
+			                         	(&nbsp;&nbsp;&nbsp;) {{prueba.nombre}}
 			                      </li>
 			                    </ol>
 	                   		</p>
@@ -75,3 +137,25 @@
         </div>
     </div>
 </div>
+-->
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

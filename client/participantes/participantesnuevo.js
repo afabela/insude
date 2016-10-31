@@ -79,29 +79,70 @@ function ParticipantesNuevoCtrl($scope, $meteor, $reactive, $state, toastr, $sta
   this.guardar = function(participante,form)
 	{
 			
-			
 			if(form.$invalid){
 	      toastr.error('Error al guardar los datos.');
 	      return;
 	    }
 			
+			//Obtener las Edades de la Categoria			
+			var cat = Categorias.findOne({ _id: participante.categoria_id});
 			
-			participante.municipio_id = Meteor.user() != undefined ? Meteor.user().profile.municipio_id : "";
-			console.log(participante);
+			var d = new Date();
+			var anioActual = d.getFullYear();
 			
-			participante.nombreCompleto = participante.nombre + " " + participante.apellidoPaterno + " " + participante.apellidoMaterno;
-			participante.estatus = true;
-			participante.usuarioInserto = Meteor.userId();
-			Participantes.insert(participante);
-			toastr.success('Guardado correctamente.');
-			participante = {};
-			$('.collapse').collapse('hide');
-			this.nuevo = true;
-			$state.go('root.listarparticipantes');
+			var anioInicio = cat.anioinicio;
+			var anioFin = cat.aniofin;
+
+			var EdadMinima = anioActual - anioInicio;	//22
+			var EdadMaxima = anioActual - anioFin;    //23
 			
-			form.$setPristine();
-	    form.$setUntouched();
-	    
+			//Obtener la Edad del participante
+			
+	    var today_year = d.getFullYear();
+	    var today_month = d.getMonth();
+	    var today_day = d.getDate();
+	    var edad = today_year - participante.fechaNacimiento.getFullYear();
+			
+	    if ( today_month < (participante.fechaNacimiento.getMonth() - 1))
+	    {
+	        edad--;
+	    }
+	    if (((participante.fechaNacimiento.getMonth() - 1) == today_month) && (today_day < participante.fechaNacimiento.getDay()))
+	    {
+	        edad--;
+	    }
+	    console.log("Final:",edad);
+			console.log("Maxima:", EdadMaxima);
+			console.log("Minima:", EdadMinima);
+			
+			
+			//Validar la edad del particpante en relación a la categoria
+			if (edad >= EdadMinima && edad <= EdadMaxima)
+			{
+					
+					participante.municipio_id = Meteor.user() != undefined ? Meteor.user().profile.municipio_id : "";
+					console.log(participante);
+					
+					participante.nombreCompleto = participante.nombre + " " + participante.apellidoPaterno + " " + participante.apellidoMaterno;
+					participante.estatus = true;
+					participante.usuarioInserto = Meteor.userId();
+					Participantes.insert(participante);
+					toastr.success('Guardado correctamente.');
+					participante = {};
+					$('.collapse').collapse('hide');
+					this.nuevo = true;
+					$state.go('root.listarparticipantes');
+					
+					form.$setPristine();
+			    form.$setUntouched();
+
+			}	 
+			else
+			{
+					 toastr.error('La edad no corresponde a la categoria verificar por favor.');
+					 
+			}
+			
 	};
 	
 	this.editar = function(id)
