@@ -175,6 +175,16 @@ angular.module('insude').config(['$injector', function ($injector) {
 	      }]
 	    }
     })
+    .state('root.participanteseditar', {
+      url: '/participanteseditar/:id',
+      templateUrl: 'client/participantes/participanteseditar.ng.html',
+      controller: 'ParticipantesEditarCtrl as pe',
+      resolve: {
+	      "currentUser": ["$meteor", function($meteor){
+	        return $meteor.requireUser();
+	      }]
+	    }
+    })
     .state('root.listarparticipantes', {
       url: '/participantes',
       templateUrl: 'client/participantes/listarparticipantes.ng.html',

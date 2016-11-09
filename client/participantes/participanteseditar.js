@@ -1,8 +1,8 @@
 angular
   .module('insude')
-  .controller('ParticipantesNuevoCtrl', ParticipantesNuevoCtrl);
+  .controller('ParticipantesEditarCtrl', ParticipantesEditarCtrl);
  
-function ParticipantesNuevoCtrl($scope, $meteor, $reactive, $state, toastr, $stateParams) {
+function ParticipantesEditarCtrl($scope, $meteor, $reactive, $state, toastr, $stateParams) {
 	$reactive(this).attach($scope);
 	
 	let rc = $reactive(this).attach($scope);
@@ -13,6 +13,12 @@ function ParticipantesNuevoCtrl($scope, $meteor, $reactive, $state, toastr, $sta
 	this.participante = {}; 
 	
 	this.participante.evento_id = $stateParams.id;
+	
+	
+	this.subscribe('participantes',()=>{
+		return [{_id : $stateParams.id}]
+	});
+	
 	
 	this.subscribe('ramas',()=>{
 		return [{estatus: true}]
@@ -49,6 +55,9 @@ function ParticipantesNuevoCtrl($scope, $meteor, $reactive, $state, toastr, $sta
 	
   
   this.helpers({
+	  participante : () => {	
+		  return Participantes.findOne();
+	  },
 	  eventos : () => {
 		  return Eventos.find();
 	  },
@@ -118,9 +127,6 @@ function ParticipantesNuevoCtrl($scope, $meteor, $reactive, $state, toastr, $sta
 	    {
 	        edad--;
 	    }
-	    console.log("Final:",edad);
-			console.log("Maxima:", EdadMaxima);
-			console.log("Minima:", EdadMinima);
 			
 			
 			//Validar la edad del particpante en relación a la categoria
@@ -163,32 +169,76 @@ function ParticipantesNuevoCtrl($scope, $meteor, $reactive, $state, toastr, $sta
 	this.actualizar = function(participante,form)
 	{
 	    if(form.$invalid){
-	        toastr.error('Error al actualizar los datos.');
-	        return;
+	      toastr.error('Error al guardar los datos.');
+	      return;
 	    }
-		 	var idTemp = participante._id;
-			delete participante._id;		
-			participante.usuarioActualizo = Meteor.userId(); 
-			Participantes.update({_id:idTemp},{$set:participante});
-			toastr.success('Actualizado correctamente.');
-			//console.log(ciclo);
-			$('.collapse').collapse('hide');
-			this.nuevo = true;
-			form.$setPristine();
-	    form.$setUntouched();
+	    
+	    if (participante.foto == undefined)
+	    {
+		    toastr.error('Error no se ha cargado la foto del particpante.');
+	      return;
+	    }
+			
+			//Obtener las Edades de la Categoria			
+			var cat = Categorias.findOne({ _id: participante.categoria_id});
+			
+			var d = new Date();
+			var anioActual = d.getFullYear();
+			
+			var anioInicio = cat.anioinicio;
+			var anioFin = cat.aniofin;
+
+			var EdadMinima = anioActual - anioInicio;	//22
+			var EdadMaxima = anioActual - anioFin;    //23
+			
+			//Obtener la Edad del participante
+			
+	    var today_year = d.getFullYear();
+	    var today_month = d.getMonth();
+	    var today_day = d.getDate();
+	    var edad = today_year - participante.fechaNacimiento.getFullYear();
+			
+	    if ( today_month < (participante.fechaNacimiento.getMonth() - 1))
+	    {
+	        edad--;
+	    }
+	    if (((participante.fechaNacimiento.getMonth() - 1) == today_month) && (today_day < participante.fechaNacimiento.getDay()))
+	    {
+	        edad--;
+	    }
+	    console.log("Final:",edad);
+			console.log("Maxima:", EdadMaxima);
+			console.log("Minima:", EdadMinima);
+			
+			
+			//Validar la edad del particpante en relación a la categoria
+			if (edad >= EdadMinima && edad <= EdadMaxima)
+			{
+					
+						var idTemp = participante._id;
+						delete participante._id;		
+						participante.usuarioActualizo = Meteor.userId(); 
+						Participantes.update({_id:idTemp},{$set:participante});
+						toastr.success('Actualizado correctamente.');
+						//console.log(ciclo);
+						$('.collapse').collapse('hide');
+						this.nuevo = true;
+						form.$setPristine();
+				    form.$setUntouched();
+
+			}	 
+			else
+			{
+					 toastr.error('La edad no corresponde a la categoria verificar por favor.');
+					 
+			}
+	    
+	    
+	    
+		 
 	};
 		
-	this.cambiarEstatus = function(id)
-	{
-			var participante = Participantes.findOne({_id:id});
-			if(participante.estatus == true)
-				participante.estatus = false;
-			else
-				participante.estatus = true;
-			
-			Participantes.update({_id:id}, {$set : {estatus : participante.estatus}});
-	};	
-
+	
 	this.getEvento = function(evento_id)
 	{		
 			var evento = Eventos.findOne({_id:evento_id});
@@ -224,7 +274,8 @@ function ParticipantesNuevoCtrl($scope, $meteor, $reactive, $state, toastr, $sta
 	
 	$(document).ready( function() {
 		
-
+			console.log(this.participante);
+			
 			$(".Mselect2").select2();
 					
 			var fileInput1 = document.getElementById('fileInput1');

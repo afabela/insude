@@ -49,7 +49,7 @@
 											<a href="#tab3" data-toggle="tab"> <span class="step">3</span> <span class="title">Información Deportiva</span></a>
 										</li>
 										<li data-target="#step3">
-											<a href="#tab4" data-toggle="tab"> <span class="step">3</span> <span class="title">Finalizar Registro</span></a>
+											<a href="#tab4" data-toggle="tab"> <span class="step">3</span> <span class="title">Finalizar Actualización</span></a>
 										</li>
 									</ul>
 									<div class="clearfix"></div>
@@ -64,23 +64,23 @@
 											    <div class="row">
 														<div class="col-sm-4" valida>
 															<label>Nombre *</label>												
-															<input name="nombre" type="text" class="form-control" ng-model="pn.participante.nombre" required>
+															<input name="nombre" type="text" class="form-control" ng-model="pe.participante.nombre" required>
 														</div>
 														<div class="col-sm-4" valida>
 															<label>Apellido Paterno *</label>												
-															<input name="apellidomaterno" type="text" class="form-control" ng-model="pn.participante.apellidoPaterno" required>
+															<input name="apellidomaterno" type="text" class="form-control" ng-model="pe.participante.apellidoPaterno" required>
 														</div>
 														<div class="col-sm-4" valida>
 															<label>Apellido Materno *</label>												
-															<input name="apellidopaterno" type="text" class="form-control" ng-model="pn.participante.apellidoMaterno" required>
+															<input name="apellidopaterno" type="text" class="form-control" ng-model="pe.participante.apellidoMaterno" required>
 														</div>
 														<div class="col-sm-4" valida>					    
 												    	<label>Fecha Nacimiento *</label>
-												    	<input name="fechanacimiento" type="date" format="dd/MM/yyyy" class="form-control" placeholder="Fecha" ng-model="pn.participante.fechaNacimiento" required>
+												    	<input name="fechanacimiento" type="date" format="dd/MM/yyyy" class="form-control" placeholder="Fecha" ng-model="pe.participante.fechaNacimiento" required>
 											    	</div>		
 														<div class="col-sm-4" valida>
 													    <label for="sexo">Sexo *</label>
-													    <select name="sexo" ng-model="pn.participante.sexo" data-placeholder="Seleccione" class="form-control" required>
+													    <select name="sexo" ng-model="pe.participante.sexo" data-placeholder="Seleccione" class="form-control" required>
 															    <option value=""></option>
 															    <option value="Hombre">Hombre</option>
 															    <option value="Mujer">Mujer</option>
@@ -88,7 +88,7 @@
 											    	</div>
 											    	<div class="col-sm-4" valida>
 													    <label for="estado">Estado *</label>
-													    <select name="estado" ng-model="pn.participante.estado" data-placeholder="Seleccione" class="form-control" required>
+													    <select name="estado" ng-model="pe.participante.estado" data-placeholder="Seleccione" class="form-control" required>
 															    <option value="AGUASCALIENTES">AGUASCALIENTES</option>
 																	<option value="BAJA CALIFORNIA NTE">BAJA CALIFORNIA NTE</option>
 																	<option value="AJA CALIFORNIA SUR">BAJA CALIFORNIA SUR</option>
@@ -122,18 +122,18 @@
 																	<option value="YUCATAN">YUCATAN</option>
 																	<option value="ZACATECAS">ZACATECAS</option>
 																	<option value="SERV. EXTERIOR MEXICANO">SERV. EXTERIOR MEXICANO</option>
-																	<option value="NACIDO EN EL EXTRANJERO">NACIDO EN EL EXTRANJERO</option> 
+																	<option value="NACIDO EN EL EXTRANJERO">NACIDO EN EL EXTRANJERO</option>  
 															</select>
 											    	</div>
 											    </div>	
 											    <div class="row">
 												    <div class="col-sm-4" valida>
 															<label>CURP *</label>												
-															<input name="curp" type="text" class="form-control" ng-model="pn.participante.curp" required>
+															<input name="curp" type="text" class="form-control" ng-model="pe.participante.curp" required>
 														</div>
 														<div class="col-sm-4" valida>
 													    <label for="formacionacademica">Formación Académica</label>
-													    <select name="formacionacademica" ng-model="pn.participante.formacionacademica" data-placeholder="Seleccione" class="form-control">
+													    <select name="formacionacademica" ng-model="pe.participante.formacionacademica" data-placeholder="Seleccione" class="form-control">
 															    <option value=""></option>
 															    <option value="Doctorado">Doctorado</option>
 															    <option value="Maestria">Maestria</option>
@@ -150,7 +150,7 @@
 																<label>Foto (máximo 512Kb)</label>
 																<input name="foto" type="file" id="fileInput1">																
 																<div id="fileDisplayArea1"></div>
-																 <!--<img class="thumbnail" src="{{pn.participante.foto}}" ng-if="{{pn.participante.foto}}" width="200" height="200"/>-->										
+																 	<img class="thumbnail" src="{{pe.participante.foto}}" width="200" height="200"/>
 															</div>												    	
 											    </div>
 										  	</div>
@@ -196,7 +196,7 @@
 											    <div class="row">
 											    	<div class="col-sm-4" valida>
 													    <label for="funcionespecifica">Función Especifica *</label>
-													    <select name="funcionespecifica" ng-model="pn.participante.funcionespecifica" data-placeholder="Seleccione" class="form-control" required>
+													    <select name="funcionespecifica" ng-model="pe.participante.funcionespecifica" data-placeholder="Seleccione" class="form-control" required>
 															    <option value=""></option>
 															    <option value="DEPORTISTA">Deportista</option>
 															    <option value="ENTRENADOR">Entrenador</option>
@@ -206,32 +206,32 @@
 											    	</div>
 														<div class="col-sm-2" valida>
 															<label >Deporte *</label>
-															<select name="deporte" class="form-control select2" placeholder="Seleccione" ng-model="pn.participante.deporte_id" required>
-																<option  value="{{deporte._id}}" ng-repeat="deporte in pn.deportes">
+															<select name="deporte" class="form-control select2" placeholder="Seleccione" ng-model="pe.participante.deporte_id" required>
+																<option  value="{{deporte._id}}" ng-repeat="deporte in pe.deportes">
 																	{{deporte.nombre}}
 																</option>
 															</select>
 														</div>
 														<div class="col-sm-4" valida>
 															<label >Categoria *</label>
-															<select name="categoria" class="form-control select2" placeholder="Seleccione" ng-model="pn.participante.categoria_id" required>
-																<option  value="{{categoria._id}}" ng-repeat="categoria in pn.categorias">
+															<select name="categoria" class="form-control select2" placeholder="Seleccione" ng-model="pe.participante.categoria_id" required>
+																<option  value="{{categoria._id}}" ng-repeat="categoria in pe.categorias">
 																	{{categoria.nombre}}
 																</option>
 															</select>
 														</div>
 														<div class="col-sm-4" valida>
 															<label >Rama *</label>
-															<select name="rama" class="form-control select2" placeholder="Seleccione" ng-model="pn.participante.rama_id" required>
-																<option  value="{{rama._id}}" ng-repeat="rama in pn.ramas">
+															<select name="rama" class="form-control select2" placeholder="Seleccione" ng-model="pe.participante.rama_id" required>
+																<option  value="{{rama._id}}" ng-repeat="rama in pe.ramas">
 																	{{rama.nombre}}
 																</option>
 															</select>
 														</div>
-														<div class="col-sm-4" ng-show="pn.pruebas.length > 0">
+														<div class="col-sm-4" ng-show="pe.pruebas.length > 0">
 															<label >Pruebas</label>
-															<select multiple name="prueba" class="js-example-basic-single Mselect2" style="width: 200%; border: white 0px;" placeholder="Seleccione" ng-model="pn.participante.pruebas">
-																<option  value="{{prueba._id}}" ng-repeat="prueba in pn.pruebas">
+															<select multiple name="prueba" class="js-example-basic-single Mselect2" style="width: 200%; border: white 0px;" placeholder="Seleccione" ng-model="pe.participante.pruebas">
+																<option  value="{{prueba._id}}" ng-repeat="prueba in pe.pruebas">
 																	{{prueba.nombre}}
 																</option>
 															</select>
@@ -247,12 +247,12 @@
 										<div class="row">
 											<div class="col-sm-12">
 												<br>
-												<h3><strong>Paso 3</strong> - Guardar Participante</h3>
+												<h3><strong>Paso 3</strong> - Actualizar Participante</h3>
 												<br>
 												<div class="text-center">
-													<h4>Click en Registrar para Finalizar</h4>
+													<h4>Click en Actualizar para Finalizar</h4>
 													<br/>
-													<button type="submit" ng-click="pn.guardar(pn.participante, form)" class="btn btn-lg btn-primary" valida-form formulario="form">Registrar</button>
+													<button type="submit" ng-click="pe.actualizar(pe.participante, form)" class="btn btn-lg btn-primary" valida-form formulario="form">Actualizar</button>
 													<br>
 													<br> 	
 												</div>												

@@ -27,15 +27,24 @@ function ListarParticipantesCtrl($scope, $meteor, $reactive, $state, toastr, $st
 	    options : { limit: 20 },
 	    where : { 
 		    nombreCompleto : this.getReactively('buscar.nombre'),
+		    evento_id : this.getReactively('buscar.evento_id'), 
 		    municipio_id : Meteor.user() != undefined ? Meteor.user().profile.municipio_id : ""	  
 		  }  
     }];
   });
+  
+  this.subscribe('eventos',()=>{
+		return [{estatus: true}]
+	});
+
 	
 	this.helpers({
 	  participantes : () => {
 		  return Participantes.find();
 	  },
+	  eventos : () => {
+			return Eventos.find();
+		},
 	});
 	
 	this.tieneFoto = function(sexo, foto){
