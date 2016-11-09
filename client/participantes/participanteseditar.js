@@ -78,94 +78,7 @@ function ParticipantesEditarCtrl($scope, $meteor, $reactive, $state, toastr, $st
 	  },
   });
   	  
-  this.nuevo = true;	  
-  this.nuevoParticipante = function()
-  {
-    this.action = true;
-    this.nuevo = !this.nuevo;
-    this.participante.nombre = "";
-  };
-	
-  this.guardar = function(participante,form)
-	{
-			
-			if(form.$invalid){
-	      toastr.error('Error al guardar los datos.');
-	      return;
-	    }
-	    
-	    if (participante.foto == undefined)
-	    {
-		    toastr.error('Error no se ha cargado la foto del particpante.');
-	      return;
-	    }
-			
-			//Obtener las Edades de la Categoria			
-			var cat = Categorias.findOne({ _id: participante.categoria_id});
-			
-			var d = new Date();
-			var anioActual = d.getFullYear();
-			
-			var anioInicio = cat.anioinicio;
-			var anioFin = cat.aniofin;
-
-			var EdadMinima = anioActual - anioInicio;	//22
-			var EdadMaxima = anioActual - anioFin;    //23
-			
-			//Obtener la Edad del participante
-			
-	    var today_year = d.getFullYear();
-	    var today_month = d.getMonth();
-	    var today_day = d.getDate();
-	    var edad = today_year - participante.fechaNacimiento.getFullYear();
-			
-	    if ( today_month < (participante.fechaNacimiento.getMonth() - 1))
-	    {
-	        edad--;
-	    }
-	    if (((participante.fechaNacimiento.getMonth() - 1) == today_month) && (today_day < participante.fechaNacimiento.getDay()))
-	    {
-	        edad--;
-	    }
-			
-			
-			//Validar la edad del particpante en relación a la categoria
-			if (edad >= EdadMinima && edad <= EdadMaxima)
-			{
-					
-					participante.municipio_id = Meteor.user() != undefined ? Meteor.user().profile.municipio_id : "";
-					console.log(participante);
-					
-					participante.nombreCompleto = participante.nombre + " " + participante.apellidoPaterno + " " + participante.apellidoMaterno;
-					participante.estatus = true;
-					participante.usuarioInserto = Meteor.userId();
-					Participantes.insert(participante);
-					toastr.success('Guardado correctamente.');
-					participante = {};
-					$('.collapse').collapse('hide');
-					this.nuevo = true;
-					$state.go('root.listarparticipantes');
-					
-					form.$setPristine();
-			    form.$setUntouched();
-
-			}	 
-			else
-			{
-					 toastr.error('La edad no corresponde a la categoria verificar por favor.');
-					 
-			}
-			
-	};
-	
-	this.editar = function(id)
-	{
-	    this.participante = Participantes.findOne({_id:id});
-	    this.action = false;
-	    $('.collapse').collapse('show');
-	    this.nuevo = false;
-	};
-	
+  	
 	this.actualizar = function(participante,form)
 	{
 	    if(form.$invalid){
@@ -225,6 +138,7 @@ function ParticipantesEditarCtrl($scope, $meteor, $reactive, $state, toastr, $st
 						this.nuevo = true;
 						form.$setPristine();
 				    form.$setUntouched();
+				    $state.go('root.listarparticipantes');
 
 			}	 
 			else
