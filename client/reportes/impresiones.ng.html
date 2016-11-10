@@ -25,12 +25,22 @@
 					</option>
 			</select>
 		</div>
+		<div class="col-sm-3">
+			<label >Deportes</label>
+			<select name="municipio" class="form-control select2" placeholder="Seleccione" ng-model="imp.evento.deporte_id">
+					<option  value="{{deporte._id}}" ng-repeat="deporte in imp.deportes">
+						{{deporte.nombre}}
+					</option>
+			</select>
+		</div>
 	</div>
 </div>
 <div class="well">		
 	<div class="row">
 		<div class="col-sm-3">
-				<a class="btn btn-primary" ui-sref="anon.credenciales({evento:imp.evento.evento_id, municipio:imp.evento.municipio_id})" target="_blank">
+				<a class="btn btn-primary" ui-sref="anon.credenciales({evento:imp.evento.evento_id
+																															,municipio:imp.evento.municipio_id
+																															,deporte:imp.evento.deporte_id })" target="_blank">
 				  Credenciales
 				</a>
 		</div>

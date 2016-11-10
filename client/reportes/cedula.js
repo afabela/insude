@@ -19,9 +19,12 @@ function CedulaCtrl($scope, $meteor, $reactive, $state, toastr, $stateParams) {
 	
 	
 	let part = this.subscribe('participantes',()=>{
-		return [{estatus: true
-					  ,$and:[ {municipio_id : Meteor.user() != undefined ? Meteor.user().profile.municipio_id : ""}
-										,{evento_id: this.getReactively('evento.evento_id')!= undefined ? this.getReactively('evento.evento_id'): "" }]
+		return [{$and:[ {municipio_id : Meteor.user() != undefined ? Meteor.user().profile.municipio_id : ""}
+									 ,{evento_id: this.getReactively('evento.evento_id')!= undefined ? this.getReactively('evento.evento_id'): "" }
+									 ,{deporte_id: this.getReactively('evento.deporte_id')!= undefined ? this.getReactively('evento.deporte_id'): ""}
+									 ,{categoria_id: this.getReactively('evento.categoria_id')!= undefined ? this.getReactively('evento.categoria_id'): ""}
+									 ,{rama_id: this.getReactively('evento.rama_id')!= undefined ? this.getReactively('evento.rama_id'): ""}]
+						,estatus: true
 			}]
 	});
 	
@@ -39,20 +42,28 @@ function CedulaCtrl($scope, $meteor, $reactive, $state, toastr, $stateParams) {
 	});
 	
 	this.subscribe('deportes',()=>{
-		return [{evento_id: this.getReactively('evento.evento_id')? this.getReactively('evento.evento_id'):""}]
+		return [{evento_id: this.getReactively('evento.evento_id')? this.getReactively('evento.evento_id'):""
+						,estatus: true
+		}]
 	});
 	
 	this.subscribe('categorias',()=>{
-		return [{estatus: true
-						 ,evento_id:  this.getReactively('evento.evento_id')? this.getReactively('evento.evento_id'):""
+		return [{evento_id:  this.getReactively('evento.evento_id')? this.getReactively('evento.evento_id'):""
+						,deporte_id: this.getReactively('evento.deporte_id')? this.getReactively('evento.deporte_id'):""
+						,estatus: true
 		}]
 	});
 	
 	this.subscribe('pruebas',()=>{
 		return [{evento_id:  this.getReactively('evento.evento_id')? this.getReactively('evento.evento_id'):"" 
+						,deporte_id: this.getReactively('evento.deporte_id')? this.getReactively('evento.deporte_id'):""
+						,categoria_id: this.getReactively('evento.categoria_id')!= undefined ? this.getReactively('evento.categoria_id'): ""
 		}]
 	});
 
+	this.subscribe('ramas',()=>{
+		return [{estatus: true}]
+	});
 	
 	this.helpers({
 	  participantes : () => {
@@ -69,6 +80,9 @@ function CedulaCtrl($scope, $meteor, $reactive, $state, toastr, $stateParams) {
 		},
 		categorias : () => {
 			return Categorias.find();
+		},
+		ramas : () => {
+			return Ramas.find();
 		},
 		pruebas : () => {
 			return Pruebas.find();

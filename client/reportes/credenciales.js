@@ -22,37 +22,34 @@ function CredencialesCtrl($scope, $meteor, $reactive, $state, toastr, $statePara
 	
 	this.evento_id = $stateParams.evento;
 	this.municipio_id = $stateParams.municipio;
+	this.municipio_id = $stateParams.deporte;
 
 	
 	
 	let part = this.subscribe('participantes',()=>{
-		return [{estatus: true
-					  ,$and:[ {municipio_id : $stateParams.municipio}
+		return [{$and:[ {municipio_id : $stateParams.municipio}
 										,{evento_id:  $stateParams.evento}]
+						,estatus: true				
 			}]
 	});
-	/*
-	this.subscribe('buscarNombre',()=>{
-		return [{$and:[ {municipio_id : Meteor.user() != undefined ? Meteor.user().profile.municipio_id : ""}
-										,{evento_id: this.getReactively('evento.evento_id')!= undefined ? this.getReactively('evento.evento_id'): "" }]}]
-	});
-	*/
+
 	
 	this.subscribe('municipios',()=>{
-		return [{estatus: true}]
+		return [{_id: $stateParams.municipio}]
 	});
 	
 	this.subscribe('eventos',()=>{
-		return [{estatus: true}]
+		return [{_id: $stateParams.evento}]
 	});
 	
 	this.subscribe('deportes',()=>{
-		return [{evento_id: this.getReactively('evento.evento_id')? this.getReactively('evento.evento_id'):""}]
+		return [{_id: $stateParams.deporte}]
 	});
 	
 	this.subscribe('categorias',()=>{
-		return [{estatus: true
-						 ,evento_id:  this.getReactively('evento.evento_id')? this.getReactively('evento.evento_id'):""
+		return [{evento_id:  this.getReactively('evento.evento_id')? this.getReactively('evento.evento_id'):""
+						,deporte_id:  this.getReactively('evento.deporte_id')? this.getReactively('evento.deporte_id'):""
+						,estatus: true
 		}]
 	});
 	

@@ -1,100 +1,43 @@
-<table class="table" align="center" border="1" >				
-	<tbody>
-		<tr ng-repeat="participante in cre.participantes"> 
-			<td colspan="2" style="padding: 0">
-				<table width="100%"> 
-					<tbody>
-						<tr>
-							<td width="40%">
-									<p>
-						         	<h6 style="margin: 0">CURP<small>{{participante.curp}}</small></h6>
-					          	<h6 style="margin: 0">Nombre<small>{{participante.nombre}} <br /> {{participante.apellidoPaterno}} {{participante.apellidoMaterno}}</small></h6>
-					            <h6 style="margin: 0">Deporte<small>{{participante.deporte_id}}</small></h6>
-					            <h6 style="margin: 0">Modalidad<small>{{participante.funcionespecifica}}</small></h6>
-											<h6 style="margin: 0">Vigencia<small>poner vigencia</small></h6>
-											<h6 style="margin: 0">Entidad<small>{{participante.municipio.nombre}}</small></h6>
-									</p>												
-							</td>
-							<td width="60%">
-									<!--<img src="{{ced.tieneFoto(participante.sexo, participante.foto)}}" alt="" class="img-rounded img-responsive" style="width:200px; height:200px;" />-->
-									<div style="position:relative; left:0; top:0;">
-									  <img src="{{cre.tieneFoto(participante.sexo, participante.foto)}}" style="position:relative; top:0; left:0;left:30; width:150px; height:150px;"/>
-									  <img src="/img/Insudecre.png" style="position:absolute; absolute; top: 30px; left: 100px;"/>
-									</div>
-							</td>
-						</tr>
-					</tbody>
-				</table>
-			</td>
-			<td align="center">
-					<p>
-             	<strong>INSITUTO SUDCALIFORNIANO DEL DEPORTE</strong>
- 	     		</p>
- 	     		<br/>
- 	     		<br/>
- 	     		<br/>
- 	     		<br/>
- 	     		<br/>
- 			 		<br/>
- 			 		<br/>
- 			 		<br/>
- 	     		<small><strong>wwww.insude.gob.mx</strong></small>
-			</td>
-		</tr>	
-	</tbody>
-</table>
+<div id="printTable">
 
+	<table class="table" align="center" border="1" style="width: 850px;" >				
+		<tbody>
+			<tr ng-repeat="participante in cre.participantes"> 
+				<td style="padding: 0; position: relative; width: 400px">
+					<img src="/img/fondo_credencial_con_pleca.png" style="position:absolute;z-index:1; "/>
+					<br/>
+					<br/>
+					<br/>
+					<table style="z-index:2;position:relative;opacity:100% !important"> 
+						<tbody>
+							<tr>
+								
+								<td style="width: 200px">
+										<p>
+							         	<h6 style="margin: 0">&nbsp;&nbsp;&nbsp;&nbsp;CURP<small>&nbsp;&nbsp;&nbsp;&nbsp;{{participante.curp}}</small></h6>
+						          	<h6 style="margin: 0">&nbsp;&nbsp;&nbsp;&nbsp;Nombre<small>&nbsp;&nbsp;&nbsp;&nbsp;{{participante.nombre}} <br /> {{participante.apellidoPaterno}} {{participante.apellidoMaterno}}</small></h6>
+						            <h6 style="margin: 0">&nbsp;&nbsp;&nbsp;&nbsp;Deporte<small>&nbsp;&nbsp;&nbsp;&nbsp;{{participante.deporte_id}}</small></h6>
+						            <h6 style="margin: 0">&nbsp;&nbsp;&nbsp;&nbsp;Modalidad<small>&nbsp;&nbsp;&nbsp;&nbsp;{{participante.funcionespecifica}}</small></h6>
+												<h6 style="margin: 0">&nbsp;&nbsp;&nbsp;&nbsp;Vigencia<small>&nbsp;&nbsp;&nbsp;&nbsp;poner vigencia</small></h6>
+												<h6 style="margin: 0">&nbsp;&nbsp;&nbsp;&nbsp;Entidad<small>&nbsp;&nbsp;&nbsp;&nbsp;{{participante.municipio.nombre}}</small></h6>
+										</p>												
+								</td>
+								
+								<td style="width: 200px">
+										<div style="position:relative; left: 0; top:0;">
+										  <img src="{{cre.tieneFoto(participante.sexo, participante.foto)}}" style="position:relative; top:0;left:110px; width:100px; height:100px;"/>
+										  <img src="/img/sellito_foto.png" style="position:absolute; absolute; top: 10px; left: 60px;width:100px; height:100px;"/>
+										</div>
+								</td>
+							</tr>
+						</tbody>
+					</table>
+				</td>
+				<td style="padding: 0; position: relative; width: 400px">
+						<img src="/img/parte_de_atras.png"  />
+				</td>
+			</tr>	
+		</tbody>
+	</table>
 
-<!--
-
-<div class="container">
-    <div class="row bootstrap snippets" ng-repeat="participante in cre.participantes">
-        <div class="col-md-6 col-xs-10">
-        	<div class="panel">
-            <div class="panel-body">
-                <div class="row">     
-                    <div class="col-sm-6">
-	                    	<p>
-		                    	<h4>CURP<small>{{participante.curp}}</small></h4>
-		                    	<h4>Nombre<small>{{participante.nombre}} <br /> {{participante.apellidoPaterno}} {{participante.apellidoMaterno}}</small></h4>
-	                        <h4>Deporte<small>{{participante.deporte_id}}</small></h4>
-	                        <h4>Modalidad<small>{{participante.funcionespecifica}}</small></h4>
-													<h4>Vigencia<small>poner vigencia</small></h4>
-													<h4>Entidad<small>{{participante.municipio_id}}</small></h4>
-												</p>
-                    </div>
-                    <div class="col-sm-4">
-                        <img src="{{cre.tieneFoto(participante.sexo, participante.foto)}}" alt="" class="img-rounded img-responsive" style="width:200px; height:200px;" />
-                    </div>
-                </div>
-            </div>  
-          </div>  
-        </div>
-        <div class="col-md-6 col-xs-12">
-        	<div class="panel">
-            <div class="panel-body">
-                <div class="row">
-	            			 <div class="col-sm-8">
-		                    	<strong>INSITUTO SUDCALIFORNIANO DEL DEPORTE</strong>
-		                    	<br />
-		                    	<br />
-		                    	<br />
-		                    	<br />
-													<br />
-													<br />
-													<br />
-		                    	<br />
-													<br />
-													<br />
-													<br />
-													<br />
-	            			 </div>
-	            			   
-                </div>
-            </div>
-        	</div>
-        </div>	        
-    </div>
 </div>
-
--->

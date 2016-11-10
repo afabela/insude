@@ -17,6 +17,32 @@
 					</option>
 			</select>
 		</div>
+		<div class="col-sm-2">
+			<label >Deporte</label>
+			<select name="deporte" class="form-control select2" placeholder="Seleccione" ng-model="ced.evento.deporte_id">
+					<option  value="{{deporte._id}}" ng-repeat="deporte in ced.deportes">
+						{{deporte.nombre}}
+					</option>
+			</select>
+		</div>
+		<div class="col-sm-4">
+			<label >Categoria *</label>
+			<select name="categoria" class="form-control select2" placeholder="Seleccione" ng-model="ced.evento.categoria_id">
+					<option  value="{{categoria._id}}" ng-repeat="categoria in ced.categorias">
+						{{categoria.nombre}}
+					</option>
+			</select>
+		</div>
+		<div class="col-sm-2">
+			<label >Rama *</label>
+			<select name="rama" class="form-control select2" placeholder="Seleccione" ng-model="ced.evento.rama_id">
+					<option  value="{{rama._id}}" ng-repeat="rama in ced.ramas">
+						{{rama.nombre}}
+					</option>
+			</select>	
+		</div>
+	</div>
+	<div class="row">	
 		<div class="col-sm-4">
 				<a class="btn btn-primary" ui-sref="anon.imprimircedula({evento:ced.evento.evento_id})" target="_blank">
 				  Imprimir
