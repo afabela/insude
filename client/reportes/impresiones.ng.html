@@ -33,6 +33,14 @@
 					</option>
 			</select>
 		</div>
+		<div class="col-sm-3">
+			<label >Categoria</label>
+			<select name="municipio" class="form-control select2" placeholder="Seleccione" ng-model="imp.evento.categoria_id">
+					<option  value="{{categoria._id}}" ng-repeat="categoria in imp.categorias">
+						{{categoria.nombre}}
+					</option>
+			</select>
+		</div>
 	</div>
 </div>
 <div class="well">		
@@ -40,7 +48,8 @@
 		<div class="col-sm-3">
 				<a class="btn btn-primary" ui-sref="anon.credenciales({evento:imp.evento.evento_id
 																															,municipio:imp.evento.municipio_id
-																															,deporte:imp.evento.deporte_id })" target="_blank">
+																															,deporte:imp.evento.deporte_id
+																															,categoria:imp.evento.categoria_id	 })" target="_blank">
 				  Credenciales
 				</a>
 		</div>
@@ -95,3 +104,8 @@
 		</tr>	
 	</tbody>
 </table>
+
+
+
+
+

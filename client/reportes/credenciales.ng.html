@@ -1,43 +1,71 @@
-<div id="printTable">
-
-	<table class="table" align="center" border="1" style="width: 850px;" >				
+	<table class="table" align="center" border="1" style="width: 880px" >				
 		<tbody>
 			<tr ng-repeat="participante in cre.participantes"> 
-				<td style="padding: 0; position: relative; width: 400px">
-					<img src="/img/fondo_credencial_con_pleca.png" style="position:absolute;z-index:1; "/>
+				<td style="padding: 0.5; position: relative; width: 420px; height: 250px">
+					<img src="/img/fondo_credencial_con_pleca.png" style="position:absolute; width: 420px; height: 250px;"/>
 					<br/>
 					<br/>
 					<br/>
-					<table style="z-index:2;position:relative;opacity:100% !important"> 
+					<table> 
 						<tbody>
 							<tr>
-								
-								<td style="width: 200px">
-										<p>
-							         	<h6 style="margin: 0">&nbsp;&nbsp;&nbsp;&nbsp;CURP<small>&nbsp;&nbsp;&nbsp;&nbsp;{{participante.curp}}</small></h6>
-						          	<h6 style="margin: 0">&nbsp;&nbsp;&nbsp;&nbsp;Nombre<small>&nbsp;&nbsp;&nbsp;&nbsp;{{participante.nombre}} <br /> {{participante.apellidoPaterno}} {{participante.apellidoMaterno}}</small></h6>
-						            <h6 style="margin: 0">&nbsp;&nbsp;&nbsp;&nbsp;Deporte<small>&nbsp;&nbsp;&nbsp;&nbsp;{{participante.deporte_id}}</small></h6>
-						            <h6 style="margin: 0">&nbsp;&nbsp;&nbsp;&nbsp;Modalidad<small>&nbsp;&nbsp;&nbsp;&nbsp;{{participante.funcionespecifica}}</small></h6>
-												<h6 style="margin: 0">&nbsp;&nbsp;&nbsp;&nbsp;Vigencia<small>&nbsp;&nbsp;&nbsp;&nbsp;poner vigencia</small></h6>
-												<h6 style="margin: 0">&nbsp;&nbsp;&nbsp;&nbsp;Entidad<small>&nbsp;&nbsp;&nbsp;&nbsp;{{participante.municipio.nombre}}</small></h6>
-										</p>												
+								<td style="width: auto">
+										<div style="position:relative; left: 30px; top:0;">
+							         	<h6 style="margin: 0">CURP<small>{{participante.curp}}</small></h6>
+						          	<h6 style="margin: 0">Nombre<small>{{participante.nombre}} <br /> {{participante.apellidoPaterno}} {{participante.apellidoMaterno}}</small></h6>
+						            <h6 style="margin: 0">Deporte<small>{{participante.deporte.nombre}}</small></h6>
+						            <h6 style="margin: 0">Modalidad<small>{{participante.funcionespecifica}}</small></h6>
+												<h6 style="margin: 0">Vigencia<small>poner vigencia</small></h6>
+												<h6 style="margin: 0">Entidad<small>{{participante.municipio.nombre}}</small></h6>
+										</div>									
 								</td>
-								
-								<td style="width: 200px">
+								<td>
 										<div style="position:relative; left: 0; top:0;">
-										  <img src="{{cre.tieneFoto(participante.sexo, participante.foto)}}" style="position:relative; top:0;left:110px; width:100px; height:100px;"/>
-										  <img src="/img/sellito_foto.png" style="position:absolute; absolute; top: 10px; left: 60px;width:100px; height:100px;"/>
+										  <img src="{{cre.tieneFoto(participante.sexo, participante.foto)}}" style="position:relative; top:0;left:200px; width:100px; height:100px;"/>
+										  <img src="/img/sellito_foto.png" style="position:absolute; absolute; top: 5px; left: 160px;width:100px; height:100px;"/>
+							      	<p style="position:absolute; absolute; top: 110px; left: 190px;width:100px; height:100px;">
+								      	___________________
+							      	</p>
+							      	<p style="position:absolute; absolute; top: 125px; left: 230px;width:100px; height:100px;">
+								      	<strong>FIRMA</strong>
+							      	</p>
 										</div>
 								</td>
 							</tr>
 						</tbody>
 					</table>
 				</td>
-				<td style="padding: 0; position: relative; width: 400px">
-						<img src="/img/parte_de_atras.png"  />
+				<td style="padding: 0.5; position: relative; width: 420px; height: 250px;">
+						<img src="/img/parte_de_atras.png" style="position:absolute;width: 420px; height: 250px;" />
+						<table> 
+						<tbody>
+							<tr>
+								<td>
+										<div style="position:relative; left: 20px; top:0;">
+							      	<img src="/img/firma_director_insude.png" style="position:relative; top:70px;left:10px;"/>
+							      	<br />
+							      	<br />
+							      	<br />
+							      	<br />
+							      	<br />
+							      	<p>
+								      	<strong>CP JOSÉ ÁVILA GERALDO</strong>
+								      	<br />
+								      	DIRECTOR GENERAL DEL INSUDE
+							      	</p>
+							      </div>
+							     									
+								</td>
+								<td>	
+										<div style="position:relative; left: 0; top:0;">
+										  <img src="https://chart.googleapis.com/chart?chs=150x150&cht=qr&chl=insude.mazoft.com/participantesver/{{participante._id}}/{{participante.evento_id}}/{{participante.deporte_id}}/{{participante.categoria_id}}/{{participante.rama_id}}" style="position:relative; top:40px;left:40px;"/>
+										</div>
+								</td>
+							</tr>
+						</tbody>
+					</table>
 				</td>
 			</tr>	
 		</tbody>
 	</table>
 
-</div>

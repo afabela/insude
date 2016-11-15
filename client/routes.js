@@ -185,6 +185,16 @@ angular.module('insude').config(['$injector', function ($injector) {
 	      }]
 	    }
     })
+    .state('anon.participantesver', {
+      url: '/participantesver/:id/:evento/:deporte/:categoria/:rama',
+      templateUrl: 'client/participantes/participantesver.ng.html',
+      controller: 'ParticipantesVerCtrl as pv',
+      resolve: {
+	      "currentUser": ["$meteor", function($meteor){
+	        return $meteor.requireUser();
+	      }]
+	    }
+    })
     .state('root.listarparticipantes', {
       url: '/participantes',
       templateUrl: 'client/participantes/listarparticipantes.ng.html',

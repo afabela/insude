@@ -6,7 +6,7 @@
 					<img src="{{impced.tieneFoto(participante.sexo, participante.foto)}}" alt="" class="img-rounded img-responsive" style="width:100px; height:100px;" />
 			</td>	
 			<td>
-					<p>
+					<p> 
 	            <span>{{participante.nombre}}</span>
 						  <br />
 							<span>{{participante.apellidoPaterno}} {{participante.apellidoMaterno}}</span>
@@ -39,18 +39,58 @@
 	     		</p>		
 			</td>
 			<td>
+					<!--
 					<ol>
               <li>(&nbsp;&nbsp;&nbsp;) Acta de Nacimiento</li>
               <li>(&nbsp;&nbsp;&nbsp;) Const. Médica</li>
               <li>(&nbsp;&nbsp;&nbsp;) CURP</li>
               <li>(&nbsp;&nbsp;&nbsp;) SIRED</li>
               <li>(&nbsp;&nbsp;&nbsp;) FOTOS</li>
-          </ol>			
+          </ol>	
+          -->
+          <table width="200px" border="1" >
+	          <tbody>
+		          <tr>
+			          <td>
+				          <br /><br /><br /><br /><br /><br /><br />
+			          </td>
+		          </tr> 
+	          </tbody> 
+          </table>			
 			</td>
-		</tr>	
+		</tr>
 	</tbody>
+	<tfoot>
+		<tr>
+			<td colspan="4">
+				<span>____________________________</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span>____________________________</span><br />
+				&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+				<span>	Director del Instuto			</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+																								 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+																								 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+																								 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+																								 <span>Vo. Bo. Conade	</span>					<br />
+				&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+				<span>Nombre, Firma y Sello</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+						 														  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+						 														  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+																					<span>Nombre, Firma y Sello </span>      					
+																					
+				&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+				&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+				&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+				<span>Fecha Emisión:</span><span id="Fecha"></span>
+			</td>	
+		</tr>	
+	</tfoot>	
 </table>
 
+
+
+<script>
+var d = new Date();
+document.getElementById("Fecha").innerHTML = d.getDate() + "/" + (d.getMonth()+1)  + "/" +d.getFullYear();
+</script>
 
 
 

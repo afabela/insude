@@ -8,7 +8,7 @@ function imprimirCedulaCtrl($scope, $meteor, $reactive, $state, toastr, $statePa
 	let rc = $reactive(this).attach($scope);
 	
 	window.rc = rc;
-	
+
   this.action = true;
   this.participante = {};
   this.participante.profile = {};
@@ -94,6 +94,7 @@ function imprimirCedulaCtrl($scope, $meteor, $reactive, $state, toastr, $statePa
 	});
 	
 	this.tieneFoto = function(sexo, foto){
+		console.log(sexo);
 	  if(foto === undefined){
 		  if(sexo === "Hombre")
 			  return "img/badmenprofile.jpeg";
@@ -107,5 +108,5 @@ function imprimirCedulaCtrl($scope, $meteor, $reactive, $state, toastr, $statePa
 		  return foto;
 	  }
   }  
-	
+  	
 };	

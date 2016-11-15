@@ -17,6 +17,22 @@
 					</option>
 			</select>
 		</div>
+		<div class="col-sm-2">
+			<label >Deporte</label>
+			<select name="evento" class="form-control select2" placeholder="Seleccione" ng-model="lp.buscar.deporte_id">
+					<option  value="{{deporte._id}}" ng-repeat="deporte in lp.deportes">
+						{{deporte.nombre}}
+					</option>
+			</select>
+		</div>
+		<div class="col-sm-2">
+			<label >Categoria</label>
+			<select name="evento" class="form-control select2" placeholder="Seleccione" ng-model="lp.buscar.categoria_id">
+					<option  value="{{categoria._id}}" ng-repeat="categoria in lp.categorias">
+						{{categoria.nombre}}
+					</option>
+			</select>
+		</div>
 	</div>
 </div>	
 <div class="row">
@@ -35,7 +51,7 @@
 	<div class="superbox col-sm-12">
 		<div class="superbox-list" ng-repeat="participante in lp.participantes">
 			<div class="img-box" style="margin:20px;">
-				<img ng-src="{{lp.tieneFoto(participante.sexo, participante.foto)}}" style="width: 50; height: 50" data-img="img/superbox/superbox-full-1.jpg" alt="{{participante.nombreCompleto}}" title="{{participante.nombreCompleto" class="superbox-img">
+				<img ng-src="{{lp.tieneFoto(participante.sexo, participante.foto)}}" style="width: 60px; height: 60px" data-img="img/superbox/superbox-full-1.jpg" alt="{{participante.nombreCompleto}}" title="{{participante.nombreCompleto" class="superbox-img">
 				<ul class="text-center" style="margin-left: -20px;">
 	        <!--<a href="/participantesver/{{participante._id}}"><li><i class="fa fa-eye"></i></li></a>-->
 	        <a href="/participanteseditar/{{participante._id}}"><li><i class="fa fa-pencil"></i></li></a>

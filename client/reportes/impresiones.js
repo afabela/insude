@@ -17,11 +17,22 @@ function ImpresionesCtrl($scope, $meteor, $reactive, $state, toastr, $stateParam
   this.buscar.nombre = '';
 	this.validation = false;
 	
-	
+	/*
 	let part = this.subscribe('participantes',()=>{
 		return [{$and:[ {municipio_id: this.getReactively('evento.municipio_id')!= undefined ? this.getReactively('evento.municipio_id'): ""}
 										,{evento_id: this.getReactively('evento.evento_id')!= undefined ? this.getReactively('evento.evento_id'): "" }
-										,{deporte_id: this.getReactively('evento.deporte_id')!= undefined ? this.getReactively('evento.deporte_id'): "" }]
+										,{deporte_id: this.getReactively('evento.deporte_id')!= undefined ? this.getReactively('evento.deporte_id'): "" }
+										,{categoria_id: this.getReactively('evento.categoria_id')!= undefined ? this.getReactively('evento.categoria_id'): "" }]
+						,estatus: true				
+			}]
+	});
+	*/
+	
+	let part = this.subscribe('participantes',()=>{
+		return [{municipio_id: this.getReactively('evento.municipio_id')!= undefined ? this.getReactively('evento.municipio_id'): ""
+										,evento_id: this.getReactively('evento.evento_id')!= undefined ? this.getReactively('evento.evento_id'): "" 
+										,deporte_id: this.getReactively('evento.deporte_id')!= undefined ? this.getReactively('evento.deporte_id'): "" 
+										,categoria_id: this.getReactively('evento.categoria_id')!= undefined ? this.getReactively('evento.categoria_id'): "" 
 						,estatus: true				
 			}]
 	});
@@ -48,6 +59,7 @@ function ImpresionesCtrl($scope, $meteor, $reactive, $state, toastr, $stateParam
 	
 	this.subscribe('categorias',()=>{
 		return [{evento_id:  this.getReactively('evento.evento_id')? this.getReactively('evento.evento_id'):""
+						,deporte_id: this.getReactively('evento.deporte_id')!= undefined ? this.getReactively('evento.deporte_id'): ""
 						,estatus: true
 		}]
 	});

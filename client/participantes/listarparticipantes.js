@@ -28,6 +28,8 @@ function ListarParticipantesCtrl($scope, $meteor, $reactive, $state, toastr, $st
 	    where : { 
 		    nombreCompleto : this.getReactively('buscar.nombre'),
 		    evento_id : this.getReactively('buscar.evento_id'), 
+		    deporte_id: this.getReactively('buscar.deporte_id'),
+		    categoria_id: this.getReactively('buscar.categoria_id'),
 		    municipio_id : Meteor.user() != undefined ? Meteor.user().profile.municipio_id : ""	  
 		  }  
     }];
@@ -35,6 +37,16 @@ function ListarParticipantesCtrl($scope, $meteor, $reactive, $state, toastr, $st
   
   this.subscribe('eventos',()=>{
 		return [{estatus: true}]
+	});
+	
+	this.subscribe('deportes',()=>{
+		return [{evento_id: this.getReactively('buscar.evento_id'),
+						 estatus: true}]
+	});
+	
+	this.subscribe('categorias',()=>{
+		return [{deporte_id: this.getReactively('buscar.deporte_id'),
+						 estatus: true}]
 	});
 
 	
@@ -44,6 +56,12 @@ function ListarParticipantesCtrl($scope, $meteor, $reactive, $state, toastr, $st
 	  },
 	  eventos : () => {
 			return Eventos.find();
+		},
+		deportes : () => {
+			return Deportes.find();
+		},
+		categorias : () => {
+			return Categorias.find();
 		},
 	});
 	

@@ -8,9 +8,6 @@ function CredencialesCtrl($scope, $meteor, $reactive, $state, toastr, $statePara
 	let rc = $reactive(this).attach($scope);
 	
 	window.rc = rc;
-	
-	console.log($stateParams.evento);
-	console.log($stateParams.municipio);
 		
   this.action = true;
   this.participante = {};
@@ -22,13 +19,15 @@ function CredencialesCtrl($scope, $meteor, $reactive, $state, toastr, $statePara
 	
 	this.evento_id = $stateParams.evento;
 	this.municipio_id = $stateParams.municipio;
-	this.municipio_id = $stateParams.deporte;
-
+	this.deporte_id = $stateParams.deporte;
+	this.categoria_id = $stateParams.categoria;
 	
 	
 	let part = this.subscribe('participantes',()=>{
 		return [{$and:[ {municipio_id : $stateParams.municipio}
-										,{evento_id:  $stateParams.evento}]
+									 ,{evento_id:  $stateParams.evento}
+									 ,{deporte_id:  $stateParams.deporte}
+									 ,{categoria_id:  $stateParams.categoria}]
 						,estatus: true				
 			}]
 	});

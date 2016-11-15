@@ -90,6 +90,22 @@ function ParticipantesNuevoCtrl($scope, $meteor, $reactive, $state, toastr, $sta
 		    toastr.error('Error no se ha cargado la foto del particpante.');
 	      return;
 	    }
+	    console.log(participante);
+	    if (participante.curpImagen == undefined)
+	    {
+		    toastr.error('Error no se ha cargado el comprobante del CURP del particpante.');
+	      return;
+	    }
+	    if (participante.actaNacimiento == undefined)
+	    {
+		    toastr.error('Error no se ha cargado el comprobante del Acta de Nacimiento del particpante.');
+	      return;
+	    }
+	    if (participante.identificacion == undefined)
+	    {
+		    toastr.error('Error no se ha cargado el comprobante de la Identificación Oficial del particpante.');
+	      return;
+	    }
 			
 			//Obtener las Edades de la Categoria			
 			var cat = Categorias.findOne({ _id: participante.categoria_id});
@@ -216,9 +232,17 @@ function ParticipantesNuevoCtrl($scope, $meteor, $reactive, $state, toastr, $sta
 				 
 	};
 	
-	this.AlmacenaImagen = function(imagen)
+	this.AlmacenaImagen = function(imagen, tipo)
 	{
-			this.participante.foto = imagen;
+			if (tipo == 1)
+					this.participante.foto = imagen;
+			else if (tipo == 2)		
+					this.participante.curpImagen = imagen;
+			else if (tipo == 3)
+					this.participante.actaNacimiento = imagen;		
+			else
+					this.participante.identificacion = imagen;		
+						
 	}
 	
 	
@@ -228,10 +252,14 @@ function ParticipantesNuevoCtrl($scope, $meteor, $reactive, $state, toastr, $sta
 			$(".Mselect2").select2();
 					
 			var fileInput1 = document.getElementById('fileInput1');
+			var fileInputCurp = document.getElementById('fileInputCurp');
+			var fileInputActa = document.getElementById('fileInputActa');
+			var fileInputIdentificacion = document.getElementById('fileInputIdentificacion');
+			
 			var fileDisplayArea1 = document.getElementById('fileDisplayArea1');
 			
 			
-				//JavaScript para agregar la imagen 1
+			//JavaScript para agregar la Foto
 			fileInput1.addEventListener('change', function(e) {
 				var file = fileInput1.files[0];
 				var imageType = /image.*/;
@@ -253,7 +281,7 @@ function ParticipantesNuevoCtrl($scope, $meteor, $reactive, $state, toastr, $sta
 							img.width =200;
 							img.height=200;
 		
-							rc.AlmacenaImagen(reader.result);
+							rc.AlmacenaImagen(reader.result, 1);
 							//this.folio.imagen1 = reader.result;
 							
 							fileDisplayArea1.appendChild(img);
@@ -261,7 +289,7 @@ function ParticipantesNuevoCtrl($scope, $meteor, $reactive, $state, toastr, $sta
 						}
 						reader.readAsDataURL(file);			
 					}else {
-						toastr.error("Error Imagin supera los 512 KB");
+						toastr.error("Error la Imagen supera los 512 KB");
 						return;
 					}
 					
@@ -269,6 +297,116 @@ function ParticipantesNuevoCtrl($scope, $meteor, $reactive, $state, toastr, $sta
 					fileDisplayArea1.innerHTML = "File not supported!";
 				}
 			});
+			
+			//JavaScript para agregar el Curp Imagen
+			fileInputCurp.addEventListener('change', function(e) {
+				var file = fileInputCurp.files[0];
+				
+				var imageType;
+				
+				if (file.type == "application/pdf")
+						imageType = /application.*/;
+				else
+						imageType = /image.*/;		
+		
+				console.log(imageType);
+				
+				if (file.type.match(imageType)) {
+					
+					if (file.size <= 512000)
+					{
+						
+						var reader = new FileReader();
+		
+						reader.onload = function(e) {
+		
+						rc.AlmacenaImagen(reader.result, 2);
+
+						}
+						reader.readAsDataURL(file);			
+					}else {
+						toastr.error("Error el archivo supera los 512 KB");
+						return;
+					}
+					
+				} else {
+					fileDisplayArea1.innerHTML = "File not supported!";
+				}
+								
+			});
+			
+			//JavaScript para agregar el Acta Nacimiento
+			fileInputActa.addEventListener('change', function(e) {
+				var file = fileInputActa.files[0];
+				
+				console.log(file.type);
+				var imageType;
+				
+				if (file.type == "application/pdf")
+						imageType = /application.*/;
+				else
+						imageType = /image.*/;		
+				
+				if (file.type.match(imageType)) {
+					
+					if (file.size <= 512000)
+					{
+						
+						var reader = new FileReader();
+		
+						reader.onload = function(e) {
+		
+							rc.AlmacenaImagen(reader.result, 3);
+
+						}
+						reader.readAsDataURL(file);			
+					}else {
+						toastr.error("Error el archivo supera los 512 KB");
+						return;
+					}
+					
+				} else {
+					fileDisplayArea1.innerHTML = "File not supported!";
+				}
+								
+			});
+			
+			//JavaScript para agregar el Identificacion Oficial
+			fileInputIdentificacion.addEventListener('change', function(e) {
+				var file = fileInputCurp.files[0];
+				
+				var imageType;
+				
+				if (file.type == "application/pdf")
+						imageType = /application.*/;
+				else
+						imageType = /image.*/;		
+				
+				if (file.type.match(imageType)) {
+					
+					if (file.size <= 512000)
+					{
+						
+						var reader = new FileReader();
+		
+						reader.onload = function(e) {
+		
+							rc.AlmacenaImagen(reader.result, 4);
+
+						}
+						reader.readAsDataURL(file);			
+					}else {
+						toastr.error("Error el archivo supera los 512 KB");
+						return;
+					}
+					
+				} else {
+					fileDisplayArea1.innerHTML = "File not supported!";
+				}
+								
+			});
+			
+			
 
 	});
 	

@@ -147,9 +147,7 @@ function ParticipantesEditarCtrl($scope, $meteor, $reactive, $state, toastr, $st
 					 
 			}
 	    
-	    
-	    
-		 
+
 	};
 		
 	
@@ -188,13 +186,23 @@ function ParticipantesEditarCtrl($scope, $meteor, $reactive, $state, toastr, $st
 	
 	$(document).ready( function() {
 		
-			console.log(this.participante);
+			
 			
 			$(".Mselect2").select2();
 					
 			var fileInput1 = document.getElementById('fileInput1');
 			var fileDisplayArea1 = document.getElementById('fileDisplayArea1');
 			
+			console.log(rc.participante);
+
+					
+			
+			var x = document.getElementById("prueba"); 
+			var optionVal = new Array();
+			for (i = 0; i <  rc.participante.pruebas.length; i++) { 
+					optionVal.push(x.options[i].value);
+			}
+						
 			
 				//JavaScript para agregar la imagen 1
 			fileInput1.addEventListener('change', function(e) {
