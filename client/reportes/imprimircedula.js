@@ -7,7 +7,7 @@ function imprimirCedulaCtrl($scope, $meteor, $reactive, $state, toastr, $statePa
 	
 	let rc = $reactive(this).attach($scope);
 	
-	window.rc = rc;
+	Window = rc;
 
   this.action = true;
   this.participante = {};
@@ -20,9 +20,12 @@ function imprimirCedulaCtrl($scope, $meteor, $reactive, $state, toastr, $statePa
 	this.evento_id = $stateParams.evento;
 	
 	let part = this.subscribe('participantes',()=>{
-		return [{estatus: true
-					  ,$and:[ {municipio_id : Meteor.user() != undefined ? Meteor.user().profile.municipio_id : ""}
-										,{evento_id: $stateParams.evento}]
+		return [{$and:[{evento_id: $stateParams.evento}
+									,{municipio_id : Meteor.user() != undefined ? Meteor.user().profile.municipio_id : ""}
+									,{deporte_id : $stateParams.deporte}
+									,{categoria_id : $stateParams.categoria}
+									,{rama_id : $stateParams.rama}]
+						,estatus: true
 			}]
 	});
 	
@@ -32,21 +35,23 @@ function imprimirCedulaCtrl($scope, $meteor, $reactive, $state, toastr, $statePa
 	});
 	
 	this.subscribe('municipios',()=>{
-		return [{estatus: true}]
+		return [{_id: Meteor.user() != undefined ? Meteor.user().profile.municipio_id : ""}]
 	});
 	
 	this.subscribe('eventos',()=>{
-		return [{estatus: true}]
+		return [{_id: $stateParams.evento}]
 	});
 	
 	this.subscribe('deportes',()=>{
-		return [{evento_id: $stateParams.evento}]
+		return [{_id: $stateParams.deporte}]
 	});
 	
 	this.subscribe('categorias',()=>{
-		return [{estatus: true
-						 ,evento_id:  $stateParams.evento
-		}]
+		return [{_id: $stateParams.categoria}]
+	});
+	
+	this.subscribe('ramas',()=>{
+		return [{_id: $stateParams.rama}]
 	});
 	
 	this.subscribe('pruebas',()=>{
@@ -59,23 +64,40 @@ function imprimirCedulaCtrl($scope, $meteor, $reactive, $state, toastr, $statePa
 	  participantes : () => {
 		  return Participantes.find();
 	  },
-		municipios : () => {
-			return Municipios.find();
+		municipio : () => {
+			return Municipios.findOne();
 		},
-		eventos : () => {
-			return Eventos.find();
+		evento : () => {
+			return Eventos.findOne();
 		},
-		deportes : () => {
-			return Deportes.find();
+		deporte : () => {
+			return Deportes.findOne();
 		},
 		categorias : () => {
-			return Categorias.find();
+			return Categorias.findOne();
+		},
+		ramas : () => {
+			return Ramas.findOne();
 		},
 		pruebas : () => {
 			return Pruebas.find();
 		},
 		todosParticipantes : () => {
 			if(part.ready()){
+				
+				var Cantidad = rc.participantes.length;
+				if (Cantidad % 5 != 0)
+				{
+						//Completar cuantos faltan para 15
+						var modulo = Math.round(Cantidad % 5);
+						var faltantes = 5 - modulo;				
+						for (var i = 1; i <= faltantes; i++)
+						{
+								objFalatantes = {_id:"sa"+i,foto:"",nombre:"",apellidoPaterno:"", apellidoMaterno:"",sexo:""};
+								rc.participantes.push(objFalatantes);
+						}
+				}		 
+
 				_.each(rc.participantes, function(participante){
 					participante.municipio = Municipios.findOne(participante.municipio_id);
 					participante.evento = Eventos.findOne(participante.evento_id);
@@ -94,7 +116,6 @@ function imprimirCedulaCtrl($scope, $meteor, $reactive, $state, toastr, $statePa
 	});
 	
 	this.tieneFoto = function(sexo, foto){
-		console.log(sexo);
 	  if(foto === undefined){
 		  if(sexo === "Hombre")
 			  return "img/badmenprofile.jpeg";

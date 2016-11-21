@@ -19,7 +19,7 @@
 		</div>
 		<div class="col-sm-2">
 			<label >Deporte</label>
-			<select name="evento" class="form-control select2" placeholder="Seleccione" ng-model="lp.buscar.deporte_id">
+			<select name="deporte" class="form-control select2" placeholder="Seleccione" ng-model="lp.buscar.deporte_id">
 					<option  value="{{deporte._id}}" ng-repeat="deporte in lp.deportes">
 						{{deporte.nombre}}
 					</option>
@@ -27,9 +27,17 @@
 		</div>
 		<div class="col-sm-2">
 			<label >Categoria</label>
-			<select name="evento" class="form-control select2" placeholder="Seleccione" ng-model="lp.buscar.categoria_id">
+			<select name="categoria" class="form-control select2" placeholder="Seleccione" ng-model="lp.buscar.categoria_id">
 					<option  value="{{categoria._id}}" ng-repeat="categoria in lp.categorias">
 						{{categoria.nombre}}
+					</option>
+			</select>
+		</div>
+		<div class="col-sm-2">
+			<label >Rama</label>
+			<select name="rama" class="form-control select2" placeholder="Seleccione" ng-model="lp.buscar.rama_id">
+					<option  value="{{rama._id}}" ng-repeat="rama in lp.ramas">
+						{{rama.nombre}}
 					</option>
 			</select>
 		</div>
@@ -52,7 +60,7 @@
 		<div class="superbox-list" ng-repeat="participante in lp.participantes">
 			<div class="img-box" style="margin:20px;">
 				<img ng-src="{{lp.tieneFoto(participante.sexo, participante.foto)}}" style="width: 60px; height: 60px" data-img="img/superbox/superbox-full-1.jpg" alt="{{participante.nombreCompleto}}" title="{{participante.nombreCompleto" class="superbox-img">
-				<ul class="text-center" style="margin-left: -20px;">
+				<ul class="text-center" style="margin-left: -35px;">
 	        <!--<a href="/participantesver/{{participante._id}}"><li><i class="fa fa-eye"></i></li></a>-->
 	        <a href="/participanteseditar/{{participante._id}}"><li><i class="fa fa-pencil"></i></li></a>
 	      </ul>

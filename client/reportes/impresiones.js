@@ -30,9 +30,10 @@ function ImpresionesCtrl($scope, $meteor, $reactive, $state, toastr, $stateParam
 	
 	let part = this.subscribe('participantes',()=>{
 		return [{municipio_id: this.getReactively('evento.municipio_id')!= undefined ? this.getReactively('evento.municipio_id'): ""
-										,evento_id: this.getReactively('evento.evento_id')!= undefined ? this.getReactively('evento.evento_id'): "" 
-										,deporte_id: this.getReactively('evento.deporte_id')!= undefined ? this.getReactively('evento.deporte_id'): "" 
-										,categoria_id: this.getReactively('evento.categoria_id')!= undefined ? this.getReactively('evento.categoria_id'): "" 
+						,evento_id: this.getReactively('evento.evento_id')!= undefined ? this.getReactively('evento.evento_id'): "" 
+						,deporte_id: this.getReactively('evento.deporte_id')!= undefined ? this.getReactively('evento.deporte_id'): "" 
+						,categoria_id: this.getReactively('evento.categoria_id')!= undefined ? this.getReactively('evento.categoria_id'): "" 
+						,rama_id: this.getReactively('evento.rama_id')!= undefined ? this.getReactively('evento.rama_id'): "" 
 						,estatus: true				
 			}]
 	});
@@ -68,6 +69,10 @@ function ImpresionesCtrl($scope, $meteor, $reactive, $state, toastr, $stateParam
 		return [{evento_id:  this.getReactively('evento.evento_id')? this.getReactively('evento.evento_id'):"" 
 		}]
 	});
+	
+	this.subscribe('ramas',()=>{
+		return [{estatus: true}]
+	});
 
 	
 	this.helpers({
@@ -88,6 +93,9 @@ function ImpresionesCtrl($scope, $meteor, $reactive, $state, toastr, $stateParam
 		},
 		pruebas : () => {
 			return Pruebas.find();
+		},
+		ramas : () => {
+			return Ramas.find();
 		},
 		todosParticipantes : () => {
 			if(part.ready()){

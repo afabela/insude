@@ -40,6 +40,11 @@ angular.module('insude').config(['$injector', function ($injector) {
       controller: 'LoginCtrl',
       controllerAs: 'lc'
     })
+    .state('anon.participantesver', {
+      url: '/participantesver/:id/:evento/:deporte/:categoria/:rama',
+      templateUrl: 'client/participantes/participantesver.ng.html',
+      controller: 'ParticipantesVerCtrl as pv'
+    })
     .state('anon.logout', {
       url: '/logout',
       resolve: {
@@ -185,16 +190,6 @@ angular.module('insude').config(['$injector', function ($injector) {
 	      }]
 	    }
     })
-    .state('anon.participantesver', {
-      url: '/participantesver/:id/:evento/:deporte/:categoria/:rama',
-      templateUrl: 'client/participantes/participantesver.ng.html',
-      controller: 'ParticipantesVerCtrl as pv',
-      resolve: {
-	      "currentUser": ["$meteor", function($meteor){
-	        return $meteor.requireUser();
-	      }]
-	    }
-    })
     .state('root.listarparticipantes', {
       url: '/participantes',
       templateUrl: 'client/participantes/listarparticipantes.ng.html',
@@ -226,7 +221,7 @@ angular.module('insude').config(['$injector', function ($injector) {
 	    }
     })
     .state('anon.imprimircedula', {
-      url: '/cedula/:evento/:municipio',
+      url: '/cedula/:evento/:deporte/:categoria/:rama',
       templateUrl: 'client/reportes/imprimircedula.ng.html',
       controller: 'imprimirCedulaCtrl as impced',
       resolve: {

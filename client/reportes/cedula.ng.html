@@ -44,14 +44,45 @@
 	</div>
 	<div class="row">	
 		<div class="col-sm-4">
-				<a class="btn btn-primary" ui-sref="anon.imprimircedula({evento:ced.evento.evento_id})" target="_blank">
-				  Imprimir
+				<a class="btn btn-primary" ui-sref="anon.imprimircedula({evento:ced.evento.evento_id
+																																,deporte:ced.evento.deporte_id
+																															  ,categoria:ced.evento.categoria_id
+																																,rama:ced.evento.rama_id})" target="_blank">
+				  Generar Cédula
 				</a>
 		</div>
+		
 	</div>
 </div>		
 
 <!-- Tablas-->
+<table class="table" width="600" align="center" >
+	<thead>
+		 <tr>
+			 <th>Foto</th>
+			 <th>CURP</th>
+			 <th>Nombre</th>
+			 <th>Sexo</th>
+			 <th>Fecha Nacimiento</th>	 
+		 </tr> 
+	</thead>	
+	<tbody>
+		<tr ng-repeat="participante in ced.participantes"> 
+			<td>
+					<img src="{{ced.tieneFoto(participante.sexo, participante.foto)}}" alt="" class="img-rounded img-responsive" style="width:60px; height:60px;" />
+			</td>	
+			<td>{{participante.curp}}</td>
+			<td>{{participante.nombre}} {{participante.apellidoPaterno}} {{participante.apellidoMaterno}}</td>
+			<td>{{participante.sexo}}</td>
+			<td>{{participante.fechaNacimiento.getUTCDate() +"/"+ (participante.fechaNacimiento.getUTCMonth()+1) +"/"+ participante.fechaNacimiento.getUTCFullYear()}}</td>		
+				
+		</tr>	
+	</tbody>
+</table>
+
+
+
+<!--
 <table class="table" width="600" align="center" >
 	<tbody>
 		<tr ng-repeat="participante in ced.participantes"> 
@@ -93,7 +124,7 @@
 	     		</p>		
 			</td>
 			<td>
-					<!--
+
 					<ol>
               <li>(&nbsp;&nbsp;&nbsp;) Acta de Nacimiento</li>
               <li>(&nbsp;&nbsp;&nbsp;) Const. Médica</li>
@@ -101,14 +132,14 @@
               <li>(&nbsp;&nbsp;&nbsp;) SIRED</li>
               <li>(&nbsp;&nbsp;&nbsp;) FOTOS</li>
           </ol>
-          -->
+   
           <table width="100px" border="1" >
           </table>			
 			</td>
 		</tr>	
 	</tbody>
 </table>
-
+-->
 
 <!--
 <div class="container">

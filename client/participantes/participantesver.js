@@ -58,6 +58,7 @@ function ParticipantesVerCtrl($scope, $meteor, $reactive, $state, toastr, $state
 	});
 	
 	this.tieneFoto = function(sexo, foto){
+		console.log(sexo,foto);
 	  if(foto === undefined){
 		  if(sexo === "Hombre")
 			  return "img/badmenprofile.jpeg";
