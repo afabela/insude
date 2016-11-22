@@ -260,4 +260,15 @@ angular.module('insude').config(['$injector', function ($injector) {
 	      }]
 	    }
     })
+    .state('root.subircedula', {
+      url: '/subircedula/:evento/:deporte/:categoria/:rama',
+      templateUrl: 'client/reportes/subircedula.ng.html',
+      controller: 'subirCedulaCtrl as subced',
+      resolve: {
+	      "currentUser": ["$meteor", function($meteor){
+	        return $meteor.requireUser();
+	      }]
+	    }
+    })
+
 }]);     

@@ -18,7 +18,7 @@ function CedulaCtrl($scope, $meteor, $reactive, $state, toastr, $stateParams) {
 	this.validation = false;
 	
 	
-	let part = this.subscribe('participantes',()=>{
+	let part = this.subscribe('participantesCred',()=>{
 		return [{$and:[ {evento_id: this.getReactively('evento.evento_id')!= undefined ? this.getReactively('evento.evento_id'): "" }
 									 ,{municipio_id : Meteor.user() != undefined ? Meteor.user().profile.municipio_id : ""}
 									 ,{deporte_id: this.getReactively('evento.deporte_id')!= undefined ? this.getReactively('evento.deporte_id'): ""}

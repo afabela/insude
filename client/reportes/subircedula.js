@@ -1,8 +1,8 @@
 angular
   .module('insude')
-  .controller('imprimirCedulaCtrl', imprimirCedulaCtrl);
+  .controller('subirCedulaCtrl', subirCedulaCtrl);
  
-function imprimirCedulaCtrl($scope, $meteor, $reactive, $state, toastr, $stateParams) {
+function subirCedulaCtrl($scope, $meteor, $reactive, $state, toastr, $stateParams) {
 	$reactive(this).attach($scope);
 	
 	let rc = $reactive(this).attach($scope);

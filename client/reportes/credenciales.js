@@ -23,7 +23,7 @@ function CredencialesCtrl($scope, $meteor, $reactive, $state, toastr, $statePara
 	this.categoria_id = $stateParams.categoria;
 	
 	
-	let part = this.subscribe('participantes',()=>{
+	let part = this.subscribe('participantesCred',()=>{
 		return [{$and:[ {evento_id:  $stateParams.evento}
 									 ,{municipio_id : $stateParams.municipio}
 									 ,{deporte_id:  $stateParams.deporte}
@@ -34,7 +34,7 @@ function CredencialesCtrl($scope, $meteor, $reactive, $state, toastr, $statePara
 	});
 
 	
-	this.subscribe('municipios',()=>{
+	this.subscribe('municipiosIdNombre',()=>{
 		return [{_id: $stateParams.municipio}]
 	});
 	
