@@ -12,9 +12,9 @@
 					<img src="{{impced.tieneFoto(participante.sexo, participante.foto)}}" alt="" class="img-rounded img-responsive" style="width:100px; height:100px;" />
 			</td>	
 			<td>
-	            <strong>NOMBRE:</strong><span> {{participante.nombre}}</span>
+	            <strong>NOMBRE:</strong>{{participante.nombre}}
 						  <br />
-							<span>{{participante.apellidoPaterno}} {{participante.apellidoMaterno}}</span>
+							{{participante.apellidoPaterno}} {{participante.apellidoMaterno}}
 							<br />
 	            <strong>FN: </strong>{{participante.fechaNacimiento.getUTCDate() +"-"+ (participante.fechaNacimiento.getUTCMonth()+1) +"-"+ participante.fechaNacimiento.getUTCFullYear()}}
 	            <br />
@@ -22,7 +22,7 @@
               <br />
               <strong>CURP:</strong> {{participante.curp}}
               <br />
-              <cite>{{participante.municipio.nombre}}</cite>
+              {{participante.municipio.nombre}}
               <br />
               {{participante.evento.nombre}}
 			</td>
@@ -84,6 +84,16 @@ var d = new Date();
 document.getElementById("Fecha").innerHTML = d.getDate() + "/" + (d.getMonth()+1)  + "/" +d.getFullYear();
 
 </script>
+
+<style type="text/css">
+   <!--
+   @page {
+      size: auto;   /* auto is the initial value */
+      margin: 0;
+   }
+   -->
+</style>
+
 
 
 

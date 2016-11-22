@@ -86,11 +86,11 @@ function imprimirCedulaCtrl($scope, $meteor, $reactive, $state, toastr, $statePa
 			if(part.ready()){
 				
 				var Cantidad = rc.participantes.length;
-				if (Cantidad % 5 != 0)
+				if (Cantidad % 6 != 0)
 				{
 						//Completar cuantos faltan para 15
-						var modulo = Math.round(Cantidad % 5);
-						var faltantes = 5 - modulo;				
+						var modulo = Math.round(Cantidad % 6);
+						var faltantes = 6 - modulo;				
 						for (var i = 1; i <= faltantes; i++)
 						{
 								objFalatantes = {_id:"sa"+i,foto:"",nombre:"",apellidoPaterno:"", apellidoMaterno:"",sexo:""};
