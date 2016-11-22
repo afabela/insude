@@ -1,33 +1,30 @@
 <table class="table" width="600" align="center" >
 	<thead>
 		<tr>
-			 <td>Evento: {{impced.evento.nombre}}</td>
+			 <td colspan="2">Evento: {{impced.evento.nombre}}</td>
 			 <td>Municipio: {{impced.municipio.nombre}}</td>
 			 <td>Deporte: {{impced.deporte.nombre}}</td>
 		</tr>	
   </thead>
 	<tbody>
 		<tr ng-repeat="participante in impced.participantes"> 
-			<td>
+			<td width="20%">
 					<img src="{{impced.tieneFoto(participante.sexo, participante.foto)}}" alt="" class="img-rounded img-responsive" style="width:100px; height:100px;" />
 			</td>	
 			<td>
-					<p> 
-	            <span>{{participante.nombre}}</span>
+	            <strong>NOMBRE:</strong><span> {{participante.nombre}}</span>
 						  <br />
 							<span>{{participante.apellidoPaterno}} {{participante.apellidoMaterno}}</span>
-					</p>
-					<p>
-	            {{participante.fechaNacimiento.getUTCDate() +"-"+ (participante.fechaNacimiento.getUTCMonth()+1) +"-"+ participante.fechaNacimiento.getUTCFullYear()}}
+							<br />
+	            <strong>FN: </strong>{{participante.fechaNacimiento.getUTCDate() +"-"+ (participante.fechaNacimiento.getUTCMonth()+1) +"-"+ participante.fechaNacimiento.getUTCFullYear()}}
 	            <br />
-              {{participante.sexo}}
+              <strong>SEXO:</strong> {{participante.sexo}}
               <br />
-              {{participante.curp}}
+              <strong>CURP:</strong> {{participante.curp}}
               <br />
               <cite>{{participante.municipio.nombre}}</cite>
               <br />
-              <span>{{participante.evento.nombre}}</span>
-          </p>
+              {{participante.evento.nombre}}
 			</td>
 			<td>
 					<p>
@@ -44,17 +41,8 @@
 		          </ol>
 	     		</p>		
 			</td>
-			<td>
-					<!--
-					<ol>
-              <li>(&nbsp;&nbsp;&nbsp;) Acta de Nacimiento</li>
-              <li>(&nbsp;&nbsp;&nbsp;) Const. Médica</li>
-              <li>(&nbsp;&nbsp;&nbsp;) CURP</li>
-              <li>(&nbsp;&nbsp;&nbsp;) SIRED</li>
-              <li>(&nbsp;&nbsp;&nbsp;) FOTOS</li>
-          </ol>	
-          -->
-          <table width="200px" border="1" >
+			<td width="20%">
+          <table width="150px" border="1" >
 	          <tbody>
 		          <tr>
 			          <td>
