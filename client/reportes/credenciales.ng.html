@@ -2,7 +2,7 @@
 		<tbody>
 			<tr ng-repeat="participante in cre.participantes"> 
 				<td style="padding: 0.5; position: relative; width: 420px; height: 250px">
-					<img src="/img/fondo_credencial_con_pleca.png" style="position:absolute; width: 420px; height: 250px;"/>
+					<img src="/img/fondo_credencial_con_pleca.png" style="position:absolute; width: 420px; height: 242px;"/>
 					<br/>
 					<br/>
 					<br/>
@@ -11,12 +11,13 @@
 							<tr>
 								<td style="width: auto">
 										<div style="position:relative; left: 30px; top:0;">
-							         	<h6 style="margin: 0">CURP<small>{{participante.curp}}</small></h6>
-						          	<h6 style="margin: 0">Nombre<small>{{participante.nombre}} <br /> {{participante.apellidoPaterno}} {{participante.apellidoMaterno}}</small></h6>
-						            <h6 style="margin: 0">Deporte<small>{{participante.deporte.nombre}}</small></h6>
-						            <h6 style="margin: 0">Modalidad<small>{{participante.funcionespecifica}}</small></h6>
-												<h6 style="margin: 0">Vigencia<small>poner vigencia</small></h6>
-												<h6 style="margin: 0">Entidad<small>{{participante.municipio.nombre}}</small></h6>
+							         	<h6 style="margin: 0">CURP<small><strong>{{participante.curp}}</strong></small></h6>
+						          	<h6 style="margin: 0">Nombre<small><strong>{{participante.nombre}}<br /> 
+							          	{{participante.apellidoPaterno}} {{participante.apellidoMaterno}}</strong></small></h6>
+						            <h6 style="margin: 0">Deporte<small><strong>{{participante.deporte.nombre}}</strong></small></h6>
+						            <h6 style="margin: 0">Modalidad<small><strong>{{participante.funcionespecifica}}</strong></small></h6>
+												<h6 style="margin: 0">Vigencia<small><strong>poner vigencia</strong></small></h6>
+												<h6 style="margin: 0">Entidad<small><strong>{{participante.municipio.nombre}}</strong></small></h6>
 										</div>									
 								</td>
 								<td>
@@ -36,7 +37,7 @@
 					</table>
 				</td>
 				<td style="padding: 0.5; position: relative; width: 420px; height: 250px;">
-						<img src="/img/parte_de_atras.png" style="position:absolute;width: 420px; height: 250px;" />
+						<img src="/img/parte_de_atras.png" style="position:absolute;width: 420px; height: 242px;" />
 						<table> 
 						<tbody>
 							<tr>

@@ -86,18 +86,18 @@ function imprimirCedulaCtrl($scope, $meteor, $reactive, $state, toastr, $statePa
 			if(part.ready()){
 				
 				var Cantidad = rc.participantes.length;
-				if (Cantidad % 6 != 0)
+				if (Cantidad % 7 != 0)
 				{
 						//Completar cuantos faltan para 15
-						var modulo = Math.round(Cantidad % 6);
-						var faltantes = 6 - modulo;				
+						var modulo = Math.round(Cantidad % 7);
+						var faltantes = 7 - modulo;				
 						for (var i = 1; i <= faltantes; i++)
 						{
 								objFalatantes = {_id:"sa"+i,foto:"",nombre:"",apellidoPaterno:"", apellidoMaterno:"",sexo:""};
 								rc.participantes.push(objFalatantes);
 						}
 				}		 
-
+				
 				_.each(rc.participantes, function(participante){
 					participante.municipio = Municipios.findOne(participante.municipio_id);
 					participante.evento = Eventos.findOne(participante.evento_id);

@@ -24,10 +24,11 @@ function CredencialesCtrl($scope, $meteor, $reactive, $state, toastr, $statePara
 	
 	
 	let part = this.subscribe('participantes',()=>{
-		return [{$and:[ {municipio_id : $stateParams.municipio}
-									 ,{evento_id:  $stateParams.evento}
+		return [{$and:[ {evento_id:  $stateParams.evento}
+									 ,{municipio_id : $stateParams.municipio}
 									 ,{deporte_id:  $stateParams.deporte}
-									 ,{categoria_id:  $stateParams.categoria}]
+									 ,{categoria_id:  $stateParams.categoria}
+									 ,{rama_id:  $stateParams.rama}]
 						,estatus: true				
 			}]
 	});

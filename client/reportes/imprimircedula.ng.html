@@ -16,16 +16,10 @@
 						  <br />
 							{{participante.apellidoPaterno}} {{participante.apellidoMaterno}}
 							<br />
-	            <strong>FN: </strong>{{participante.fechaNacimiento.getUTCDate() +"-"+ (participante.fechaNacimiento.getUTCMonth()+1) +"-"+ participante.fechaNacimiento.getUTCFullYear()}}
-	            <br />
-              <strong>SEXO:</strong> {{participante.sexo}}
+	            <strong>FN: </strong>{{participante.fechaNacimiento.getUTCDate() +"-"+ (participante.fechaNacimiento.getUTCMonth()+1) +"-"+ participante.fechaNacimiento.getUTCFullYear()}} - <strong>SEXO:</strong> {{participante.sexo}}
               <br />
-              <strong>CURP:</strong> {{participante.curp}}
-              <br />
-              {{participante.municipio.nombre}}
-              <br />
-              {{participante.evento.nombre}}
-			</td>
+              <strong>CURP:</strong> {{participante.curp}} 
+      </td>
 			<td>
              	<span>{{participante.funcionespecifica}}</span>
               <br />
@@ -40,11 +34,11 @@
 		          </ol>
 			</td>
 			<td width="20%">
-          <table width="150px" border="1" >
+          <table style="width: 110px; height: 113px" border="1" >
 	          <tbody>
 		          <tr>
 			          <td>
-				          <br /><br /><br /><br /><br /><br /><br />
+											<!--<br /><br /><br /><br /><br />-->
 			          </td>
 		          </tr> 
 	          </tbody> 
@@ -53,6 +47,7 @@
 		</tr>
 	</tbody>
 </table>
+
 <div class="divFooter">
 	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span>____________________________</span>
 	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span>____________________________</span><br />
@@ -89,38 +84,11 @@ document.getElementById("Fecha").innerHTML = d.getDate() + "/" + (d.getMonth()+1
    @media print {
 		  div.divFooter {
 		    position: fixed;
-		    bottom: 30px;
+		    bottom: 7.9375mm;
 		  }
 	 }   
    
 </style>
-
-<!--
-	<tfoot>
-		<tr>
-			<td colspan="4">
-				<span>____________________________</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span>____________________________</span><br />
-				&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-				<span>	Director del Instuto			</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-																								 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-																								 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-																								 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-																								 <span>Vo. Bo. Conade	</span>					<br />
-				&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-				<span>Nombre, Firma y Sello</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-						 														  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-						 														  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-																					<span>Nombre, Firma y Sello </span> 				
-				&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-				&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-				&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-				<span>Fecha Emisión:</span><span id="Fecha"></span>
-			</td>	
-		</tr>	
-	</tfoot>	
-
--->
-
 
 
 

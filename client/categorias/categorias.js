@@ -24,10 +24,7 @@ function CategoriasCtrl($scope, $meteor, $reactive, $state, toastr) {
 	this.subscribe('ramas',()=>{
 		return [{estatus: true}]
 	});
-	this.subscribe('modalidaddeportivas',()=>{
-		return [{estatus: true}]
-	});
-  
+	  
   this.helpers({
 		categorias : () => {
 		  return Categorias.find();
@@ -43,9 +40,6 @@ function CategoriasCtrl($scope, $meteor, $reactive, $state, toastr) {
 	  },
 	  ramas : () => {
 		  return Ramas.find();
-	  },
-	  modalidaddeportivas : () => {
-		  return ModalidadDeportivas.find();
 	  },
   });
   	  
