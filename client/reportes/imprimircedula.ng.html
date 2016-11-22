@@ -27,7 +27,6 @@
               {{participante.evento.nombre}}
 			</td>
 			<td>
-					<p>
              	<span>{{participante.funcionespecifica}}</span>
               <br />
               <span>{{participante.categoria.nombre}}</span>
@@ -39,7 +38,6 @@
 			             	(&nbsp;&nbsp;&nbsp;) {{prueba.nombre}}
 			          </li>
 		          </ol>
-	     		</p>		
 			</td>
 			<td width="20%">
           <table width="150px" border="1" >
@@ -54,6 +52,50 @@
 			</td>
 		</tr>
 	</tbody>
+</table>
+<div class="divFooter">
+	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span>____________________________</span>
+	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span>____________________________</span><br />
+	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+	<span>	Director del Instituto			</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+																								 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+																								 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+																								 &nbsp;&nbsp;&nbsp;
+																								 <span>Vo. Bo. Conade	</span><br />
+				&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+				<span>Nombre, Firma y Sello</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+						 														  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+						 														  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+																					<span>Nombre, Firma y Sello </span> 				
+				&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+				&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+				&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+				<span>Fecha Emisión:</span><span id="Fecha"></span>
+</div>
+
+<script>
+var d = new Date();
+document.getElementById("Fecha").innerHTML = d.getDate() + "/" + (d.getMonth()+1)  + "/" +d.getFullYear();
+
+</script>
+
+<style type="text/css">
+   <!--
+   @page {
+      size: auto;   /* auto is the initial value */
+      margin: 0;
+   }
+   -->
+   @media print {
+		  div.divFooter {
+		    position: fixed;
+		    bottom: 30px;
+		  }
+	 }   
+   
+</style>
+
+<!--
 	<tfoot>
 		<tr>
 			<td colspan="4">
@@ -76,25 +118,8 @@
 			</td>	
 		</tr>	
 	</tfoot>	
-</table>
 
-
-<script>
-var d = new Date();
-document.getElementById("Fecha").innerHTML = d.getDate() + "/" + (d.getMonth()+1)  + "/" +d.getFullYear();
-
-</script>
-
-<style type="text/css">
-   <!--
-   @page {
-      size: auto;   /* auto is the initial value */
-      margin: 0;
-   }
-   -->
-</style>
-
-
+-->
 
 
 
