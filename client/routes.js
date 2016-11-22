@@ -231,7 +231,7 @@ angular.module('insude').config(['$injector', function ($injector) {
 	    }
     })
     .state('anon.credenciales', {
-      url: '/credenciales/:evento/:municipio',
+      url: '/credenciales/:evento/:municipio/:deporte/:categoria/:rama',
       templateUrl: 'client/reportes/credenciales.ng.html',
       controller: 'CredencialesCtrl as cre',
       resolve: {
@@ -241,7 +241,7 @@ angular.module('insude').config(['$injector', function ($injector) {
 	    }
     })
     .state('anon.gafetes', {
-      url: '/gafetes/:evento/:municipio',
+      url: '/gafetes/:evento/:municipio/:deporte/:categoria/:rama',
       templateUrl: 'client/reportes/gafetes.ng.html',
       controller: 'GafetesCtrl as gaf',
       resolve: {
