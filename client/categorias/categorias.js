@@ -11,7 +11,6 @@ function CategoriasCtrl($scope, $meteor, $reactive, $state, toastr) {
 	this.subscribe('categorias',()=>{
 		return [{evento_id:  this.getReactively('buscar.buscarEvento_id')? this.getReactively('buscar.buscarEvento_id'):"" 
 						 ,deporte_id: this.getReactively('buscar.buscarDeporte_id')? this.getReactively('buscar.buscarDeporte_id'):""
-						 ,rama_id: 	 this.getReactively('buscar.buscarRama_id')? this.getReactively('buscar.buscarRama_id'):""
 					}]
 	});
 	
@@ -19,9 +18,6 @@ function CategoriasCtrl($scope, $meteor, $reactive, $state, toastr) {
 		return [{estatus: true}]
 	});
 	this.subscribe('deportes',()=>{
-		return [{estatus: true}]
-	});
-	this.subscribe('ramas',()=>{
 		return [{estatus: true}]
 	});
 	  
@@ -37,9 +33,6 @@ function CategoriasCtrl($scope, $meteor, $reactive, $state, toastr) {
 	  },
 	  deportes : () => {
 		  return Deportes.find({evento_id: this.getReactively('categoria.evento_id')? this.getReactively('categoria.evento_id'):""});
-	  },
-	  ramas : () => {
-		  return Ramas.find();
 	  },
   });
   	  
@@ -115,7 +108,7 @@ function CategoriasCtrl($scope, $meteor, $reactive, $state, toastr) {
 				 return evento.nombre;
 				 
 	};
-	*/
+	
 	this.getRama = function(rama_id)
 	{		
 			var rama = Ramas.findOne({_id:rama_id});
@@ -133,6 +126,6 @@ function CategoriasCtrl($scope, $meteor, $reactive, $state, toastr) {
 				 return modalidaddeportiva.nombre;
 				 
 	};
-	
+	*/
 	
 };

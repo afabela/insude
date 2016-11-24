@@ -64,6 +64,12 @@
       </a>
      </li>
      <li data-ui-sref-active="active">
+      <a ui-sref="root.descargadocumentos" tilte="Insude" ng-if="currentUser.roles[0] == 'admin'">
+        <i class="fa fa-lg fa-fw fa-folder-o"></i>
+        <span class="menu-item-parent">Descarga Doctos</span>
+      </a>
+     </li>
+     <li data-ui-sref-active="active">
       <a ui-sref="root.listarparticipantes" tilte="Insude" ng-if="currentUser.roles[0] == 'DelegadoMunicipal'">
         <i class="fa fa-lg fa-fw fa-folder-o"></i>
         <span class="menu-item-parent">Lista Participantes</span>

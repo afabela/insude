@@ -260,6 +260,16 @@ angular.module('insude').config(['$injector', function ($injector) {
 	      }]
 	    }
     })
+    .state('root.descargadocumentos', {
+      url: '/descargadocumentos',
+      templateUrl: 'client/descarga/descargaDocumentos.ng.html',
+      controller: 'descargaDocumentosCtrl as dc',
+      resolve: {
+	      "currentUser": ["$meteor", function($meteor){
+	        return $meteor.requireUser();
+	      }]
+	    }
+    })
     .state('root.subircedula', {
       url: '/subircedula/:evento/:deporte/:categoria/:rama',
       templateUrl: 'client/reportes/subircedula.ng.html',

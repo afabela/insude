@@ -39,14 +39,6 @@
 									</option>
 								</select>
 							</div>
-							<div class="col-sm-2" valida>
-								<label >Rama</label>
-								<select name="rama" class="form-control select2" placeholder="Seleccione" ng-model="cat.categoria.rama_id" required>
-									<option  value="{{rama._id}}" ng-repeat="rama in cat.ramas">
-										{{rama.nombre}}
-									</option>
-								</select>
-							</div>	
 			    </div>  
 					<div class="row">	
 						<h3>Registros</h3>
@@ -96,14 +88,6 @@
 				</option>
 			</select>
 		</div>
-		<div class="col-sm-2">
-			<label >Rama</label>
-			<select name="rama" class="form-control select2" placeholder="Seleccione" ng-model="cat.buscar.buscarRama_id">
-				<option  value="{{rama._id}}" ng-repeat="rama in cat.ramas">
-					{{rama.nombre}}
-				</option>
-			</select>
-		</div>	
 	</div>	
 </div>
 <!--/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////-->
@@ -113,8 +97,6 @@
 			<thead>
 				<tr>
 					<th width="20%"><div class="text-center">Nombre</div></th>
-					<th width="10%"><div class="text-center">Rama</div></th>						
-					<th width="10%"><div class="text-center">Modalidad Deportiva</div></th>						
 					<th width="10%">
 						<div class="text-center">
 							Estatus
@@ -130,8 +112,6 @@
 			<tbody>
 		    <tr ng-repeat="categoria in cat.categorias | filter:query">
 			    <td><a href="/pruebas/{{categoria._id}}/{{categoria.evento_id}}/{{categoria.deporte_id}}/{{categoria.categoria_id}}/{{categoria.rama_id}}">{{categoria.nombre}} </a></td>
-			    <td>{{cat.getRama(categoria.rama_id)}}</td>
-			    <td>{{cat.getModalidadDeportiva(categoria.modalidaddeportiva_id)}}</td>
 			    <td>
 				    <div class="text-center">
 				    	<span ng-if="categoria.estatus" class="label label-success">
