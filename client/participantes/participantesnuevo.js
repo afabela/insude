@@ -466,34 +466,38 @@ function ParticipantesNuevoCtrl($scope, $meteor, $reactive, $state, toastr, $sta
 	{
 			if (participante.nombre == undefined)
 			{
-					
-				
+					toastr.error('Falta proporcionar el nombre.');
+					return;
 			}
 			
 			if (participante.apellidoPaterno == undefined)
 			{
-					
-				
-			}
-			
-			if (participante.sexo == undefined)
-			{
-					
-				
-			}
-			
-			if (participante.estado == undefined)
-			{
-					
+					toastr.error('Falta proporcionar el apellido paterno.');
+					return;
 				
 			}
 			
 			if (participante.fechaNacimiento == undefined)
 			{
-					
+					toastr.error('Falta proporcionar la fecha de nacimiento.');
+					return;
 				
 			}
-		
+			
+			if (participante.sexo == undefined)
+			{
+					toastr.error('Falta proporcionar el sexo.');
+					return;
+				
+			}
+			
+			if (participante.estado == undefined)
+			{
+					toastr.error('Falta seleccionar el estado.');
+					return;
+				
+			}
+			
 			var curp = generaCurp({
 			  nombre            : participante.nombre,
 			  apellido_paterno  : participante.apellidoPaterno,
