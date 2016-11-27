@@ -23,5 +23,5 @@ Meteor.methods({
 			profile: usuario.profile
 		}});
 		Accounts.setPassword(usuario._id, usuario.password, {logout: false});
-	}
+	},
 });

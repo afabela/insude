@@ -9,7 +9,7 @@
 <br>
 <div class="well">	    
 	<div class="row">
-		<div class="col-sm-4">
+		<div class="col-sm-3">
 			<label >Evento</label>
 			<select name="evento" class="form-control select2" placeholder="Seleccione" ng-model="ced.evento.evento_id">
 					<option  value="{{evento._id}}" ng-repeat="evento in ced.eventos">
@@ -25,8 +25,8 @@
 					</option>
 			</select>
 		</div>
-		<div class="col-sm-4">
-			<label >Categoria *</label>
+		<div class="col-sm-3">
+			<label >Categoria</label>
 			<select name="categoria" class="form-control select2" placeholder="Seleccione" ng-model="ced.evento.categoria_id">
 					<option  value="{{categoria._id}}" ng-repeat="categoria in ced.categorias">
 						{{categoria.nombre}}
@@ -34,12 +34,29 @@
 			</select>
 		</div>
 		<div class="col-sm-2">
-			<label >Rama *</label>
+			<label >Rama</label>
 			<select name="rama" class="form-control select2" placeholder="Seleccione" ng-model="ced.evento.rama_id">
 					<option  value="{{rama._id}}" ng-repeat="rama in ced.ramas">
 						{{rama.nombre}}
 					</option>
 			</select>	
+		</div>
+		<div class="col-sm-2" valida>
+			<label for="funcionespecifica">Función Especifica</label>
+			<select name="funcionespecifica" ng-model="ced.evento.funcionEspecifica" data-placeholder="Seleccione" class="form-control">
+					<option value=""></option>
+					<option value="DEPORTISTA">Deportista</option>
+					<option value="ENTRENADOR">Entrenador</option>
+					<option value="DELEGADO POR DEPORTE">Delegado Por Deporte</option>
+					<option value="AUXILIAR GENERAL">Auxiliar General</option>
+					<option value="ASOCIACIÓN">Asociación</option>
+					<option value="JUEZ/ARBITRO">Juez/Arbitro</option>
+				  <option value="JEFE DE MISIÓN">Jefe de Misión</option>
+					<option value="OFICIAL">Oficial</option>
+					<option value="MÉDICO">Médico</option>
+					<option value="PRENSA">Prensa</option>
+					<option value="INVITADO ESPECIAL">Invitado Especial</option>
+			</select>
 		</div>
 	</div>
 	<div class="row">	
@@ -56,7 +73,7 @@
 </div>		
 
 <!-- Tablas-->
-<table class="table" width="600" align="center" >
+<table class="table" width="600" align="center" bs-table>
 	<thead>
 		 <tr>
 			 <th>Foto</th>

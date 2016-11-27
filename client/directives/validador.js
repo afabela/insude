@@ -48,3 +48,4 @@ angular.module('insude').directive('validaForm', validaForm);
 		}
   }
 }
+

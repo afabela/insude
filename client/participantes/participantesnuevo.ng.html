@@ -43,10 +43,10 @@
 											<a href="#tab1" data-toggle="tab"> <span class="step">1</span> <span class="title">Información Básica</span></a>
 										</li>
 										<li data-target="#step2">
-											<a href="#tab2" data-toggle="tab"> <span class="step">2</span> <span class="title">Documentación</span></a>
+											<a href="#tab2" data-toggle="tab"> <span class="step">2</span> <span class="title">Información Deportiva</span></a>
 										</li>
 										<li data-target="#step2">
-											<a href="#tab3" data-toggle="tab"> <span class="step">3</span> <span class="title">Información Deportiva</span></a>
+											<a href="#tab3" data-toggle="tab"> <span class="step">3</span> <span class="title">Documentación</span></a>
 										</li>
 										<li data-target="#step3">
 											<a href="#tab4" data-toggle="tab"> <span class="step">3</span> <span class="title">Finalizar Registro</span></a>
@@ -130,6 +130,7 @@
 												    <div class="col-sm-4" valida>
 															<label>CURP *</label>												
 															<input name="curp" type="text" class="form-control" ng-model="pn.participante.curp" required>
+															<input type="button" ng-click="pn.GeneraCurp(pn.participante)" value="Generar CURP">
 														</div>
 														<div class="col-sm-4" valida>
 													    <label for="formacionacademica">Formación Académica</label>
@@ -159,49 +160,26 @@
 									</div>
 									<div class="tab-pane" id="tab2">
 										<br>
-										<h3><strong>Paso 2</strong> - Documentación</h3>
-										<div class="row">
-											<div class="col-sm-12">
-												<div class="well">												
-											    <div class="row">
-											    	<div class="col-sm-4">
-															<label>CURP *</label>
-															<div>
-																<input type="file" id="fileInputCurp" accept="application/pdf, image/jpeg">
-															</div>
-														</div>
-														<div class="col-sm-4">
-															<label>Acta de Nacimiento *</label>
-															<div>
-																<input type="file" id="fileInputActa" accept="application/pdf, image/jpeg">
-															</div>
-														</div>
-														<div class="col-sm-4">
-															<label>Identificación Oficial *</label>
-															<div>
-																<input type="file" id="fileInputIdentificacion" accept="application/pdf, image/jpeg">
-															</div>
-														</div>								
-											    </div>
-										  	</div>	
-											</div>
-										</div>
-									</div>
-									<div class="tab-pane" id="tab3">
-										<br>
-										<h3><strong>Paso 3</strong> - Información Deportiva</h3>
+										<h3><strong>Paso 2</strong> - Información Deportiva</h3>
 										<div class="row">
 											<div class="col-sm-12">
 												<div class="well">												
 											    <div class="row">
 											    	<div class="col-sm-4" valida>
 													    <label for="funcionespecifica">Función Especifica *</label>
-													    <select name="funcionespecifica" ng-model="pn.participante.funcionespecifica" data-placeholder="Seleccione" class="form-control" required>
+													    <select name="funcionespecifica" ng-model="pn.participante.funcionEspecifica" data-placeholder="Seleccione" ng-change="pn.funcionEspecifica(pn.participante)" class="form-control" required>
 															    <option value=""></option>
 															    <option value="DEPORTISTA">Deportista</option>
 															    <option value="ENTRENADOR">Entrenador</option>
 															    <option value="DELEGADO POR DEPORTE">Delegado Por Deporte</option>
 															    <option value="AUXILIAR GENERAL">Auxiliar General</option>
+															    <option value="ASOCIACIÓN">Asociación</option>
+															    <option value="JUEZ/ARBITRO">Juez/Arbitro</option>
+															    <option value="JEFE DE MISIÓN">Jefe de Misión</option>
+															    <option value="OFICIAL">Oficial</option>
+															    <option value="MÉDICO">Médico</option>
+															    <option value="PRENSA">Prensa</option>
+															    <option value="INVITADO ESPECIAL">Invitado Especial</option>
 															</select>
 											    	</div>
 														<div class="col-sm-2" valida>
@@ -235,9 +213,37 @@
 																	{{prueba.nombre}}
 																</option>
 															</select>
+														</div>	
+											    </div>
+										  	</div>	
+											</div>
+										</div>
+									</div>
+									<div class="tab-pane" id="tab3">
+										<br>
+										<h3><strong>Paso 3</strong> - Documentación</h3>
+										<div class="row">
+											<div class="col-sm-12">
+												<div class="well">												
+											    <div class="row">
+											    	<div class="col-sm-4">
+															<label>CURP *</label>
+															<div>
+																<input type="file" id="fileInputCurp" accept="application/pdf, image/jpeg">
+															</div>
 														</div>
-														
-														
+														<div class="col-sm-4">
+															<label>Acta de Nacimiento *</label>
+															<div>
+																<input type="file" id="fileInputActa" accept="application/pdf, image/jpeg">
+															</div>
+														</div>
+														<div class="col-sm-4">
+															<label>Identificación Oficial *</label>
+															<div>
+																<input type="file" id="fileInputIdentificacion" accept="application/pdf, image/jpeg">
+															</div>
+														</div>								
 											    </div>
 										  	</div>	
 											</div>

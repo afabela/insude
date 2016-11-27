@@ -87,18 +87,18 @@ function ParticipantesNuevoCtrl($scope, $meteor, $reactive, $state, toastr, $sta
 	    
 	    if (participante.foto == undefined)
 	    {
-		    toastr.error('Error no se ha cargado la foto del particpante.');
+		    toastr.error('Error no se ha cargado la foto del participante.');
 	      return;
 	    }
 	    console.log(participante);
 	    if (participante.curpImagen == undefined)
 	    {
-		    toastr.error('Error no se ha cargado el comprobante del CURP del particpante.');
+		    toastr.error('Error no se ha cargado el comprobante del CURP del participante.');
 	      return;
 	    }
 	    if (participante.actaNacimiento == undefined)
 	    {
-		    toastr.error('Error no se ha cargado el comprobante del Acta de Nacimiento del particpante.');
+		    toastr.error('Error no se ha cargado el comprobante del Acta de Nacimiento del participante.');
 	      return;
 	    }
 	    if (participante.identificacion == undefined)
@@ -106,65 +106,87 @@ function ParticipantesNuevoCtrl($scope, $meteor, $reactive, $state, toastr, $sta
 		    toastr.error('Error no se ha cargado el comprobante de la Identificación Oficial del particpante.');
 	      return;
 	    }
-			
-			//Obtener las Edades de la Categoria			
-			var cat = Categorias.findOne({ _id: participante.categoria_id});
-			
-			var d = new Date();
-			var anioActual = d.getFullYear();
-			
-			var anioInicio = cat.anioinicio;
-			var anioFin = cat.aniofin;
-
-			var EdadMinima = anioActual - anioInicio;	//22
-			var EdadMaxima = anioActual - anioFin;    //23
-			
-			//Obtener la Edad del participante
-			
-	    var today_year = d.getFullYear();
-	    var today_month = d.getMonth();
-	    var today_day = d.getDate();
-	    var edad = today_year - participante.fechaNacimiento.getFullYear();
-			
-	    if ( today_month < (participante.fechaNacimiento.getMonth() - 1))
+	    
+	    if (participante.categoria_id != "s/a")
 	    {
-	        edad--;
-	    }
-	    if (((participante.fechaNacimiento.getMonth() - 1) == today_month) && (today_day < participante.fechaNacimiento.getDay()))
-	    {
-	        edad--;
-	    }
-	    console.log("Final:",edad);
-			console.log("Maxima:", EdadMaxima);
-			console.log("Minima:", EdadMinima);
 			
-			
-			//Validar la edad del particpante en relación a la categoria
-			if (edad >= EdadMinima && edad <= EdadMaxima)
+					//Obtener las Edades de la Categoria			
+					var cat = Categorias.findOne({ _id: participante.categoria_id});
+					
+					var d = new Date();
+					var anioActual = d.getFullYear();
+					
+					var anioInicio = cat.anioinicio;
+					var anioFin = cat.aniofin;
+		
+					var EdadMinima = anioActual - anioInicio;	//22
+					var EdadMaxima = anioActual - anioFin;    //23
+					
+					//Obtener la Edad del participante
+					
+			    var today_year = d.getFullYear();
+			    var today_month = d.getMonth();
+			    var today_day = d.getDate();
+			    var edad = today_year - participante.fechaNacimiento.getFullYear();
+					
+			    if ( today_month < (participante.fechaNacimiento.getMonth() - 1))
+			    {
+			        edad--;
+			    }
+			    if (((participante.fechaNacimiento.getMonth() - 1) == today_month) && (today_day < participante.fechaNacimiento.getDay()))
+			    {
+			        edad--;
+			    }
+			    
+			    //console.log("Final:",edad);
+					//console.log("Maxima:", EdadMaxima);
+					//console.log("Minima:", EdadMinima);
+					
+					
+					//Validar la edad del particpante en relación a la categoria
+					if (edad >= EdadMinima && edad <= EdadMaxima)
+					{
+							
+							participante.municipio_id = Meteor.user() != undefined ? Meteor.user().profile.municipio_id : "";
+							console.log(participante);
+							
+							participante.nombreCompleto = participante.nombre + " " + participante.apellidoPaterno + " " + participante.apellidoMaterno;
+							participante.estatus = true;
+							participante.usuarioInserto = Meteor.userId();
+							Participantes.insert(participante);
+							toastr.success('Guardado correctamente.');
+							participante = {};
+							$('.collapse').collapse('hide');
+							this.nuevo = true;
+							$state.go('root.listarparticipantes');
+							
+							form.$setPristine();
+					    form.$setUntouched();
+		
+					}	 
+					else
+					{
+							 toastr.error('La edad no corresponde a la categoria verificar por favor.');
+							 
+					}
+			}else
 			{
+							participante.municipio_id = Meteor.user() != undefined ? Meteor.user().profile.municipio_id : "";
 					
-					participante.municipio_id = Meteor.user() != undefined ? Meteor.user().profile.municipio_id : "";
-					console.log(participante);
-					
-					participante.nombreCompleto = participante.nombre + " " + participante.apellidoPaterno + " " + participante.apellidoMaterno;
-					participante.estatus = true;
-					participante.usuarioInserto = Meteor.userId();
-					Participantes.insert(participante);
-					toastr.success('Guardado correctamente.');
-					participante = {};
-					$('.collapse').collapse('hide');
-					this.nuevo = true;
-					$state.go('root.listarparticipantes');
-					
-					form.$setPristine();
-			    form.$setUntouched();
-
-			}	 
-			else
-			{
-					 toastr.error('La edad no corresponde a la categoria verificar por favor.');
-					 
-			}
+							participante.nombreCompleto = participante.nombre + " " + participante.apellidoPaterno + " " + participante.apellidoMaterno;
+							participante.estatus = true;
+							participante.usuarioInserto = Meteor.userId();
+							Participantes.insert(participante);
+							toastr.success('Guardado correctamente.');
+							participante = {};
+							$('.collapse').collapse('hide');
+							this.nuevo = true;
+							$state.go('root.listarparticipantes');
+							
+							form.$setPristine();
+					    form.$setUntouched();
+				
+			}		
 			
 	};
 	
@@ -193,7 +215,7 @@ function ParticipantesNuevoCtrl($scope, $meteor, $reactive, $state, toastr, $sta
 			form.$setPristine();
 	    form.$setUntouched();
 	};
-		
+	/*	
 	this.cambiarEstatus = function(id)
 	{
 			var participante = Participantes.findOne({_id:id});
@@ -231,6 +253,36 @@ function ParticipantesNuevoCtrl($scope, $meteor, $reactive, $state, toastr, $sta
 				 return categoria.nombre;
 				 
 	};
+	*/
+	
+	this.funcionEspecifica = function(participante)
+	{
+			
+			console.log(participante.funcionEspecifica);
+			switch (participante.funcionEspecifica)
+			{
+					case "ASOCIACIÓN":
+					case "JUEZ/ARBITRO":
+					case "JEFE DE MISIÓN":
+					case "OFICIAL":
+					case "MÉDICO":
+					case "PRENSA":
+					case "INVITADO ESPECIAL":
+							console.log("entro");
+							
+							participante.fechaNacimiento= new Date();
+							participante.estado = "BAJA CALIFORNIA SUR";
+							participante.curpImagen = "s/a";
+							participante.actaNacimiento = "s/a";
+							participante.identificacion = "s/a";
+							participante.categoria_id = "s/a";
+							participante.rama_id = "s/a";
+							break;
+			}
+			console.log(participante);
+			
+						
+	}
 	
 	this.AlmacenaImagen = function(imagen, tipo)
 	{
@@ -410,6 +462,91 @@ function ParticipantesNuevoCtrl($scope, $meteor, $reactive, $state, toastr, $sta
 
 	});
 	
+	this.GeneraCurp = function(participante)
+	{
+			if (participante.nombre == undefined)
+			{
+					
+				
+			}
+			
+			if (participante.apellidoPaterno == undefined)
+			{
+					
+				
+			}
+			
+			if (participante.sexo == undefined)
+			{
+					
+				
+			}
+			
+			if (participante.estado == undefined)
+			{
+					
+				
+			}
+			
+			if (participante.fechaNacimiento == undefined)
+			{
+					
+				
+			}
+		
+			var curp = generaCurp({
+			  nombre            : participante.nombre,
+			  apellido_paterno  : participante.apellidoPaterno,
+			  apellido_materno  : participante.apellidoMaterno,
+			  sexo              : participante.sexo == 'Hombre'?'H':'M',
+			  estado            : Estado(participante.estado),
+			  fecha_nacimiento  : [participante.fechaNacimiento.getUTCDate(), participante.fechaNacimiento.getUTCMonth()+1, participante.fechaNacimiento.getUTCFullYear()]
+			});
+			
+		  participante.curp = curp;
+		
+	};
 	
+	function Estado(estado)
+	{	
+			var e = '';
+			switch(estado)
+			{
+					case 'AGUASCALIENTES': e = 'AS'; break;
+					case 'BAJA CALIFORNIA NTE.': e = 'BC'; break;
+					case 'BAJA CALIFORNIA SUR': e = 'BS'; break;
+					case 'CAMPECHE': e = 'CC'; break;
+					case 'COAHUILA': e = 'CL'; break;
+					case 'COLIMA': e = 'CM'; break;
+					case 'CHIAPAS': e = 'CS'; break;
+					case 'CHIHUAHUA': e = 'CH'; break;
+					case 'DISTRITO FEDERAL': e = 'DF'; break;
+					case 'DURANGO': e = 'DG'; break;
+					case 'GUANAJUATO': e = 'GT'; break;
+					case 'GUERRERO': e = 'GR'; break;
+					case 'HIDALGO': e = 'HG'; break;
+					case 'JALISCO': e = 'JC'; break;
+					case 'MEXICO': e = 'MC'; break;
+					case 'MICHOACAN': e = 'MN'; break;
+					case 'NAYARIT': e = 'NT'; break;
+					case 'NUEVO LEON': e = 'NL'; break;
+					case 'PUEBLA': e = 'PL'; break;
+					case 'QUERETARO': e = 'QT'; break;
+					case 'QUINTANA ROO': e = 'QR'; break;
+					case 'SAN LUIS POTOSI': e = 'SP'; break;
+					case 'SINALOA': e = 'SL'; break;
+					case 'SONORA': e = 'SR'; break;
+					case 'TABASCO': e = 'TC'; break;
+					case 'TAMAULIPAS': e = 'TS'; break;
+					case 'TLAXCALA': e = 'TL'; break;
+					case 'VERACRUZ': e = 'VZ'; break;
+					case 'YUCATAN': e = 'YN'; break;
+					case 'ZACATECAS': e = 'ZS'; break;
+					case 'SERV. EXTERIOR MEXICANO': e = 'SM'; break;
+					case 'NACIDO EN EL EXTRANJERO': e = 'NE'; break;
+			}	
+			
+			return e;		
+	}	
 	
 };

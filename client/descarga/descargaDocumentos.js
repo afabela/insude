@@ -45,7 +45,9 @@ function descargaDocumentosCtrl($scope, $meteor, $reactive, $state, toastr, $sta
 	});
 	
 	this.subscribe('deportes',()=>{
-		return [{evento_id: this.getReactively('evento.evento_id')? this.getReactively('evento.evento_id'):""}]
+		return [{evento_id: this.getReactively('evento.evento_id')? this.getReactively('evento.evento_id'):""
+						,estatus: true
+		}]
 	});
 	
 	this.subscribe('categorias',()=>{
@@ -56,7 +58,8 @@ function descargaDocumentosCtrl($scope, $meteor, $reactive, $state, toastr, $sta
 	});
 	
 	this.subscribe('pruebas',()=>{
-		return [{evento_id:  this.getReactively('evento.evento_id')? this.getReactively('evento.evento_id'):"" 
+		return [{evento_id:  this.getReactively('evento.evento_id')? this.getReactively('evento.evento_id'):""
+						,estatus: true 
 		}]
 	});
 	
@@ -108,39 +111,27 @@ function descargaDocumentosCtrl($scope, $meteor, $reactive, $state, toastr, $sta
 	
   this.download = function(data) {
 		
-		var pdf = 'data:application/octet-stream;base64,';
-    
+    console.log(data);
+    if (data.indexOf("pdf") > 0)
+    {
+	    	var pdf = 'data:application/octet-stream;base64,';
+	  		var d = data.replace('data:application/pdf;base64,','');  
+				var dlnk = document.getElementById('dwnldLnk');
+		    dlnk.download="Curp"+".pdf";
+		    dlnk.href = pdf+d;
 		
-		//console.log(data);
-		var d = data.replace('data:application/pdf;base64,','');
-
-		/*
-    var a = document.createElement("a"),
-        file = new Blob([pdf], {type: 'data:application/octet-stream;base64,'});
-        
-        
-    if (window.navigator.msSaveOrOpenBlob) // IE10+
-        window.navigator.msSaveOrOpenBlob(file, 'demo.pdf');
-    else { // Others
-        var url = URL.createObjectURL(file);
-        a.href = url;
-        a.download = 'demo';
-        document.body.appendChild(a);
-        a.click();
-        setTimeout(function() {
-            document.body.removeChild(a);
-            window.URL.revokeObjectURL(url);  
-        }, 0); 
+		    dlnk.click();
     }
-    */
-    
-    var dlnk = document.getElementById('dwnldLnk');
-    dlnk.download="Curp"+".pdf";
-    dlnk.href = pdf+d;
-
-    dlnk.click();
-
-    
+    else if(data.indexOf("jpeg") > 0)
+    {
+	    	var jpeg = 'data:application/octet-stream;base64,';
+	  		var d = data.replace('data:image/jpeg;base64,','');  
+				var dlnk = document.getElementById('dwnldLnk');
+		    dlnk.download="Curp"+".jpeg";
+		    dlnk.href = jpeg+d;
+		
+		    dlnk.click();
+    }
 	};
 
 
