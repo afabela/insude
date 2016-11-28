@@ -18,7 +18,7 @@ function descargaDocumentosCtrl($scope, $meteor, $reactive, $state, toastr, $sta
 	this.validation = false;
 	
 	
-	let part = this.subscribe('participantes',()=>{
+	let part = this.subscribe('participantesCred',()=>{
 		return [{municipio_id: this.getReactively('evento.municipio_id')!= undefined ? this.getReactively('evento.municipio_id'): ""
 						,evento_id: this.getReactively('evento.evento_id')!= undefined ? this.getReactively('evento.evento_id'): "" 
 						,deporte_id: this.getReactively('evento.deporte_id')!= undefined ? this.getReactively('evento.deporte_id'): "" 
@@ -109,31 +109,76 @@ function descargaDocumentosCtrl($scope, $meteor, $reactive, $state, toastr, $sta
 		
 	});
 	
-  this.download = function(participante) 
+  this.download = function(p, op) 
   {
+		var participante = {};
 		
-		var data = participante.curpImagen;
-		
-    if (data.indexOf("pdf") > 0)
-    {
-	    	var pdf = 'data:application/octet-stream;base64,';
-	  		var d = data.replace('data:application/pdf;base64,','');  
-				var dlnk = document.getElementById('dwnldLnk');
-		    dlnk.download= participante.curp+".pdf";
-		    dlnk.href = pdf+d;
-		
-		    dlnk.click();
-    }
-    else if(data.indexOf("jpeg") > 0)
-    {
-	    	var jpeg = 'data:application/octet-stream;base64,';
-	  		var d = data.replace('data:image/jpeg;base64,','');  
-				var dlnk = document.getElementById('dwnldLnk');
-		    dlnk.download=participante.curp+".jpeg";
-		    dlnk.href = jpeg+d;
-		
-		    dlnk.click();
-    }
+		Meteor.call('getParticipante', p._id, function(error, response) {
+		   if(error){
+		    console.log('ERROR :', error);
+		    return;
+		   }else{
+		    //console.log('response:', response);
+		    participante = response;
+		    
+		    var data;
+				if (op==1)
+				{
+					  data = participante.curpImagen;
+				}
+				else if (op==2)
+				{
+					  data = participante.actaNacimiento;
+				}
+				else if (op==3)
+				{
+					  data = participante.identificacion;
+				}
+				
+		    if (data.indexOf("pdf") > 0)
+		    {
+			    	var pdf = 'data:application/octet-stream;base64,';
+			  		var d = data.replace('data:application/pdf;base64,','');  
+						var dlnk = document.getElementById('dwnldLnk');
+						if (op==1)
+						{
+							 dlnk.download= participante.curp+".pdf";
+						}
+						else if (op==2)
+						{
+							 dlnk.download= participante.curp+"-AN.pdf";
+						}
+						else if (op==3)
+						{
+							 dlnk.download= participante.curp+"-Ide.pdf";
+						}
+				    dlnk.href = pdf+d;
+				    dlnk.click();
+		    }
+		    else if(data.indexOf("jpeg") > 0)
+		    {
+			    	var jpeg = 'data:application/octet-stream;base64,';
+			  		var d = data.replace('data:image/jpeg;base64,','');  
+						var dlnk = document.getElementById('dwnldLnk');
+				    
+				    if (op==1)
+						{
+							 dlnk.download= participante.curp+".jpeg";
+						}
+						else if (op==2)
+						{
+							 dlnk.download= participante.curp+"-AN.jpeg";
+						}
+						else if (op==3)
+						{
+							 dlnk.download= participante.curp+"-Ide.jpeg";
+						}		
+				    dlnk.href = jpeg+d;
+				    dlnk.click();
+		    }
+		    
+		   }
+		});
 	};
 
 
