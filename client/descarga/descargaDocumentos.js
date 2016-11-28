@@ -109,15 +109,17 @@ function descargaDocumentosCtrl($scope, $meteor, $reactive, $state, toastr, $sta
 		
 	});
 	
-  this.download = function(data) {
+  this.download = function(participante) 
+  {
 		
-    console.log(data);
+		var data = participante.curpImagen;
+		
     if (data.indexOf("pdf") > 0)
     {
 	    	var pdf = 'data:application/octet-stream;base64,';
 	  		var d = data.replace('data:application/pdf;base64,','');  
 				var dlnk = document.getElementById('dwnldLnk');
-		    dlnk.download="Curp"+".pdf";
+		    dlnk.download= participante.curp+".pdf";
 		    dlnk.href = pdf+d;
 		
 		    dlnk.click();
@@ -127,7 +129,7 @@ function descargaDocumentosCtrl($scope, $meteor, $reactive, $state, toastr, $sta
 	    	var jpeg = 'data:application/octet-stream;base64,';
 	  		var d = data.replace('data:image/jpeg;base64,','');  
 				var dlnk = document.getElementById('dwnldLnk');
-		    dlnk.download="Curp"+".jpeg";
+		    dlnk.download=participante.curp+".jpeg";
 		    dlnk.href = jpeg+d;
 		
 		    dlnk.click();

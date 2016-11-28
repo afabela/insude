@@ -144,11 +144,30 @@ function ParticipantesNuevoCtrl($scope, $meteor, $reactive, $state, toastr, $sta
 					
 					
 					//Validar la edad del particpante en relación a la categoria
-					if (edad >= EdadMinima && edad <= EdadMaxima)
+					if (participante.funcionEspecifica != 'DEPORTISTA')
+					{
+						  participante.municipio_id = Meteor.user() != undefined ? Meteor.user().profile.municipio_id : "";
+							//console.log(participante);
+							
+							participante.nombreCompleto = participante.nombre + " " + participante.apellidoPaterno + " " + participante.apellidoMaterno;
+							participante.estatus = true;
+							participante.usuarioInserto = Meteor.userId();
+							Participantes.insert(participante);
+							toastr.success('Guardado correctamente.');
+							participante = {};
+							$('.collapse').collapse('hide');
+							this.nuevo = true;
+							$state.go('root.listarparticipantes');
+							
+							form.$setPristine();
+					    form.$setUntouched();
+						
+					}
+					else if (edad >= EdadMinima && edad <= EdadMaxima)
 					{
 							
 							participante.municipio_id = Meteor.user() != undefined ? Meteor.user().profile.municipio_id : "";
-							console.log(participante);
+							//console.log(participante);
 							
 							participante.nombreCompleto = participante.nombre + " " + participante.apellidoPaterno + " " + participante.apellidoMaterno;
 							participante.estatus = true;
