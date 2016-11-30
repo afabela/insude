@@ -90,7 +90,7 @@ function ParticipantesNuevoCtrl($scope, $meteor, $reactive, $state, toastr, $sta
 		    toastr.error('Error no se ha cargado la foto del participante.');
 	      return;
 	    }
-	    console.log(participante);
+
 	    if (participante.curpImagen == undefined)
 	    {
 		    toastr.error('Error no se ha cargado el comprobante del CURP del participante.');
@@ -156,16 +156,28 @@ function ParticipantesNuevoCtrl($scope, $meteor, $reactive, $state, toastr, $sta
 							participante.nombreCompleto = participante.nombre + " " + participante.apellidoPaterno + " " + participante.apellidoMaterno;
 							participante.estatus = true;
 							participante.usuarioInserto = Meteor.userId();
-							Participantes.insert(participante);
-							toastr.success('Guardado correctamente.');
-							participante = {};
-							$('.collapse').collapse('hide');
-							this.nuevo = true;
-							$state.go('root.listarparticipantes');
 							
-							form.$setPristine();
-					    form.$setUntouched();
-						
+							Participantes.insert(participante, 
+																			function(error,result){
+																				if (error){
+																					  console.log("Error:",error);
+																					  if (error.error == 409) toastr.error('Error registro duplicado.');
+																					  		return;
+																				}	  
+																				if (result)
+																				{
+																						toastr.success('Guardado correctamente.');
+																						participante = {};
+																						$('.collapse').collapse('hide');
+																						this.nuevo = true;
+																						$state.go('root.listarparticipantes');
+																						
+																						form.$setPristine();
+																				    form.$setUntouched();	
+																				}	 
+																			}
+																	);
+
 					}
 					else if (edad >= EdadMinima && edad <= EdadMaxima)
 					{
@@ -281,7 +293,7 @@ function ParticipantesNuevoCtrl($scope, $meteor, $reactive, $state, toastr, $sta
 	this.funcionEspecifica = function(participante)
 	{
 			
-			console.log(participante.funcionEspecifica);
+			//console.log(participante.funcionEspecifica);
 			switch (participante.funcionEspecifica)
 			{
 					case "ASOCIACIÓN":
@@ -291,7 +303,7 @@ function ParticipantesNuevoCtrl($scope, $meteor, $reactive, $state, toastr, $sta
 					case "MÉDICO":
 					case "PRENSA":
 					case "INVITADO ESPECIAL":
-							console.log("entro");
+							//console.log("entro");
 							
 							participante.fechaNacimiento= new Date();
 							participante.estado = "BAJA CALIFORNIA SUR";
@@ -302,7 +314,7 @@ function ParticipantesNuevoCtrl($scope, $meteor, $reactive, $state, toastr, $sta
 							participante.rama_id = "s/a";
 							break;
 			}
-			console.log(participante);
+			//console.log(participante);
 			
 						
 	}
@@ -384,7 +396,7 @@ function ParticipantesNuevoCtrl($scope, $meteor, $reactive, $state, toastr, $sta
 				else
 						imageType = /image.*/;		
 		
-				console.log(imageType);
+				//console.log(imageType);
 				
 				if (file.type.match(imageType)) {
 					
@@ -414,7 +426,7 @@ function ParticipantesNuevoCtrl($scope, $meteor, $reactive, $state, toastr, $sta
 			fileInputActa.addEventListener('change', function(e) {
 				var file = fileInputActa.files[0];
 				
-				console.log(file.type);
+				//console.log(file.type);
 				var imageType;
 				
 				if (file.type == "application/pdf")
