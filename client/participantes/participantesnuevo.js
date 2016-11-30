@@ -101,10 +101,14 @@ function ParticipantesNuevoCtrl($scope, $meteor, $reactive, $state, toastr, $sta
 		    toastr.error('Error no se ha cargado el comprobante del Acta de Nacimiento del participante.');
 	      return;
 	    }
-	    if (participante.identificacion == undefined)
-	    {
-		    toastr.error('Error no se ha cargado el comprobante de la Identificación Oficial del particpante.');
-	      return;
+	    
+	    if (participante.municipio_id != '8mqR9HsyDwG3X7jmp')
+	    {	    
+			    if (participante.identificacion == undefined)
+			    {
+				    toastr.error('Error no se ha cargado el comprobante de la Identificación Oficial del particpante.');
+			      return;
+			    }
 	    }
 	    
 	    if (participante.categoria_id != "s/a")
