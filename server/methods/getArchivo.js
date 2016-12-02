@@ -1,4 +1,6 @@
 Meteor.methods({
+  
+  /*
   getArchivo: function (participantes) {
 		
 		var fs = Npm.require('fs');
@@ -27,7 +29,7 @@ Meteor.methods({
 		var imageModule=new ImageModule(opts);
 		
 		
-		/*
+		
 		var participantes = [{
 					foto: "/Users/alfonsoduarte/Documents/Meteor/deporteb/.meteor/local/build/programs/server/fotos/foto.png",
 					nombre:"Alfonso",
@@ -40,9 +42,9 @@ Meteor.methods({
 					deporte:"BEISBOL"
 				}
 		];
-		*/
 		
-		/*
+		
+		
 		var handsets = [{
 					extntype:"Alfonso",
 					extntotal:"10.00",
@@ -52,10 +54,10 @@ Meteor.methods({
 					extnimg: "/Users/alfonsoduarte/Documents/Meteor/deporteb/.meteor/local/build/programs/server/fotos/foto.png"
 				}
 		];
-		*/
+		
 
 		
-		/*
+		
 		_.each(participantes, function(participante){
 										
 					// create buffer object from base64 encoded string, it is important to tell the constructor that the string is base64 encoded
@@ -66,9 +68,7 @@ Meteor.methods({
 					participante.foto = "foto.png";
 				
 		})
-		*/
 		
-				
 		var content = fs
     							.readFileSync(process.cwd() + "/gafete3.docx", "binary");
  
@@ -97,7 +97,7 @@ Meteor.methods({
 		//doc.setData({p : [{image:process.cwd()+"/foto.png"}]});
 									
 		
-		/*
+		
 		doc.setData({nombre:"Alfonso",
 																		 apellidoPaterno:"Duarte",
 																		 apellidoMaterno:"Jiménez",
@@ -109,7 +109,7 @@ Meteor.methods({
 																		 image:process.cwd()+"/foto.png"
 								
 									});	
-		*/			
+			
 		doc.setData({handsets});
 								
  		console.log(doc);
@@ -124,6 +124,7 @@ Meteor.methods({
 		
 		
   },
+  */
 });
 
 

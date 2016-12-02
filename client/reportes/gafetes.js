@@ -115,7 +115,7 @@ function GafetesCtrl($scope, $meteor, $reactive, $state, toastr, $stateParams) {
 							participante.pruebasNombre.push(Pruebas.findOne(prueba, { fields : { nombre : 1}}))
 					})
 				})
-				
+				/*
 				Meteor.call('getArchivo',rc.participantes, function(error, response) {
 				   if(error){
 				    console.log('ERROR :', error);
@@ -125,7 +125,7 @@ function GafetesCtrl($scope, $meteor, $reactive, $state, toastr, $stateParams) {
 		    
 		    	 }
 				});
-				
+				*/
 			}
 		}
 		
@@ -148,12 +148,12 @@ function GafetesCtrl($scope, $meteor, $reactive, $state, toastr, $stateParams) {
   
 	
 };
-
+/*
 $(document).ready( function() {
 	
     console.log( "ready!" );
   	
-  	/*
+  
   	Meteor.call('getArchivo', function(error, response) {
 		   if(error){
 		    console.log('ERROR :', error);
@@ -165,8 +165,10 @@ $(document).ready( function() {
 		    
 		    
 		   }
-		});*/
+		});
   	  
     
   });
+  
+  */
 	
