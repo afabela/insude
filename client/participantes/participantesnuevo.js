@@ -101,8 +101,10 @@ function ParticipantesNuevoCtrl($scope, $meteor, $reactive, $state, toastr, $sta
 		    toastr.error('Error no se ha cargado el comprobante del Acta de Nacimiento del participante.');
 	      return;
 	    }
-	    
-	    if (participante.municipio_id != '8mqR9HsyDwG3X7jmp')
+			var mun = String(Meteor.user() != undefined ? Meteor.user().profile.municipio_id : "");
+			//console.log(mun);
+			            
+	    if (mun != '8mqR9HsyDwG3X7jmp')
 	    {	    
 			    if (participante.identificacion == undefined)
 			    {
@@ -400,7 +402,7 @@ function ParticipantesNuevoCtrl($scope, $meteor, $reactive, $state, toastr, $sta
 				
 				if (file.type.match(imageType)) {
 					
-					if (file.size <= 512000)
+					if (file.size <= 2000000)
 					{
 						
 						var reader = new FileReader();
@@ -412,7 +414,7 @@ function ParticipantesNuevoCtrl($scope, $meteor, $reactive, $state, toastr, $sta
 						}
 						reader.readAsDataURL(file);			
 					}else {
-						toastr.error("Error el archivo supera los 512 KB");
+						toastr.error("Error el archivo supera los 2 MB");
 						return;
 					}
 					
@@ -436,7 +438,7 @@ function ParticipantesNuevoCtrl($scope, $meteor, $reactive, $state, toastr, $sta
 				
 				if (file.type.match(imageType)) {
 					
-					if (file.size <= 512000)
+					if (file.size <= 5000000)
 					{
 						
 						var reader = new FileReader();
@@ -448,7 +450,7 @@ function ParticipantesNuevoCtrl($scope, $meteor, $reactive, $state, toastr, $sta
 						}
 						reader.readAsDataURL(file);			
 					}else {
-						toastr.error("Error el archivo supera los 512 KB");
+						toastr.error("Error el archivo supera los 5 MB");
 						return;
 					}
 					
@@ -471,7 +473,7 @@ function ParticipantesNuevoCtrl($scope, $meteor, $reactive, $state, toastr, $sta
 				
 				if (file.type.match(imageType)) {
 					
-					if (file.size <= 512000)
+					if (file.size <= 2000000)
 					{
 						
 						var reader = new FileReader();
@@ -483,7 +485,7 @@ function ParticipantesNuevoCtrl($scope, $meteor, $reactive, $state, toastr, $sta
 						}
 						reader.readAsDataURL(file);			
 					}else {
-						toastr.error("Error el archivo supera los 512 KB");
+						toastr.error("Error el archivo supera los 2 MB");
 						return;
 					}
 					

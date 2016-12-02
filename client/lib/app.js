@@ -1,4 +1,5 @@
 
+
 angular.module('insude',
   [
     'angular-meteor',    
@@ -6,7 +7,6 @@ angular.module('insude',
     'ngCookies',
     'ngSanitize',    
     'toastr',
-    //'ponchoXLSX',
     'ui.router',
     'ui.grid',
     'smartadmin',

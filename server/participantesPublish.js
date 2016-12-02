@@ -16,7 +16,7 @@ Meteor.publish("participantesCred",function(params){
 	  																						,deporte_id:1
 	  																						,categoria_id:1
 	  																						,rama_id:1
-	  																						,funcionespecifica:1
+	  																						,funcionEspecifica:1
 	  																						,fechaNacimiento:1
 	  																						,sexo:1
 	  																						,pruebas:1
@@ -45,7 +45,7 @@ Meteor.publish("buscarNombre",function(options){
 										  																						,deporte_id:1
 										  																						,categoria_id:1
 										  																						,rama_id:1
-										  																						,funcionespecifica:1
+										  																						,funcionEspecifica:1
 										  																						,fechaNacimiento:1
 										  																						,sexo:1
 										  																						,pruebas:1

@@ -1,3 +1,7 @@
+
+
+
+
 angular
   .module('insude')
   .controller('GafetesCtrl', GafetesCtrl);
@@ -9,6 +13,17 @@ function GafetesCtrl($scope, $meteor, $reactive, $state, toastr, $stateParams) {
 	
 	window.rc = rc;
 	
+	
+	
+	
+	//-----------
+
+	//console.log(showHelp());
+	
+	//-----------
+	
+	
+	this.participantes = [];
   this.action = true;
   this.participante = {};
   this.participante.profile = {};
@@ -21,7 +36,7 @@ function GafetesCtrl($scope, $meteor, $reactive, $state, toastr, $stateParams) {
 	this.evento_id = $stateParams.evento;
 	this.municipio_id = $stateParams.municipio;
 
-	let part = this.subscribe('participantes',()=>{
+	let part = this.subscribe('participantesCred',()=>{
 		return [{estatus: true
 					  ,$and:[ {municipio_id : $stateParams.municipio}
 										,{evento_id:  $stateParams.evento}]
@@ -50,6 +65,10 @@ function GafetesCtrl($scope, $meteor, $reactive, $state, toastr, $stateParams) {
 		return [{evento_id:  $stateParams.evento 
 		}]
 	});
+	
+	this.subscribe('ramas',()=>{
+		return [{estatus: true}]
+	});
 
 	
 	this.helpers({
@@ -71,19 +90,42 @@ function GafetesCtrl($scope, $meteor, $reactive, $state, toastr, $stateParams) {
 		pruebas : () => {
 			return Pruebas.find();
 		},
+		ramas : () => {
+			return Ramas.find();
+		},
 		todosParticipantes : () => {
 			if(part.ready()){
 				_.each(rc.participantes, function(participante){
-					participante.municipio = Municipios.findOne(participante.municipio_id);
-					participante.evento = Eventos.findOne(participante.evento_id);
-					participante.deporte = Deportes.findOne(participante.deporte_id);
-					participante.categoria = Categorias.findOne(participante.categoria_id);	
+					var m = Municipios.findOne(participante.municipio_id);
+					participante.municipio = m.nombre;
+					var e = Eventos.findOne(participante.evento_id);
+					participante.evento = e.nombre;
+					var d = Deportes.findOne(participante.deporte_id);
+					participante.deporte = d.nombre;
+					var c = Categorias.findOne(participante.categoria_id);
+					participante.categoria = 	c.nombre;
+					var r = Ramas.findOne(participante.rama_id);
+					participante.rama = 	r.nombre;
+					
+					var f = String(participante.foto);
+					participante.foto = f.replace('data:image/jpeg;base64,', '');
 					
 					participante.pruebasNombre = [];
 					_.each(participante.pruebas, function(prueba){
 							participante.pruebasNombre.push(Pruebas.findOne(prueba, { fields : { nombre : 1}}))
 					})
 				})
+				
+				Meteor.call('getArchivo',rc.participantes, function(error, response) {
+				   if(error){
+				    console.log('ERROR :', error);
+				    return;
+				   }else{
+				    console.log('response:', response);
+		    
+		    	 }
+				});
+				
 			}
 		}
 		
@@ -103,5 +145,28 @@ function GafetesCtrl($scope, $meteor, $reactive, $state, toastr, $stateParams) {
 		  return foto;
 	  }
   }  
+  
 	
-};	
+};
+
+$(document).ready( function() {
+	
+    console.log( "ready!" );
+  	
+  	/*
+  	Meteor.call('getArchivo', function(error, response) {
+		   if(error){
+		    console.log('ERROR :', error);
+		    return;
+		   }else{
+		    console.log('response:', response);
+		    
+		    
+		    
+		    
+		   }
+		});*/
+  	  
+    
+  });
+	
