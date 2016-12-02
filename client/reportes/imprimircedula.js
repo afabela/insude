@@ -20,13 +20,13 @@ function imprimirCedulaCtrl($scope, $meteor, $reactive, $state, toastr, $statePa
 	this.evento_id = $stateParams.evento;
 	
 	let part = this.subscribe('participantesCred',()=>{
-		return [{$and:[{evento_id: $stateParams.evento}
-									,{municipio_id : Meteor.user() != undefined ? Meteor.user().profile.municipio_id : ""}
-									,{deporte_id : $stateParams.deporte}
-									,{categoria_id : $stateParams.categoria}
-									,{rama_id : $stateParams.rama}]
-						,estatus: true
-			}]
+		return [{evento_id: this.getReactively('evento.evento_id')!= undefined ? this.getReactively('evento.evento_id'): "" 
+					  ,municipio_id : Meteor.user() != undefined ? Meteor.user().profile.municipio_id : ""
+					  ,deporte_id: this.getReactively('evento.deporte_id')!= undefined ? this.getReactively('evento.deporte_id'): ""
+						,categoria_id: this.getReactively('evento.categoria_id')!= undefined ? this.getReactively('evento.categoria_id'): ""
+					  ,rama_id: this.getReactively('evento.rama_id')!= undefined ? this.getReactively('evento.rama_id'): ""
+					  ,funcionEspecifica: this.getReactively('evento.funcionEspecifica')!= undefined ? this.getReactively('evento.funcionEspecifica'): ""
+						,estatus: true}]
 	});
 	
 	this.subscribe('buscarNombre',()=>{

@@ -1,6 +1,6 @@
 Meteor.methods({
   
-  /*
+  
   getArchivo: function (participantes) {
 		
 		var fs = Npm.require('fs');
@@ -14,7 +14,7 @@ Meteor.methods({
 			opts.centered = false;
 			opts.getImage=function(tagValue, tagName) {
 					var binaryData =  fs.readFileSync(tagValue,'binary');
-					console.log(binaryData);
+					//console.log("Dato Binario:", binaryData);
 					return binaryData;
 					
 			    //return fs.readFileSync(tagValue,'binary');
@@ -30,8 +30,7 @@ Meteor.methods({
 		
 		
 		
-		var participantes = [{
-					foto: "/Users/alfonsoduarte/Documents/Meteor/deporteb/.meteor/local/build/programs/server/fotos/foto.png",
+		var p = [{
 					nombre:"Alfonso",
 					apellidoPaterno:"Duarte",
 					apellidoMaterno:"Jiménez",
@@ -39,12 +38,25 @@ Meteor.methods({
 					categoria:"2002-2003",
 					municipio:"LOS CABOS",
 					rama:"Varonil",
-					deporte:"BEISBOL"
+					deporte:"BEISBOL",
+					image: process.cwd()+"/foto.png",
+				},
+				{
+					nombre:"puta",
+					apellidoPaterno:"madre",
+					apellidoMaterno:"sal",
+					funcionEspecifica:"DEPORTISTA",
+					categoria:"2002-2003",
+					municipio:"LOS CABOS",
+					rama:"Varonil",
+					deporte:"BEISBOL",
+					image: process.cwd()+"/foto.png",
 				}
+
 		];
 		
 		
-		
+		/*
 		var handsets = [{
 					extntype:"Alfonso",
 					extntotal:"10.00",
@@ -54,10 +66,10 @@ Meteor.methods({
 					extnimg: "/Users/alfonsoduarte/Documents/Meteor/deporteb/.meteor/local/build/programs/server/fotos/foto.png"
 				}
 		];
-		
+		*/
 
 		
-		
+		/*
 		_.each(participantes, function(participante){
 										
 					// create buffer object from base64 encoded string, it is important to tell the constructor that the string is base64 encoded
@@ -68,9 +80,9 @@ Meteor.methods({
 					participante.foto = "foto.png";
 				
 		})
-		
+		*/
 		var content = fs
-    							.readFileSync(process.cwd() + "/gafete3.docx", "binary");
+    							.readFileSync(process.cwd() + "/gafete.docx", "binary");
  
 		var zip = new JSZip(content);
 		var doc=new Docxtemplater()
@@ -97,7 +109,7 @@ Meteor.methods({
 		//doc.setData({p : [{image:process.cwd()+"/foto.png"}]});
 									
 		
-		
+		/*
 		doc.setData({nombre:"Alfonso",
 																		 apellidoPaterno:"Duarte",
 																		 apellidoMaterno:"Jiménez",
@@ -109,10 +121,11 @@ Meteor.methods({
 																		 image:process.cwd()+"/foto.png"
 								
 									});	
-			
-		doc.setData({handsets});
+		
+		*/
+		doc.setData({p});
 								
- 		console.log(doc);
+ 		//console.log(doc);
 		
 		
 		doc.render();
@@ -124,7 +137,7 @@ Meteor.methods({
 		
 		
   },
-  */
+  
 });
 
 

@@ -115,17 +115,17 @@ function GafetesCtrl($scope, $meteor, $reactive, $state, toastr, $stateParams) {
 							participante.pruebasNombre.push(Pruebas.findOne(prueba, { fields : { nombre : 1}}))
 					})
 				})
-				/*
+				
 				Meteor.call('getArchivo',rc.participantes, function(error, response) {
 				   if(error){
 				    console.log('ERROR :', error);
 				    return;
 				   }else{
 				    console.log('response:', response);
-		    
+							
 		    	 }
 				});
-				*/
+				
 			}
 		}
 		
