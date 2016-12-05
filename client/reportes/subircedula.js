@@ -28,12 +28,12 @@ function subirCedulaCtrl($scope, $meteor, $reactive, $state, toastr, $stateParam
 						,estatus: true
 			}]
 	});
-	
+	/*
 	this.subscribe('buscarNombre',()=>{
 		return [{$and:[ {municipio_id : Meteor.user() != undefined ? Meteor.user().profile.municipio_id : ""}
 										,{evento_id: $stateParams.evento }]}]
 	});
-	
+	*/
 	this.subscribe('municipios',()=>{
 		return [{_id: Meteor.user() != undefined ? Meteor.user().profile.municipio_id : ""}]
 	});

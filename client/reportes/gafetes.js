@@ -13,9 +13,6 @@ function GafetesCtrl($scope, $meteor, $reactive, $state, toastr, $stateParams) {
 	
 	window.rc = rc;
 	
-	
-	
-	
 	//-----------
 
 	//console.log(showHelp());
