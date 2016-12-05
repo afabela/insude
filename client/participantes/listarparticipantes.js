@@ -23,17 +23,28 @@ function ListarParticipantesCtrl($scope, $meteor, $reactive, $state, toastr, $st
 	*/
 	
 	this.subscribe('buscarNombre', () => {
-    return [{
-	    options : { limit: 20 },
-	    where : { 
-		    nombreCompleto : this.getReactively('buscar.nombre'),
-		    evento_id : this.getReactively('buscar.evento_id'), 
-		    deporte_id: this.getReactively('buscar.deporte_id'),
-		    categoria_id: this.getReactively('buscar.categoria_id'),
-		    rama_id: this.getReactively('buscar.rama_id'),
-		    municipio_id : Meteor.user() != undefined ? Meteor.user().profile.municipio_id : ""	  
-		  }  
-    }];
+		
+		console.log(this.buscar);
+		if (this.getReactively('buscar.evento_id') != undefined && this.getReactively('buscar.deporte_id') != undefined && this.getReactively('buscar.categoria_id') != undefined && this.getReactively('buscar.rama_id') != undefined && this.getReactively('buscar.nombre') != undefined )
+		{			
+			console.log(this.buscar);
+			console.log("Si se fue");
+	    return [{
+		    options : { limit: 20 },
+		    where : { 
+			    nombreCompleto : this.getReactively('buscar.nombre'),
+			    evento_id : this.getReactively('buscar.evento_id'), 
+			    deporte_id: this.getReactively('buscar.deporte_id'),
+			    categoria_id: this.getReactively('buscar.categoria_id'),
+			    rama_id: this.getReactively('buscar.rama_id'),
+			    municipio_id : Meteor.user() != undefined ? Meteor.user().profile.municipio_id : ""	  
+			  }  
+	    }];
+    }
+    else
+    {
+				console.log("No se fue");   
+    }
   });
   
   this.subscribe('eventos',()=>{
