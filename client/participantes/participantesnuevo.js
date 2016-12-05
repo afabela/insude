@@ -164,7 +164,7 @@ function ParticipantesNuevoCtrl($scope, $meteor, $reactive, $state, toastr, $sta
 																				if (error){
 																					  console.log("Error:",error);
 																					  if (error.error == 409) toastr.error('Error registro duplicado.');
-																					  		return;
+																					  		return;		
 																				}	  
 																				if (result)
 																				{

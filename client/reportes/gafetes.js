@@ -116,7 +116,7 @@ function GafetesCtrl($scope, $meteor, $reactive, $state, toastr, $stateParams) {
 					})
 				})
 				
-				Meteor.call('getArchivo',rc.participantes, function(error, response) {
+				Meteor.call('getGafetes',rc.participantes, function(error, response) {
 				   if(error){
 				    console.log('ERROR :', error);
 				    return;

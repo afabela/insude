@@ -78,9 +78,9 @@
 			<td>{{participante.fechaNacimiento.getUTCDate() +"/"+ (participante.fechaNacimiento.getUTCMonth()+1) +"/"+ participante.fechaNacimiento.getUTCFullYear()}}</td>		
 			<td>
 					<ul>
-						<li><input type="button" ng-click="dc.download(participante,1)" value="Curp" /></li>
-						<li><input type="button" ng-click="dc.download(participante,2)" value="Acta Nac." /></li>
-						<li><input type="button" ng-click="dc.download(participante,3)" value="Identificación" /></li>
+						<li><input type="button" class="btn btn-primary" ng-click="dc.download(participante,1)" value="Curp" /></li>
+						<li><input type="button" class="btn btn-primary" ng-click="dc.download(participante,2)" value="Acta Nac." /></li>
+						<li><input type="button" class="btn btn-primary" ng-click="dc.download(participante,3)" value="Identificación" /></li>
 					</ul>
 			</td>		
 		</tr>	

@@ -93,7 +93,7 @@ function imprimirCedulaCtrl($scope, $meteor, $reactive, $state, toastr, $statePa
 						var faltantes = 7 - modulo;				
 						for (var i = 1; i <= faltantes; i++)
 						{
-								objFalatantes = {_id:"sa"+i,foto:"",nombre:"",apellidoPaterno:"", apellidoMaterno:"",sexo:""};
+								objFalatantes = {_id:"sa"+i,foto:"",nombre:"",apellidoPaterno:"", apellidoMaterno:"",fechaNacimiento:"",sexo:"",curp:"",funcionEspecifica:"",};
 								rc.participantes.push(objFalatantes);
 						}
 				}		 

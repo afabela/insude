@@ -118,7 +118,7 @@ function descargaDocumentosCtrl($scope, $meteor, $reactive, $state, toastr, $sta
 		    console.log('ERROR :', error);
 		    return;
 		   }else{
-		    //console.log('response:', response);
+		    
 		    participante = response;
 		    
 		    var data;

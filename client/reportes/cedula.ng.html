@@ -61,12 +61,15 @@
 	</div>
 	<div class="row">	
 		<div class="col-sm-4">
-				<a class="btn btn-primary" ui-sref="anon.imprimircedula({evento:ced.evento.evento_id
+				<!--<a class="btn btn-primary" ui-sref="anon.imprimircedula({evento:ced.evento.evento_id
 																																,deporte:ced.evento.deporte_id
 																															  ,categoria:ced.evento.categoria_id
-																																,rama:ced.evento.rama_id})" target="_blank">
+																																,rama:ced.evento.rama_id,
+																																,funionEspecifica})" target="_blank">
 				  Generar Cédula
 				</a>
+				-->
+				<input class="btn btn-primary" type="button" ng-click="ced.download(ced.participantes)" value="Generar Cedula" />
 		</div>
 		
 	</div>
@@ -91,133 +94,12 @@
 			<td>{{participante.curp}}</td>
 			<td>{{participante.nombre}} {{participante.apellidoPaterno}} {{participante.apellidoMaterno}}</td>
 			<td>{{participante.sexo}}</td>
-			<td>{{participante.fechaNacimiento.getUTCDate() +"/"+ (participante.fechaNacimiento.getUTCMonth()+1) +"/"+ participante.fechaNacimiento.getUTCFullYear()}}</td>		
-				
+			<td>{{participante.fechaNacimiento.getUTCDate() +"/"+ (participante.fechaNacimiento.getUTCMonth()+1) +"/"+ participante.fechaNacimiento.getUTCFullYear()}}</td>						
 		</tr>	
 	</tbody>
 </table>
 
-
-
-<!--
-<table class="table" width="600" align="center" >
-	<tbody>
-		<tr ng-repeat="participante in ced.participantes"> 
-			<td>
-					<img src="{{ced.tieneFoto(participante.sexo, participante.foto)}}" alt="" class="img-rounded img-responsive" style="width:100px; height:100px;" />
-			</td>	
-			<td>
-					<p>
-	            <span>{{participante.nombre}}</span>
-						  <br />
-							<span>{{participante.apellidoPaterno}} {{participante.apellidoMaterno}}</span>
-					</p>
-					<p>
-	            <i class="glyphicon glyphicon-gift"></i>{{participante.fechaNacimiento.getUTCDate() +"-"+ (participante.fechaNacimiento.getUTCMonth()+1) +"-"+ participante.fechaNacimiento.getUTCFullYear()}}
-	            <br />
-              <i class="glyphicon glyphicon-user"></i>{{participante.sexo}}
-              <br />
-              <i class="glyphicon glyphicon-file"></i>{{participante.curp}}
-              <br />
-              <cite>{{participante.municipio.nombre}}<i class="glyphicon glyphicon-map-marker"></i></cite>
-          </p>
-          <p>
-	           	<span>{{participante.evento.nombre}}</span>
-          </p>				
-			</td>
-			<td>
-					<p>
-             	<span>{{participante.funcionespecifica}}</span>
-              <br />
-              <span>{{participante.categoria.nombre}}</span>
-              <br />
-              <span>{{participante.deporte.nombre}}</span>
-              <br />
-			        <ol>
-			          <li ng-repeat="prueba in participante.pruebasNombre">
-			             	(&nbsp;&nbsp;&nbsp;) {{prueba.nombre}}
-			          </li>
-		          </ol>
-	     		</p>		
-			</td>
-			<td>
-
-					<ol>
-              <li>(&nbsp;&nbsp;&nbsp;) Acta de Nacimiento</li>
-              <li>(&nbsp;&nbsp;&nbsp;) Const. Médica</li>
-              <li>(&nbsp;&nbsp;&nbsp;) CURP</li>
-              <li>(&nbsp;&nbsp;&nbsp;) SIRED</li>
-              <li>(&nbsp;&nbsp;&nbsp;) FOTOS</li>
-          </ol>
-   
-          <table width="100px" border="1" >
-          </table>			
-			</td>
-		</tr>	
-	</tbody>
-</table>
--->
-
-<!--
-<div class="container">
-    <div class="row" ng-repeat="participante in ced.participantes">
-        <div class="col-sm-12 col-md-12">
-            <div class="well well-sm">
-                <div class="row">
-                    <div class="col-sm-2">
-                        <img src="{{ced.tieneFoto(participante.sexo, participante.foto)}}" alt="" class="img-rounded img-responsive" style="width:100px; height:100px;" />
-                    </div>
-                    <div class="col-sm-3">
-	                    	<p>
-	                        <span>{{participante.nombre}}</span>
-	                        <br />
-													<span>{{participante.apellidoPaterno}} {{participante.apellidoMaterno}}</span>
-												</p>
-                        <p>
-	                        	<i class="glyphicon glyphicon-gift"></i>{{participante.fechaNacimiento.getUTCDate() +"-"+ (participante.fechaNacimiento.getUTCMonth()+1) +"-"+ participante.fechaNacimiento.getUTCFullYear()}}
-	                        	<br />
-                            <i class="glyphicon glyphicon-user"></i>{{participante.sexo}}
-                            <br />
-                            <i class="glyphicon glyphicon-file"></i>{{participante.curp}}
-                            <br />
-                            <cite>{{participante.municipio.nombre}}<i class="glyphicon glyphicon-map-marker"></i></cite>
-                        </p>
-                        <p>
-	                        	<span>{{participante.evento.nombre}}</span>
-                        </p>
-                    </div>
-                    <div class="col-sm-3">
-	                   		<p>
-                        	<span>{{participante.funcionespecifica}}</span>
-                        	<br />
-                        	<span>{{participante.categoria.nombre}}</span>
-                        	<br />
-                        	<span>{{participante.deporte.nombre}}</span>
-                        	<br />
-			                    <ol>
-			                      <li ng-repeat="prueba in participante.pruebasNombre">
-			                         	(&nbsp;&nbsp;&nbsp;) {{prueba.nombre}}
-			                      </li>
-			                    </ol>
-	                   		</p>
-                    </div>
-                    <div class="col-sm-3">
-                        <ol>
-                            <li>(&nbsp;&nbsp;&nbsp;) Acta de Nacimiento</li>
-                            <li>(&nbsp;&nbsp;&nbsp;) Const. Médica</li>
-                            <li>(&nbsp;&nbsp;&nbsp;) CURP</li>
-                            <li>(&nbsp;&nbsp;&nbsp;) SIRED</li>
-                            <li>(&nbsp;&nbsp;&nbsp;) FOTOS</li>
-                        </ol>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
--->
-
-
+ <a id='dwnldLnk' href="#" download='cedula.pdf' style="display:none;" hidden="true"></a>   
 
 
 

@@ -27,12 +27,12 @@ function CedulaCtrl($scope, $meteor, $reactive, $state, toastr, $stateParams) {
 					  ,funcionEspecifica: this.getReactively('evento.funcionEspecifica')!= undefined ? this.getReactively('evento.funcionEspecifica'): ""
 						,estatus: true}]
 	});
-	
+	/*
 	this.subscribe('buscarNombre',()=>{
 		return [{$and:[ {municipio_id : Meteor.user() != undefined ? Meteor.user().profile.municipio_id : ""}
 	 								 ,{evento_id: this.getReactively('evento.evento_id')!= undefined ? this.getReactively('evento.evento_id'): "" }]}]
 	});
-	
+	*/
 	this.subscribe('municipios',()=>{
 		return [{estatus: true}]
 	});
@@ -89,22 +89,58 @@ function CedulaCtrl($scope, $meteor, $reactive, $state, toastr, $stateParams) {
 		},
 		todosParticipantes : () => {
 			if(part.ready()){
+				
 				_.each(rc.participantes, function(participante){
-					participante.municipio = Municipios.findOne(participante.municipio_id);
-					participante.evento = Eventos.findOne(participante.evento_id);
-					participante.deporte = Deportes.findOne(participante.deporte_id);
-					participante.categoria = Categorias.findOne(participante.categoria_id);	
-					
+					var m = Municipios.findOne(participante.municipio_id);
+					participante.municipio = m.nombre;
+					var e = Eventos.findOne(participante.evento_id);
+					participante.evento = e.nombre;
+					var d = Deportes.findOne(participante.deporte_id);
+					participante.deporte = d.nombre;
+					var c = Categorias.findOne(participante.categoria_id);
+					participante.categoria = 	c.nombre;
+					var r = Ramas.findOne(participante.rama_id);
+					participante.rama = 	r.nombre;	
+										
 					participante.pruebasNombre = [];
 					_.each(participante.pruebas, function(prueba){
-							participante.pruebasNombre.push(Pruebas.findOne(prueba, { fields : { nombre : 1}}))
+							//participante.pruebasNombre.push(Pruebas.findOne(prueba, { fields : { nombre : 1}}))
+							var p = Pruebas.findOne(prueba,{ fields : { nombre : 1}});
+							participante.pruebasNombre.push({"nombre": p.nombre});
 					})
 					
 				})
+				
 			}
 		}
 		
 	});
+	
+	this.download = function(participantes) 
+  {
+	  
+		if (participantes.length == 0)
+ 		{
+	 			toastr.error("No hay participantes para generar cédula");
+				return;
+		}
+		
+		Meteor.call('getCedula', participantes, function(error, response) {
+		   if(error){
+		    console.log('ERROR :', error);
+		    return;
+		   }else{
+
+			  var pdf = 'data:application/octet-stream;base64,';
+		    var dlnk = document.getElementById('dwnldLnk');
+				dlnk.href = pdf+response;
+				dlnk.click();
+		    		    
+		   }
+		});
+		
+	};
+
 	
 	this.tieneFoto = function(sexo, foto){
 	  if(foto === undefined){
