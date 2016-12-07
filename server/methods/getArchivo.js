@@ -1,3 +1,4 @@
+/*
 Meteor.methods({
   
   
@@ -25,18 +26,18 @@ Meteor.methods({
 		var imageModule=new ImageModule(opts);
 		
 		
-		/*
-		_.each(participantes, function(participante){
+		
+		//_.each(participantes, function(participante){
 										
 					// create buffer object from base64 encoded string, it is important to tell the constructor that the string is base64 encoded
-			    var bitmap = new Buffer(participante.foto, 'base64');
+		//	    var bitmap = new Buffer(participante.foto, 'base64');
 			    // write buffer to file
-			    fs.writeFileSync(process.cwd()+"/fotos/"+participante.curp+".png", bitmap);
+		//	    fs.writeFileSync(process.cwd()+"/fotos/"+participante.curp+".png", bitmap);
 					//participante.foto = process.cwd() + "/fotos/"+participante.curp+".png";
-					participante.foto = "foto.png";
+		//			participante.foto = "foto.png";
 				
 		})
-		*/
+		
 		console.log();
 		
 		var content = fs
@@ -47,7 +48,7 @@ Meteor.methods({
 		var doc=new Docxtemplater()
 								.attachModule(imageModule)
 								.loadZip(zip)
-		/*
+		
 		doc.setOptions({
 		    parser: function(tag) {
 		      return {
@@ -63,7 +64,7 @@ Meteor.methods({
 		      };
 		    },
 		})
-		*/
+		
 		
 		
 		doc.render();
@@ -164,12 +165,12 @@ Meteor.methods({
 		
 		
 		//Convertir a PDF
-		/*
-		unoconv.convert(process.cwd()+"/app/server/descargas/cedulaSalida.docx", 'pdf', function (err, result) {
+		
+		//unoconv.convert(process.cwd()+"/app/server/descargas/cedulaSalida.docx", 'pdf', function (err, result) {
 			// result is returned as a Buffer
-			fs.writeFile(process.cwd()+"/app/server/descargas/cedulaSalida.pdf", result);
-		});
-		*/
+		//	fs.writeFile(process.cwd()+"/app/server/descargas/cedulaSalida.pdf", result);
+		//});
+		
 		
 		
 		
@@ -184,3 +185,4 @@ Meteor.methods({
   
 });
 
+*/
