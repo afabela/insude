@@ -7,6 +7,7 @@ Meteor.methods({
     var Docxtemplater = Npm.require('docxtemplater');
 		var JSZip = Npm.require('jszip');
 		var ImageModule = Npm.require('docxtemplater-image-module')
+		var unoconv = require('unoconv');
 		
 	
 		
@@ -64,118 +65,6 @@ Meteor.methods({
 		})
 		*/
 		
-		doc.setData({	evento: "Olimpiada Nacional", municipio: "LOS CABOS", deporte: "Atletismo",
-									participantes : [{nombre:"Alfonso",
-																		apellidoPaterno:"Duarte",
-																		apellidoMaterno:"Jiménez",
-																		funcionEspecifica:"DEPORTISTA",
-																		categoria:"2002-2003",
-																		municipio:"LOS CABOS",
-																		rama:"Varonil",
-																		deporte:"BEISBOL",
-																		foto: "/Users/alfonsoduarte/Documents/Meteor/deporteb/foto.png"	
-																	 },
-															  	 {nombre:"Karina",
-																		apellidoPaterno:"Cebreros",
-																		apellidoMaterno:"Ureta",
-																		funcionEspecifica:"DEPORTISTA",
-																		categoria:"2002-2003",
-																		municipio:"LOS CABOS",
-																		rama:"Varonil",
-																		deporte:"BALONCESTO",
-																  	foto: "/Users/alfonsoduarte/Documents/Meteor/deporteb/foto2.png" 
-															  	 },
-															  	 {nombre:"Alfonso",
-																		apellidoPaterno:"Duarte",
-																		apellidoMaterno:"Jiménez",
-																		funcionEspecifica:"DEPORTISTA",
-																		categoria:"2002-2003",
-																		municipio:"LOS CABOS",
-																		rama:"Varonil",
-																		deporte:"BEISBOL",
-																		foto: "/Users/alfonsoduarte/Documents/Meteor/deporteb/foto.png"	
-																	 },
-																	 {nombre:"Alfonso",
-																		apellidoPaterno:"Duarte",
-																		apellidoMaterno:"Jiménez",
-																		funcionEspecifica:"DEPORTISTA",
-																		categoria:"2002-2003",
-																		municipio:"LOS CABOS",
-																		rama:"Varonil",
-																		deporte:"BEISBOL",
-																		foto: "/Users/alfonsoduarte/Documents/Meteor/deporteb/foto.png"	
-																	 },
-																	 {nombre:"Alfonso",
-																		apellidoPaterno:"Duarte",
-																		apellidoMaterno:"Jiménez",
-																		funcionEspecifica:"DEPORTISTA",
-																		categoria:"2002-2003",
-																		municipio:"LOS CABOS",
-																		rama:"Varonil",
-																		deporte:"BEISBOL",
-																		foto: "/Users/alfonsoduarte/Documents/Meteor/deporteb/foto.png"	
-																	 },
-																	 {nombre:"Alfonso",
-																		apellidoPaterno:"Duarte",
-																		apellidoMaterno:"Jiménez",
-																		funcionEspecifica:"DEPORTISTA",
-																		categoria:"2002-2003",
-																		municipio:"LOS CABOS",
-																		rama:"Varonil",
-																		deporte:"BEISBOL",
-																		foto: "/Users/alfonsoduarte/Documents/Meteor/deporteb/foto.png"	
-																	 },
-																	 {nombre:"Alfonso",
-																		apellidoPaterno:"Duarte",
-																		apellidoMaterno:"Jiménez",
-																		funcionEspecifica:"DEPORTISTA",
-																		categoria:"2002-2003",
-																		municipio:"LOS CABOS",
-																		rama:"Varonil",
-																		deporte:"BEISBOL",
-																		foto: "/Users/alfonsoduarte/Documents/Meteor/deporteb/foto.png"	
-																	 },
-																	 {nombre:"Alfonso",
-																		apellidoPaterno:"Duarte",
-																		apellidoMaterno:"Jiménez",
-																		funcionEspecifica:"DEPORTISTA",
-																		categoria:"2002-2003",
-																		municipio:"LOS CABOS",
-																		rama:"Varonil",
-																		deporte:"BEISBOL",
-																		foto: "/Users/alfonsoduarte/Documents/Meteor/deporteb/foto.png"	
-																	 },
-																	 {nombre:"Alfonso",
-																		apellidoPaterno:"Duarte",
-																		apellidoMaterno:"Jiménez",
-																		funcionEspecifica:"DEPORTISTA",
-																		categoria:"2002-2003",
-																		municipio:"LOS CABOS",
-																		rama:"Varonil",
-																		deporte:"BEISBOL",
-																		foto: "/Users/alfonsoduarte/Documents/Meteor/deporteb/foto.png"	
-																	 },
-																	 {nombre:"Alfonso",
-																		apellidoPaterno:"Duarte",
-																		apellidoMaterno:"Jiménez",
-																		funcionEspecifica:"DEPORTISTA",
-																		categoria:"2002-2003",
-																		municipio:"LOS CABOS",
-																		rama:"Varonil",
-																		deporte:"BEISBOL",
-																		foto: "/Users/alfonsoduarte/Documents/Meteor/deporteb/foto.png"	
-																	 },
-																	 {nombre:"Alfonso",
-																		apellidoPaterno:"Duarte",
-																		apellidoMaterno:"Jiménez",
-																		funcionEspecifica:"DEPORTISTA",
-																		categoria:"2002-2003",
-																		municipio:"LOS CABOS",
-																		rama:"Varonil",
-																		deporte:"BEISBOL",
-																		foto: "/Users/alfonsoduarte/Documents/Meteor/deporteb/foto.png"	
-																	 },]	  	 
-								});
 		
 		doc.render();
  
@@ -193,9 +82,10 @@ Meteor.methods({
 		var fs = Npm.require('fs');
     var Docxtemplater = Npm.require('docxtemplater');
 		var JSZip = Npm.require('jszip');
-		var ImageModule = Npm.require('docxtemplater-image-module')
+		var ImageModule = Npm.require('docxtemplater-image-module');
+		var unoconv = Npm.require('unoconv');
 		
-	
+		var meteor_root = Npm.require('fs').realpathSync( process.cwd() + '/../' );
 		
 		var opts = {}
 			opts.centered = false;
@@ -219,7 +109,7 @@ Meteor.methods({
 				var faltantes = 8 - modulo;				
 				for (var i = 1; i <= faltantes; i++)
 				{
-						objFalatantes = {_id:"s/a"+i,foto:"",nombre:"-",apellidoPaterno:"-", apellidoMaterno:"-",sexo:"-" ,fechaNacimiento:"-",curp:"-",categoria:"-"};
+						objFalatantes = {_id:"s/a"+i,foto:"",nombre:"-",apellidoPaterno:"-", apellidoMaterno:"-",sexo:"-" ,fechaNacimiento:"-",curp:"-",funcionEspecifica:"-",categoria:"-"};
 						participantes.push(objFalatantes);
 				}
 		}		 
@@ -235,24 +125,34 @@ Meteor.methods({
 					// create buffer object from base64 encoded string, it is important to tell the constructor that the string is base64 encoded
 			    var bitmap = new Buffer(participante.foto, 'base64');
 			    // write buffer to file
-			    fs.writeFileSync(process.cwd()+"/app/server/fotos/"+participante.curp+".png", bitmap);
-					participante.foto = process.cwd()+"/app/server/fotos/"+participante.curp+".png";
+			    
+			    //fs.writeFileSync(process.cwd()+"/app/server/fotos/"+participante.curp+".png", bitmap);
+					//participante.foto = process.cwd()+"/app/server/fotos/"+participante.curp+".png";									
+					
+					fs.writeFileSync(meteor_root+"/web.browser/app/fotos/"+participante.curp+".png", bitmap);
+					participante.foto = meteor_root + "/web.browser/app/fotos/"+participante.curp+".png";
+					
 				}
 		})
 		
 		
 		var content = fs
-    							.readFileSync(process.cwd()+"/app/server/archivos/cedula.docx", "binary");
+    							.readFileSync(meteor_root+"/web.browser/app/archivos/cedula.docx", "binary");
 	  
 		var zip = new JSZip(content);
 		var doc=new Docxtemplater()
 								.attachModule(imageModule)
 								.loadZip(zip)
 		
+		var fecha = new Date();
+		var f = fecha;
+		f = fecha.getUTCDate()+'-'+(fecha.getUTCMonth()+1)+'-'+fecha.getUTCFullYear();//+', Hora:'+fecha.getUTCHours()+':'+fecha.getMinutes()+':'+fecha.getSeconds();
+		
 		doc.setData({	evento: participantes[0].evento, 
 									municipio: participantes[0].municipio, 
 									deporte: participantes[0].deporte, 
 									categoria: participantes[0].categoria,
+									fechaEmision: f,
 									participantes});
 								
 		doc.render();
@@ -260,11 +160,22 @@ Meteor.methods({
 		var buf = doc.getZip()
              		 .generate({type:"nodebuffer"});
  
-		fs.writeFileSync(process.cwd()+"/app/server/descargas/cedulaSalida.docx",buf);
+		fs.writeFileSync(meteor_root+"/web.browser/app/descargas/cedulaSalida.docx",buf);
 		
 		
+		//Convertir a PDF
+		/*
+		unoconv.convert(process.cwd()+"/app/server/descargas/cedulaSalida.docx", 'pdf', function (err, result) {
+			// result is returned as a Buffer
+			fs.writeFile(process.cwd()+"/app/server/descargas/cedulaSalida.pdf", result);
+		});
+		*/
+		
+		
+		
+		//Pasar a base64
 		// read binary data
-    var bitmap = fs.readFileSync(process.cwd()+"/app/server/descargas/cedulaSalida.pdf");
+    var bitmap = fs.readFileSync(meteor_root+"/web.browser/app/descargas/cedulaSalida.docx");
     // convert binary data to base64 encoded string
     return new Buffer(bitmap).toString('base64');
 		

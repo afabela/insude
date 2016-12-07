@@ -16,6 +16,8 @@ function CedulaCtrl($scope, $meteor, $reactive, $state, toastr, $stateParams) {
   this.evento = {};
   this.buscar.nombre = '';
 	this.validation = false;
+	this.deporteNombre = "";
+	this.categoriaNombre = "";
 	
 	
 	let part = this.subscribe('participantesCred',()=>{
@@ -97,8 +99,10 @@ function CedulaCtrl($scope, $meteor, $reactive, $state, toastr, $stateParams) {
 					participante.evento = e.nombre;
 					var d = Deportes.findOne(participante.deporte_id);
 					participante.deporte = d.nombre;
+					this.deporteNombre = d.nombre;
 					var c = Categorias.findOne(participante.categoria_id);
 					participante.categoria = 	c.nombre;
+					this.categoriaNombre = c.nombre;
 					var r = Ramas.findOne(participante.rama_id);
 					participante.rama = 	r.nombre;	
 										
@@ -131,8 +135,9 @@ function CedulaCtrl($scope, $meteor, $reactive, $state, toastr, $stateParams) {
 		    return;
 		   }else{
 
-			  var pdf = 'data:application/octet-stream;base64,';
+			  var pdf = 'data:application/docx;base64,';
 		    var dlnk = document.getElementById('dwnldLnk');
+		    dlnk.download = this.deporteNombre+'-'+this.categoriaNombre+'.docx'; 
 				dlnk.href = pdf+response;
 				dlnk.click();
 		    		    

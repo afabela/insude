@@ -26,7 +26,7 @@ Meteor.publish("participantesCred",function(params){
 
 
 Meteor.publish("buscarNombre",function(options){
-	console.log(options);
+
 	if (options != undefined)
 	{
 			let selector = {
@@ -37,7 +37,7 @@ Meteor.publish("buscarNombre",function(options){
 		  	rama_id: options.where.rama_id,
 		  	municipio_id: options.where.municipio_id
 			}
-			console.log(selector);
+
 			return Participantes.find(selector, {fields:{ _id:1
 												  																						,nombre:1
 												  																						,apellidoPaterno:1
