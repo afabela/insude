@@ -119,6 +119,7 @@ function descargaDocumentosCtrl($scope, $meteor, $reactive, $state, toastr, $sta
 		    return;
 		   }else{
 		    
+		    console.log(response);
 		    participante = response;
 		    
 		    var data;
@@ -135,8 +136,9 @@ function descargaDocumentosCtrl($scope, $meteor, $reactive, $state, toastr, $sta
 					  data = participante.identificacion;
 				}
 				
-		    if (data.indexOf("pdf") > 0)
+		    if (data.indexOf("application") > 0)
 		    {
+			    	console.log("entro pdf");
 			    	var pdf = 'data:application/octet-stream;base64,';
 			  		var d = data.replace('data:application/pdf;base64,','');  
 						var dlnk = document.getElementById('dwnldLnk');
@@ -155,9 +157,10 @@ function descargaDocumentosCtrl($scope, $meteor, $reactive, $state, toastr, $sta
 				    dlnk.href = pdf+d;
 				    dlnk.click();
 		    }
-		    else if(data.indexOf("jpeg") > 0)
+		    else if(data.indexOf("image") > 0)
 		    {
-			    	var jpeg = 'data:application/octet-stream;base64,';
+			    	console.log("entro jpg");
+			    	var jpeg = 'data:image/jpeg;base64,';
 			  		var d = data.replace('data:image/jpeg;base64,','');  
 						var dlnk = document.getElementById('dwnldLnk');
 				    
@@ -175,6 +178,10 @@ function descargaDocumentosCtrl($scope, $meteor, $reactive, $state, toastr, $sta
 						}		
 				    dlnk.href = jpeg+d;
 				    dlnk.click();
+		    }
+		    else
+		    {
+			    console.log("no entro")
 		    }
 		    
 		   }
