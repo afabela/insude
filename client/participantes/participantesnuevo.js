@@ -113,6 +113,8 @@ function ParticipantesNuevoCtrl($scope, $meteor, $reactive, $state, toastr, $sta
 			    }
 	    }
 	    
+	    // Enable #x
+			$( "#registrar" ).prop( "disabled", true );
 	    if (participante.categoria_id != "s/a")
 	    {
 			
@@ -162,6 +164,7 @@ function ParticipantesNuevoCtrl($scope, $meteor, $reactive, $state, toastr, $sta
 							Participantes.insert(participante, 
 																			function(error,result){
 																				if (error){
+																						$( "#registar" ).prop( "disabled", false );
 																					  console.log("Error:",error);
 																					  if (error.error == 409) toastr.error('Error registro duplicado.');
 																					  		return;		
@@ -194,6 +197,7 @@ function ParticipantesNuevoCtrl($scope, $meteor, $reactive, $state, toastr, $sta
 							Participantes.insert(participante, 
 																			function(error,result){
 																				if (error){
+																						$( "#registar" ).prop( "disabled", false );
 																					  console.log("Error:",error);
 																					  if (error.error == 409) toastr.error('Error registro duplicado.');
 																					  		return;		
@@ -228,6 +232,7 @@ function ParticipantesNuevoCtrl($scope, $meteor, $reactive, $state, toastr, $sta
 							Participantes.insert(participante, 
 																			function(error,result){
 																				if (error){
+																					  $( "#registar" ).prop( "disabled", false );
 																					  console.log("Error:",error);
 																					  if (error.error == 409) toastr.error('Error registro duplicado.');
 																					  		return;		
