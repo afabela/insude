@@ -212,15 +212,6 @@ function ParticipantesNuevoCtrl($scope, $meteor, $reactive, $state, toastr, $sta
 																				}	 
 																			}
 																	);
-							toastr.success('Guardado correctamente.');
-							participante = {};
-							$('.collapse').collapse('hide');
-							this.nuevo = true;
-							$state.go('root.listarparticipantes');
-							
-							form.$setPristine();
-					    form.$setUntouched();
-		
 					}	 
 					else
 					{
@@ -255,14 +246,6 @@ function ParticipantesNuevoCtrl($scope, $meteor, $reactive, $state, toastr, $sta
 																				}	 
 																			}
 																	);
-							toastr.success('Guardado correctamente.');
-							participante = {};
-							$('.collapse').collapse('hide');
-							this.nuevo = true;
-							$state.go('root.listarparticipantes');
-							
-							form.$setPristine();
-					    form.$setUntouched();
 				
 			}		
 			
