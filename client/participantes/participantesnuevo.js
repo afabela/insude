@@ -166,6 +166,7 @@ function ParticipantesNuevoCtrl($scope, $meteor, $reactive, $state, toastr, $sta
 																					  if (error.error == 409) toastr.error('Error registro duplicado.');
 																					  		return;		
 																				}	  
+																				console.log("Insert No deportista:",result);
 																				if (result)
 																				{
 																						toastr.success('Guardado correctamente.');
@@ -190,7 +191,27 @@ function ParticipantesNuevoCtrl($scope, $meteor, $reactive, $state, toastr, $sta
 							participante.nombreCompleto = participante.nombre + " " + participante.apellidoPaterno + " " + participante.apellidoMaterno;
 							participante.estatus = true;
 							participante.usuarioInserto = Meteor.userId();
-							Participantes.insert(participante);
+							Participantes.insert(participante, 
+																			function(error,result){
+																				if (error){
+																					  console.log("Error:",error);
+																					  if (error.error == 409) toastr.error('Error registro duplicado.');
+																					  		return;		
+																				}	  
+																				console.log("Insert deportista:",result);
+																				if (result)
+																				{
+																						toastr.success('Guardado correctamente.');
+																						participante = {};
+																						$('.collapse').collapse('hide');
+																						this.nuevo = true;
+																						$state.go('root.listarparticipantes');
+																						
+																						form.$setPristine();
+																				    form.$setUntouched();	
+																				}	 
+																			}
+																	);
 							toastr.success('Guardado correctamente.');
 							participante = {};
 							$('.collapse').collapse('hide');
@@ -213,7 +234,27 @@ function ParticipantesNuevoCtrl($scope, $meteor, $reactive, $state, toastr, $sta
 							participante.nombreCompleto = participante.nombre + " " + participante.apellidoPaterno + " " + participante.apellidoMaterno;
 							participante.estatus = true;
 							participante.usuarioInserto = Meteor.userId();
-							Participantes.insert(participante);
+							Participantes.insert(participante, 
+																			function(error,result){
+																				if (error){
+																					  console.log("Error:",error);
+																					  if (error.error == 409) toastr.error('Error registro duplicado.');
+																					  		return;		
+																				}	  
+																				console.log("Insert otro:",result);
+																				if (result)
+																				{
+																						toastr.success('Guardado correctamente.');
+																						participante = {};
+																						$('.collapse').collapse('hide');
+																						this.nuevo = true;
+																						$state.go('root.listarparticipantes');
+																						
+																						form.$setPristine();
+																				    form.$setUntouched();	
+																				}	 
+																			}
+																	);
 							toastr.success('Guardado correctamente.');
 							participante = {};
 							$('.collapse').collapse('hide');
