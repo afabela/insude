@@ -196,13 +196,13 @@ function ParticipantesEditarCtrl($scope, $meteor, $reactive, $state, toastr, $st
 			console.log(rc.participante);
 
 					
-			
+			/*
 			var x = document.getElementById("prueba"); 
 			var optionVal = new Array();
 			for (i = 0; i <  rc.participante.pruebas.length; i++) { 
 					optionVal.push(rc.participante.pruebas[i]);
 			}
-			
+			*/
 			
 				//JavaScript para agregar la imagen 1
 			fileInput1.addEventListener('change', function(e) {

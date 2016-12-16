@@ -64,7 +64,7 @@
 			 <th>Nombre</th>
 			 <th>Sexo</th>
 			 <th>Fecha Nacimiento</th>	 
-			 <th>Documentos</th>
+			 <th>Descargar</th>
 		 </tr> 
 	</thead>	
 	<tbody>
@@ -77,11 +77,19 @@
 			<td>{{participante.sexo}}</td>
 			<td>{{participante.fechaNacimiento.getUTCDate() +"/"+ (participante.fechaNacimiento.getUTCMonth()+1) +"/"+ participante.fechaNacimiento.getUTCFullYear()}}</td>		
 			<td>
-					<ul>
-						<li><input type="button" class="btn btn-primary" ng-click="dc.download(participante,1)" value="Curp" /></li>
-						<li><input type="button" class="btn btn-primary" ng-click="dc.download(participante,2)" value="Acta Nac." /></li>
-						<li><input type="button" class="btn btn-primary" ng-click="dc.download(participante,3)" value="Identificación" /></li>
-					</ul>
+					<div class="text-center">
+					    <div class="btn-group">
+							  <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+							    <span class="caret"></span>
+							    <span class="sr-only">Toggle Dropdown</span>
+							  </button>
+							  <ul class="dropdown-menu text-left dropdown-menu-right">
+											<li><a href="#" ng-click="dc.download(participante,1)"><i class="fa fa-pencil"></i> Curp</a></li>
+											<li><a href="#" ng-click="dc.download(participante,2)"><i class="fa fa-pencil"></i> Acta Nac.</a></li>
+											<li><a href="#" ng-click="dc.download(participante,3)"><i class="fa fa-pencil"></i> Identificación</a></li>
+							  </ul>
+							</div>
+				  </div>
 			</td>		
 		</tr>	
 	</tbody>

@@ -164,7 +164,7 @@ function ParticipantesNuevoCtrl($scope, $meteor, $reactive, $state, toastr, $sta
 							Participantes.insert(participante, 
 																			function(error,result){
 																				if (error){
-																						$( "#registar" ).prop( "disabled", false );
+																						$( "#registrar" ).prop( "disabled", false );
 																					  console.log("Error:",error);
 																					  if (error.error == 409) toastr.error('Error registro duplicado.');
 																					  		return;		
@@ -197,7 +197,7 @@ function ParticipantesNuevoCtrl($scope, $meteor, $reactive, $state, toastr, $sta
 							Participantes.insert(participante, 
 																			function(error,result){
 																				if (error){
-																						$( "#registar" ).prop( "disabled", false );
+																						$( "#registrar" ).prop( "disabled", false );
 																					  console.log("Error:",error);
 																					  if (error.error == 409) toastr.error('Error registro duplicado.');
 																					  		return;		
@@ -220,6 +220,8 @@ function ParticipantesNuevoCtrl($scope, $meteor, $reactive, $state, toastr, $sta
 					else
 					{
 							 toastr.error('La edad no corresponde a la categoria verificar por favor.');
+							 $( "#registrar" ).prop( "disabled", false );
+							 return;
 							 
 					}
 			}else
@@ -232,7 +234,7 @@ function ParticipantesNuevoCtrl($scope, $meteor, $reactive, $state, toastr, $sta
 							Participantes.insert(participante, 
 																			function(error,result){
 																				if (error){
-																					  $( "#registar" ).prop( "disabled", false );
+																					  $( "#registrar" ).prop( "disabled", false );
 																					  console.log("Error:",error);
 																					  if (error.error == 409) toastr.error('Error registro duplicado.');
 																					  		return;		
@@ -255,7 +257,7 @@ function ParticipantesNuevoCtrl($scope, $meteor, $reactive, $state, toastr, $sta
 			}		
 			
 	};
-	
+	/*
 	this.editar = function(id)
 	{
 	    this.participante = Participantes.findOne({_id:id});
@@ -263,7 +265,7 @@ function ParticipantesNuevoCtrl($scope, $meteor, $reactive, $state, toastr, $sta
 	    $('.collapse').collapse('show');
 	    this.nuevo = false;
 	};
-	
+	*/
 	this.actualizar = function(participante,form)
 	{
 	    if(form.$invalid){
@@ -347,7 +349,6 @@ function ParticipantesNuevoCtrl($scope, $meteor, $reactive, $state, toastr, $sta
 			}
 			//console.log(participante);
 			
-						
 	}
 	
 	this.AlmacenaImagen = function(imagen, tipo)
