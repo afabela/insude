@@ -1,4 +1,4 @@
-/*
+
 Meteor.methods({
   
   
@@ -36,10 +36,9 @@ Meteor.methods({
 					//participante.foto = process.cwd() + "/fotos/"+participante.curp+".png";
 		//			participante.foto = "foto.png";
 				
-		})
+		//})
 		
-		console.log();
-		
+				
 		var content = fs
     							//.readFileSync("/Users/alfonsoduarte/Documents/Meteor/deporteb/cedula.docx", "binary");
     							.readFileSync(process.cwd()+"/app/server/cedula.docx", "binary");
@@ -81,12 +80,15 @@ Meteor.methods({
   getCedula: function (participantes) {
 		
 		var fs = Npm.require('fs');
-    var Docxtemplater = Npm.require('docxtemplater');
+    
 		var JSZip = Npm.require('jszip');
+		var Docxtemplater = Npm.require('docxtemplater');
 		var ImageModule = Npm.require('docxtemplater-image-module');
-		var unoconv = Npm.require('unoconv');
+		//var unoconv = Npm.require('unoconv');
 		
 		var meteor_root = Npm.require('fs').realpathSync( process.cwd() + '/../' );
+		
+		console.log("Root: ", meteor_root);
 		
 		var opts = {}
 			opts.centered = false;
@@ -130,8 +132,10 @@ Meteor.methods({
 			    //fs.writeFileSync(process.cwd()+"/app/server/fotos/"+participante.curp+".png", bitmap);
 					//participante.foto = process.cwd()+"/app/server/fotos/"+participante.curp+".png";									
 					
+					//Usando Meteor_root
 					fs.writeFileSync(meteor_root+"/web.browser/app/fotos/"+participante.curp+".png", bitmap);
 					participante.foto = meteor_root + "/web.browser/app/fotos/"+participante.curp+".png";
+					
 					
 				}
 		})
@@ -139,6 +143,7 @@ Meteor.methods({
 		
 		var content = fs
     							.readFileSync(meteor_root+"/web.browser/app/archivos/cedula.docx", "binary");
+
 	  
 		var zip = new JSZip(content);
 		var doc=new Docxtemplater()
@@ -162,6 +167,7 @@ Meteor.methods({
              		 .generate({type:"nodebuffer"});
  
 		fs.writeFileSync(meteor_root+"/web.browser/app/descargas/cedulaSalida.docx",buf);
+
 		
 		
 		//Convertir a PDF
@@ -172,11 +178,10 @@ Meteor.methods({
 		//});
 		
 		
-		
-		
 		//Pasar a base64
 		// read binary data
     var bitmap = fs.readFileSync(meteor_root+"/web.browser/app/descargas/cedulaSalida.docx");
+    
     // convert binary data to base64 encoded string
     return new Buffer(bitmap).toString('base64');
 		
@@ -185,4 +190,3 @@ Meteor.methods({
   
 });
 
-*/

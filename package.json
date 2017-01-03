@@ -4,7 +4,6 @@
   "description": "Sistema Para el deporte",
   "main": "index.js",
   "dependencies": {
-    
   },
   "devDependencies": {},
   "scripts": {
