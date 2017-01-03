@@ -127,16 +127,19 @@ function ParticipantesNuevoCtrl($scope, $meteor, $reactive, $state, toastr, $sta
 					var anioInicio = cat.anioinicio;
 					var anioFin = cat.aniofin;
 		
-					var EdadMinima = anioActual - anioInicio;	//22
-					var EdadMaxima = anioActual - anioFin;    //23
+					//var EdadMinima = anioActual - anioInicio;	//22
+					//var EdadMaxima = anioActual - anioFin;    //23
 					
 					//Obtener la Edad del participante
 					
 			    var today_year = d.getFullYear();
 			    var today_month = d.getMonth();
 			    var today_day = d.getDate();
-			    var edad = today_year - participante.fechaNacimiento.getFullYear();
+			    //var edad = today_year - participante.fechaNacimiento.getFullYear();
+			    
+			    var anioNacimiento = participante.fechaNacimiento.getFullYear();
 					
+					/*
 			    if ( today_month < (participante.fechaNacimiento.getMonth() - 1))
 			    {
 			        edad--;
@@ -145,8 +148,12 @@ function ParticipantesNuevoCtrl($scope, $meteor, $reactive, $state, toastr, $sta
 			    {
 			        edad--;
 			    }
+			    */
 			    
-			    //console.log("Final:",edad);
+			    //console.log("Año del Participante:",edad);
+			    
+			    console.log("Año de Nacimiento:",anioNacimiento);	
+			    				
 					//console.log("Maxima:", EdadMaxima);
 					//console.log("Minima:", EdadMinima);
 					
@@ -185,7 +192,7 @@ function ParticipantesNuevoCtrl($scope, $meteor, $reactive, $state, toastr, $sta
 																	);
 
 					}
-					else if (edad >= EdadMinima && edad <= EdadMaxima)
+					else if (anioNacimiento <= anioInicio && anioNacimiento >= anioFin)
 					{
 							
 							participante.municipio_id = Meteor.user() != undefined ? Meteor.user().profile.municipio_id : "";
