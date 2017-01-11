@@ -270,5 +270,24 @@ angular.module('insude').config(['$injector', function ($injector) {
 	      }]
 	    }
     })
-    
+    .state('root.cantidadPorMunicipio', {
+      url: '/cantidadPorMunicipio',
+      templateUrl: 'client/reportes/cantidadPorMunicipio.ng.html',
+      controller: 'cantidadPorMunicipioCtrl as cm',
+      resolve: {
+	      "currentUser": ["$meteor", function($meteor){
+	        return $meteor.requireUser();
+	      }]
+	    }
+    })
+    .state('root.cantidadPorDeporte', {
+      url: '/cantidadPorDeporte',
+      templateUrl: 'client/reportes/cantidadPorDeporte.ng.html',
+      controller: 'cantidadPorDeporteCtrl as cd',
+      resolve: {
+	      "currentUser": ["$meteor", function($meteor){
+	        return $meteor.requireUser();
+	      }]
+	    }
+    })
 }]);     
