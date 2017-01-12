@@ -15,26 +15,21 @@ function ListarParticipantesCtrl($scope, $meteor, $reactive, $state, toastr, $st
   this.buscar = {};
   this.buscar.nombre = '';
 	this.validation = false;
-	
-	/*
-	this.subscribe('participantes',()=>{
-		return [{municipio_id : Meteor.user() != undefined ? Meteor.user().profile.municipio_id : ""}]
-	});
-	*/
-	
+			
 	this.subscribe('buscarNombre', () => {
-		
-
-		if (this.getReactively('buscar.evento_id') != undefined && this.getReactively('buscar.deporte_id') != undefined && this.getReactively('buscar.categoria_id') != undefined && this.getReactively('buscar.rama_id') != undefined && this.getReactively('buscar.nombre') != undefined )
-		{			
+		if (this.getReactively('buscar.evento_id') != undefined)
+		{
+			
+			if (this.getReactively('buscar.nombre') == "" || this.getReactively('buscar.nombre') == undefined ) return;
+			 
 	    return [{
 		    options : { limit: 20 },
 		    where : { 
 			    nombreCompleto : this.getReactively('buscar.nombre'),
 			    evento_id : this.getReactively('buscar.evento_id'), 
-			    deporte_id: this.getReactively('buscar.deporte_id'),
-			    categoria_id: this.getReactively('buscar.categoria_id'),
-			    rama_id: this.getReactively('buscar.rama_id'),
+			    //deporte_id: this.getReactively('buscar.deporte_id'),
+			    //categoria_id: this.getReactively('buscar.categoria_id'),
+			    //rama_id: this.getReactively('buscar.rama_id'),
 			    municipio_id : Meteor.user() != undefined ? Meteor.user().profile.municipio_id : ""	  
 			  }  
 	    }];

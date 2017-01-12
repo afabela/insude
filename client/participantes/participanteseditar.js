@@ -15,7 +15,9 @@ function ParticipantesEditarCtrl($scope, $meteor, $reactive, $state, toastr, $st
 	this.participante.evento_id = $stateParams.id;
 	
 	
-	this.subscribe('participantes',()=>{
+	let part = this.subscribe('participantes',()=>{
+		
+		console.log("ID:",$stateParams.id);
 		return [{_id : $stateParams.id}]
 	});
 	
@@ -55,8 +57,27 @@ function ParticipantesEditarCtrl($scope, $meteor, $reactive, $state, toastr, $st
 	
   
   this.helpers({
-	  participante : () => {	
-		  return Participantes.findOne();
+	  participante : () => {
+		  if (part)
+		  {
+			  var p = Participantes.findOne(); 
+			  
+			  console.log(p);
+			  
+			  fileDisplayArea1.innerHTML = "";
+			
+				var img = new Image();
+												
+				img.id = "fotoCargada";
+				img.src = p.foto;
+				img.width =200;
+				img.height=200;
+												
+				fileDisplayArea1.appendChild(img);	
+			  
+			  
+			  return p;
+			}  
 	  },
 	  eventos : () => {
 		  return Eventos.find();
@@ -126,28 +147,9 @@ function ParticipantesEditarCtrl($scope, $meteor, $reactive, $state, toastr, $st
 					var anioActual = d.getFullYear();
 					
 					var anioInicio = cat.anioinicio;
-					var anioFin = cat.aniofin;
-		
-					var EdadMinima = anioActual - anioInicio;	//22
-					var EdadMaxima = anioActual - anioFin;    //23
-					
-					//Obtener la Edad del participante
-					
-			    var today_year = d.getFullYear();
-			    var today_month = d.getMonth();
-			    var today_day = d.getDate();
-			    var edad = today_year - participante.fechaNacimiento.getFullYear();
-					
-			    if ( today_month < (participante.fechaNacimiento.getMonth() - 1))
-			    {
-			        edad--;
-			    }
-			    if (((participante.fechaNacimiento.getMonth() - 1) == today_month) && (today_day < participante.fechaNacimiento.getDay()))
-			    {
-			        edad--;
-			    }
-			    
-					
+					var anioFin = cat.aniofin;			    
+			    var anioNacimiento = participante.fechaNacimiento.getFullYear();
+										
 					//Validar la edad del particpante en relación a la categoria
 					if (participante.funcionEspecifica != 'DEPORTISTA')
 					{
@@ -178,7 +180,7 @@ function ParticipantesEditarCtrl($scope, $meteor, $reactive, $state, toastr, $st
 																	);
 
 					}
-					else if (edad >= EdadMinima && edad <= EdadMaxima)
+					else if (anioNacimiento <= anioInicio && anioNacimiento >= anioFin)
 					{
 							
 							participante.municipio_id = Meteor.user() != undefined ? Meteor.user().profile.municipio_id : "";
@@ -278,6 +280,44 @@ function ParticipantesEditarCtrl($scope, $meteor, $reactive, $state, toastr, $st
 			this.participante.foto = imagen;
 	}
 	
+	this.download = function(archivo, op) 
+  {
+		    if (archivo.indexOf("application") > 0)
+		    {
+
+			    	var pdf = 'data:application/octet-stream;base64,';
+			  		var d = archivo.replace('data:application/pdf;base64,','');  
+						var dlnk = document.getElementById('dwnldLnk');
+						if (op==1)
+							 dlnk.download= "curp.pdf";
+						else if (op==2)
+							 dlnk.download= "AN.pdf";
+						else if (op==3)
+							 dlnk.download= "Ide.pdf";
+				    dlnk.href = pdf+d;
+				    dlnk.click();
+		    }else if(archivo.indexOf("image") > 0)
+		    {
+
+			    	var jpeg = 'data:image/jpeg;base64,';
+			  		var d = archivo.replace('data:image/jpeg;base64,','');  
+						var dlnk = document.getElementById('dwnldLnk');
+				    if (op==1)
+							 dlnk.download= "curp.jpeg";
+						else if (op==2)
+							 dlnk.download= "AN.jpeg";
+						else if (op==3)
+							 dlnk.download= "Ide.jpeg";				    
+						dlnk.href = jpeg+d;
+				    dlnk.click();
+		    }
+		    else
+		    {
+			    console.log("no entro")
+		    }
+
+	};
+	
 	
 	$(document).ready( function() {
 		
@@ -288,8 +328,19 @@ function ParticipantesEditarCtrl($scope, $meteor, $reactive, $state, toastr, $st
 			var fileInput1 = document.getElementById('fileInput1');
 			var fileDisplayArea1 = document.getElementById('fileDisplayArea1');
 			
-			console.log(rc.participante);
-
+			console.log(this.participante);
+			/*
+			fileDisplayArea1.innerHTML = "";
+		
+			var img = new Image();
+											
+			img.id = "fotoCargada";
+			img.src = this.participante.foto;
+			img.width =200;
+			img.height=200;
+											
+			fileDisplayArea1.appendChild(img);	
+			*/
 					
 			/*
 			var x = document.getElementById("prueba"); 

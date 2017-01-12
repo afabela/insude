@@ -6,7 +6,7 @@ Meteor.publish("participantes",function(params){
 
 Meteor.publish("participantesCred",function(params){
   	return Participantes.find(params, {fields: { _id:1
-	  																						, nombre:1
+	  																						,nombre:1
 	  																						,apellidoPaterno:1
 	  																						,apellidoMaterno:1
 	  																						,curp:1
@@ -32,9 +32,9 @@ Meteor.publish("buscarNombre",function(options){
 			let selector = {
 		  	nombreCompleto: { '$regex' : '.*' + options.where.nombreCompleto || '' + '.*', '$options' : 'i' },
 		  	evento_id: options.where.evento_id,
-		  	deporte_id: options.where.deporte_id,
-		  	categoria_id: options.where.categoria_id,
-		  	rama_id: options.where.rama_id,
+		  	//deporte_id: options.where.deporte_id,
+		  	//categoria_id: options.where.categoria_id,
+		  	//rama_id: options.where.rama_id,
 		  	municipio_id: options.where.municipio_id
 			}
 
@@ -54,7 +54,8 @@ Meteor.publish("buscarNombre",function(options){
 												  																						,sexo:1
 												  																						,pruebas:1
 												  																						}},options.options);
-	}											  																						
+	}
+				  																						
 });
 
 

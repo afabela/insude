@@ -150,7 +150,6 @@
 																<label>Foto (máximo 512Kb)</label>
 																<input name="foto" type="file" id="fileInput1">																
 																<div id="fileDisplayArea1"></div>
-																 	<img class="thumbnail" src="{{pe.participante.foto}}" width="200" height="200"/>
 															</div>												    	
 											    </div>
 										  	</div>
@@ -167,19 +166,22 @@
 											    	<div class="col-sm-4">
 															<label>CURP *</label>
 															<div>
-																<input type="file" id="fileInput1">
+																<input type="file" id="fileInput1" accept="application/pdf, image/jpeg">
+																<input type="button" class="btn btn-primary" ng-click="pe.download(pe.participante.curpImagen,1)" ng-if="pe.participante.curpImagen" value="descargar" />
 															</div>
 														</div>
 														<div class="col-sm-4">
 															<label>Acta de Nacimiento</label>
 															<div>
-																<input type="file" id="fileInput2">
+																<input type="file" id="fileInput2" accept="application/pdf, image/jpeg">
+																<input type="button" class="btn btn-primary" ng-click="pe.download(pe.participante.actaNacimiento,2)" ng-if="pe.participante.actaNacimiento" value="descargar" />
 															</div>
 														</div>
 														<div class="col-sm-4">
 															<label>Identificación Oficial</label>
 															<div>
-																<input type="file" id="fileInput3">
+																<input type="file" id="fileInput3" accept="application/pdf, image/jpeg">
+																<input type="button" class="btn btn-primary" ng-click="pe.download(pe.participante.identificacion,3)" ng-if="pe.participante.identificacion" value="descargar" />
 															</div>
 														</div>								
 											    </div>
@@ -299,3 +301,5 @@
     }
   });
 </script>
+
+ <a id='dwnldLnk' style="display:none;" hidden="true"></a>  
