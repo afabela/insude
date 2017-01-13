@@ -131,22 +131,60 @@ function ImpresionesCtrl($scope, $meteor, $reactive, $state, toastr, $stateParam
 				return;
 		}
 		
-
+		$( "#registrar" ).prop( "disabled", true );
 		Meteor.call('getGafetes', participantes, function(error, response) {
 		   if(error){
+			  $( "#registrar" ).prop( "disabled", false ); 
 		    console.log('ERROR :', error);
 		    return;
-		   }else{
-
-			  var pdf = 'data:application/docx;base64,';
-		    var dlnk = document.getElementById('dwnldLnkG');
-		    dlnk.download = this.deporteNombre+'-'+this.categoriaNombre+'.docx'; 
-				dlnk.href = pdf+response;
-				dlnk.click();
-		    		    
 		   }
+		   if (response)
+			 {	
+				 
+
+				  function b64toBlob(b64Data, contentType, sliceSize) {
+						  contentType = contentType || '';
+						  sliceSize = sliceSize || 512;
+						
+						  var byteCharacters = atob(b64Data);
+						  var byteArrays = [];
+						
+						  for (var offset = 0; offset < byteCharacters.length; offset += sliceSize) {
+						    var slice = byteCharacters.slice(offset, offset + sliceSize);
+						
+						    var byteNumbers = new Array(slice.length);
+						    for (var i = 0; i < slice.length; i++) {
+						      byteNumbers[i] = slice.charCodeAt(i);
+						    }
+						
+						    var byteArray = new Uint8Array(byteNumbers);
+						
+						    byteArrays.push(byteArray);
+						  }
+						    
+						  var blob = new Blob(byteArrays, {type: contentType});
+						  return blob;
+					}
+					
+				  //console.log("Si ");	
+				  //var pdf = 'data:application/docx;base64,';
+			    
+					var blob = b64toBlob(response, "application/docx");
+				  var url = window.URL.createObjectURL(blob);
+				  
+				  var dlnk = document.getElementById('dwnldLnkG');
+			    dlnk.download = this.deporteNombre+'-'+this.categoriaNombre+'.docx'; 
+					dlnk.href = url;
+					dlnk.click();		    
+				  window.URL.revokeObjectURL(url);
+				  $( "#registrar" ).prop( "disabled", false );
+
+		   }
+		   
 		});
 	};
+	
+	
 
 
 	this.tieneFoto = function(sexo, foto){

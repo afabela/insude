@@ -8,8 +8,12 @@ Meteor.methods({
 		var JSZip = require('jszip');
 		var ImageModule = require('docxtemplater-image-module')
 		
-	  //var meteor_root = require('fs').realpathSync( process.cwd() + '/../' );
+	  var meteor_root = require('fs').realpathSync( process.cwd() + '/../' );
 		//console.log(meteor_root);
+		
+		//var produccion = meteor_root+"/web.browser/app/archivos/";
+		var produccion = "/home/insude/archivos/";
+		
 		
 		var opts = {}
 			opts.centered = false;
@@ -35,8 +39,8 @@ Meteor.methods({
 			    // write buffer to file					
 					
 					//Usando Meteor_root
-					fs.writeFileSync("/home/insude/archivos/"+participante.curp+".png", bitmap);
-					participante.foto = "/home/insude/archivos/"+participante.curp+".png";
+					fs.writeFileSync(produccion+participante.curp+".png", bitmap);
+					participante.foto = produccion+participante.curp+".png";
 					
 				}
 		})
@@ -44,7 +48,7 @@ Meteor.methods({
 		
 		var content = fs
     							//.readFileSync("/Users/alfonsoduarte/Documents/Meteor/deporteb/cedula.docx", "binary");
-    							.readFileSync("/home/insude/archivos/gafete.docx", "binary");
+    							.readFileSync(produccion+"gafete.docx", "binary");
 	  
 		var zip = new JSZip(content);
 		var doc=new Docxtemplater()
@@ -58,12 +62,12 @@ Meteor.methods({
 		var buf = doc.getZip()
              		 .generate({type:"nodebuffer"});
  
-		fs.writeFileSync("/home/insude/archivos/gafeteSalida.docx",buf);
+		fs.writeFileSync(produccion+"gafeteSalida.docx",buf);
 		
 		
 		//Pasar a base64
 		// read binary data
-    var bitmap = fs.readFileSync("/home/insude/archivos/gafeteSalida.docx");
+    var bitmap = fs.readFileSync(produccion+"gafeteSalida.docx");
     
     // convert binary data to base64 encoded string
     return new Buffer(bitmap).toString('base64');
