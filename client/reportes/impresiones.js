@@ -123,8 +123,6 @@ function ImpresionesCtrl($scope, $meteor, $reactive, $state, toastr, $stateParam
   this.download = function(participantes) 
   {
 	  
-	  console.log(participantes);	
-	  
 		if (participantes.length == 0)
  		{
 	 			toastr.error("No hay participantes seleccionados para imprmir");
@@ -166,12 +164,13 @@ function ImpresionesCtrl($scope, $meteor, $reactive, $state, toastr, $stateParam
 						  return blob;
 					}
 					
-				  //console.log("Si ");	
+				  console.log("Si entro descarga");	
 				  //var pdf = 'data:application/docx;base64,';
 			    
 					var blob = b64toBlob(response, "application/docx");
 				  var url = window.URL.createObjectURL(blob);
 				  
+				  console.log(url);
 				  var dlnk = document.getElementById('dwnldLnkG');
 			    dlnk.download = this.deporteNombre+'-'+this.categoriaNombre+'.docx'; 
 					dlnk.href = url;

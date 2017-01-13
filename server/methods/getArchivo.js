@@ -9,7 +9,6 @@ Meteor.methods({
 		var ImageModule = require('docxtemplater-image-module')
 		
 	  var meteor_root = require('fs').realpathSync( process.cwd() + '/../' );
-		//console.log(meteor_root);
 		
 		//var produccion = meteor_root+"/web.browser/app/archivos/";
 		var produccion = "/home/insude/archivos/";
@@ -47,7 +46,6 @@ Meteor.methods({
 
 		
 		var content = fs
-    							//.readFileSync("/Users/alfonsoduarte/Documents/Meteor/deporteb/cedula.docx", "binary");
     							.readFileSync(produccion+"gafete.docx", "binary");
 	  
 		var zip = new JSZip(content);
@@ -71,8 +69,6 @@ Meteor.methods({
     
     // convert binary data to base64 encoded string
     return new Buffer(bitmap).toString('base64');
-		
-		
 		
   },
   getCedula: function (participantes) {
