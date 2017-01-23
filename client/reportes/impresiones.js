@@ -14,8 +14,9 @@ function ImpresionesCtrl($scope, $meteor, $reactive, $state, toastr, $stateParam
   this.participante.profile = {};
   this.buscar = {};
   this.evento = {};
-  this.buscar.nombre = '';
 	this.validation = false;
+	this.carga = false;
+	
 	
 	/*
 	let part = this.subscribe('participantes',()=>{
@@ -113,74 +114,138 @@ function ImpresionesCtrl($scope, $meteor, $reactive, $state, toastr, $stateParam
 					var r = Ramas.findOne(participante.rama_id);
 					participante.rama = 	r.nombre;
 					
+					participante.imprimir = true;
+					
 				})
+				
 			}
+
 		}
 		
 	});
 	
 	 
-  this.download = function(participantes) 
+  this.download = function(participantes, op) 
   {
 	  
-		if (participantes.length == 0)
+	  var p = rc.participantes.filter(function(ele){
+																						return ele.imprimir === true;
+		});
+
+	  
+		if (p.length == 0)
  		{
 	 			toastr.error("No hay participantes seleccionados para imprmir");
 				return;
 		}
 		
-		$( "#registrar" ).prop( "disabled", true );
-		Meteor.call('getGafetes', participantes, function(error, response) {
-		   if(error){
-			  $( "#registrar" ).prop( "disabled", false ); 
-		    console.log('ERROR :', error);
-		    return;
-		   }
-		   if (response)
-			 {	
-				 
-
-				  function b64toBlob(b64Data, contentType, sliceSize) {
-						  contentType = contentType || '';
-						  sliceSize = sliceSize || 512;
-						
-						  var byteCharacters = atob(b64Data);
-						  var byteArrays = [];
-						
-						  for (var offset = 0; offset < byteCharacters.length; offset += sliceSize) {
-						    var slice = byteCharacters.slice(offset, offset + sliceSize);
-						
-						    var byteNumbers = new Array(slice.length);
-						    for (var i = 0; i < slice.length; i++) {
-						      byteNumbers[i] = slice.charCodeAt(i);
-						    }
-						
-						    var byteArray = new Uint8Array(byteNumbers);
-						
-						    byteArrays.push(byteArray);
-						  }
-						    
-						  var blob = new Blob(byteArrays, {type: contentType});
-						  return blob;
-					}
-					
-				  console.log("Si entro descarga");	
-				  //var pdf = 'data:application/docx;base64,';
-			    
-					var blob = b64toBlob(response, "application/docx");
-				  var url = window.URL.createObjectURL(blob);
-				  
-				  console.log(url);
-				  var dlnk = document.getElementById('dwnldLnkG');
-			    dlnk.download = this.deporteNombre+'-'+this.categoriaNombre+'.docx'; 
-					dlnk.href = url;
-					dlnk.click();		    
-				  window.URL.revokeObjectURL(url);
-				  $( "#registrar" ).prop( "disabled", false );
-
-		   }
-		   
-		});
+		
+		if (op == 1)
+		{
+				$( "#registrar1" ).prop( "disabled", true );
+				Meteor.call('getCredenciales', p, function(error, response) {
+				   if(error){
+					  $( "#registrar1" ).prop( "disabled", false ); 
+				    console.log('ERROR :', error);
+				    return;
+				   }
+				   if (response)
+					 {	
+						 
+						  function b64toBlob(b64Data, contentType, sliceSize) {
+								  contentType = contentType || '';
+								  sliceSize = sliceSize || 512;
+								
+								  var byteCharacters = atob(b64Data);
+								  var byteArrays = [];
+								
+								  for (var offset = 0; offset < byteCharacters.length; offset += sliceSize) {
+								    var slice = byteCharacters.slice(offset, offset + sliceSize);
+								
+								    var byteNumbers = new Array(slice.length);
+								    for (var i = 0; i < slice.length; i++) {
+								      byteNumbers[i] = slice.charCodeAt(i);
+								    }
+								
+								    var byteArray = new Uint8Array(byteNumbers);
+								
+								    byteArrays.push(byteArray);
+								  }
+								    
+								  var blob = new Blob(byteArrays, {type: contentType});
+								  return blob;
+							}
+							
+							var blob = b64toBlob(response, "application/docx");
+						  var url = window.URL.createObjectURL(blob);
+						  
+						  var dlnk = document.getElementById('dwnldLnkG');
+					    dlnk.download = "cred-"+this.deporteNombre+'-'+this.categoriaNombre+'.docx'; 
+							dlnk.href = url;
+							dlnk.click();		    
+						  window.URL.revokeObjectURL(url);
+						  $( "#registrar1" ).prop( "disabled", false );
+		
+				   }
+				});
+			
+		}
+		else if (op == 2)
+		{
+	  		
+				$( "#registrar2" ).prop( "disabled", true );
+				Meteor.call('getGafetes', p, function(error, response) {
+				   if(error){
+					  $( "#registrar2" ).prop( "disabled", false ); 
+				    console.log('ERROR :', error);
+				    return;
+				   }
+				   if (response)
+					 {	
+						 
+						  function b64toBlob(b64Data, contentType, sliceSize) {
+								  contentType = contentType || '';
+								  sliceSize = sliceSize || 512;
+								
+								  var byteCharacters = atob(b64Data);
+								  var byteArrays = [];
+								
+								  for (var offset = 0; offset < byteCharacters.length; offset += sliceSize) {
+								    var slice = byteCharacters.slice(offset, offset + sliceSize);
+								
+								    var byteNumbers = new Array(slice.length);
+								    for (var i = 0; i < slice.length; i++) {
+								      byteNumbers[i] = slice.charCodeAt(i);
+								    }
+								
+								    var byteArray = new Uint8Array(byteNumbers);
+								
+								    byteArrays.push(byteArray);
+								  }
+								    
+								  var blob = new Blob(byteArrays, {type: contentType});
+								  return blob;
+							}
+							
+							var blob = b64toBlob(response, "application/docx");
+						  var url = window.URL.createObjectURL(blob);
+						  
+						  //console.log(url);
+						  var dlnk = document.getElementById('dwnldLnkG');
+					    dlnk.download = "Gaf-"+this.deporteNombre+'-'+this.categoriaNombre+'.docx'; 
+							dlnk.href = url;
+							dlnk.click();		    
+						  window.URL.revokeObjectURL(url);
+						  $( "#registrar2" ).prop( "disabled", false );
+		
+				   }
+				});
+		}		
+		
+		
+		
+		
+		
 	};
 	
 	
@@ -200,5 +265,17 @@ function ImpresionesCtrl($scope, $meteor, $reactive, $state, toastr, $stateParam
 		  return foto;
 	  }
   }  
+  
+  this.cambiar = function() 
+  {
+				var chkImprimir = document.getElementById('todos');
+				
+				if(part.ready()){
+				_.each(rc.participantes, function(participante){
+					participante.imprimir = chkImprimir.checked;
+				})
+			}
+		 			
+	};
 	
 };	

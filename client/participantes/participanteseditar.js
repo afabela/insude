@@ -280,6 +280,39 @@ function ParticipantesEditarCtrl($scope, $meteor, $reactive, $state, toastr, $st
 			this.participante.foto = imagen;
 	}
 	
+	this.funcionEspecifica = function(participante)
+	{
+			
+			//console.log(participante.funcionEspecifica);
+			switch (participante.funcionEspecifica)
+			{
+					case "ASOCIACIÓN":
+					case "JUEZ/ARBITRO":
+					case "JEFE DE MISIÓN":
+					case "OFICIAL":
+					case "MÉDICO":
+					case "PRENSA":
+					case "INVITADO ESPECIAL":
+					case "COMITE ORGANIZADOR":
+					case "SERVICIOS MEDICOS":
+					
+							//console.log("entro");
+							
+							participante.fechaNacimiento= new Date();
+							participante.estado = "BAJA CALIFORNIA SUR";
+							participante.curpImagen = "s/a";
+							participante.actaNacimiento = "s/a";
+							participante.identificacion = "s/a";
+							participante.categoria_id = "s/a";
+							participante.rama_id = "s/a";
+							participante.deporte_id = "s/a";
+							break;
+			}
+			//console.log(participante);
+			
+	}
+
+	
 	this.download = function(archivo, op) 
   {
 		    if (archivo.indexOf("application") > 0)

@@ -23,6 +23,7 @@ function CredencialesCtrl($scope, $meteor, $reactive, $state, toastr, $statePara
 	this.categoria_id = $stateParams.categoria;
 	
 	
+	/*
 	let part = this.subscribe('participantesCred',()=>{
 		return [{$and:[ {evento_id:  $stateParams.evento}
 									 ,{municipio_id : $stateParams.municipio}
@@ -32,7 +33,7 @@ function CredencialesCtrl($scope, $meteor, $reactive, $state, toastr, $statePara
 						,estatus: true				
 			}]
 	});
-
+ */
 	
 	this.subscribe('municipiosIdNombre',()=>{
 		return [{_id: $stateParams.municipio}]
@@ -79,7 +80,7 @@ function CredencialesCtrl($scope, $meteor, $reactive, $state, toastr, $statePara
 			return Pruebas.find();
 		},
 		todosParticipantes : () => {
-			if(part.ready()){
+			//if(part.ready()){
 				_.each(rc.participantes, function(participante){
 					participante.municipio = Municipios.findOne(participante.municipio_id);
 					participante.evento = Eventos.findOne(participante.evento_id);
@@ -92,7 +93,7 @@ function CredencialesCtrl($scope, $meteor, $reactive, $state, toastr, $statePara
 					})
 					
 				})
-			}
+			//}
 		}
 	});
 	

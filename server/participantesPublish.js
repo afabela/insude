@@ -9,6 +9,7 @@ Meteor.publish("participantesCred",function(params){
 	  																						,nombre:1
 	  																						,apellidoPaterno:1
 	  																						,apellidoMaterno:1
+	  																						,nombreCompleto:1
 	  																						,curp:1
 	  																						,foto:1
 	  																						,evento_id:1
@@ -24,20 +25,15 @@ Meteor.publish("participantesCred",function(params){
 });
 
 
-
 Meteor.publish("buscarNombre",function(options){
 
 	if (options != undefined)
 	{
-			let selector = {
-		  	nombreCompleto: { '$regex' : '.*' + options.where.nombreCompleto || '' + '.*', '$options' : 'i' },
+			let selector = {		  	
+		  	municipio_id: options.where.municipio_id,
 		  	evento_id: options.where.evento_id,
-		  	//deporte_id: options.where.deporte_id,
-		  	//categoria_id: options.where.categoria_id,
-		  	//rama_id: options.where.rama_id,
-		  	municipio_id: options.where.municipio_id
+		  	nombreCompleto: { '$regex' : '.*' + options.where.nombreCompleto || '' + '.*', '$options' : 'i' }
 			}
-
 			return Participantes.find(selector, {fields:{ _id:1
 												  																						,nombre:1
 												  																						,apellidoPaterno:1

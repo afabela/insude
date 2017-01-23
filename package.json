@@ -9,6 +9,7 @@
     "docxtemplater": "^3.0.2",
     "docxtemplater-image-module": "^3.0.0",
     "jszip": "^2.6.1",
+    "qr-image": "^3.2.0",
     "xlsx": "^0.8.1"
   },
   "devDependencies": {},

@@ -13,10 +13,13 @@ function cantidadPorMunicipioCtrl($scope, $meteor, $reactive,  $state, toastr) {
   
 		
 	let part = this.subscribe('participantesCred',()=>{
-		return [{municipio_id: this.getReactively('municipio_id')!= undefined ? this.getReactively('municipio_id'): ""
-						,evento_id: this.getReactively('evento_id')!= undefined ? this.getReactively('evento_id'): ""
-						,estatus: true				
-			}]
+		if (his.getReactively('municipio_id')!= undefined && this.getReactively('evento_id')!= undefined)	
+		{		
+			return [{municipio_id: this.getReactively('municipio_id')!= undefined ? this.getReactively('municipio_id'): ""
+							,evento_id: this.getReactively('evento_id')!= undefined ? this.getReactively('evento_id'): ""
+							,estatus: true				
+				}]
+		}	
 	});
 	
 	this.subscribe('municipios',()=>{
@@ -42,7 +45,6 @@ function cantidadPorMunicipioCtrl($scope, $meteor, $reactive,  $state, toastr) {
 		  if(part.ready()){
 			  
 			  _.each(this.municipios, function(municipio){
-
 				  arreglo.push(Participantes.find({municipio_id : municipio._id, 
 																					}).count());
 			  });

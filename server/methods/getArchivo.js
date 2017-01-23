@@ -8,11 +8,10 @@ Meteor.methods({
 		var JSZip = require('jszip');
 		var ImageModule = require('docxtemplater-image-module')
 		
-	  var meteor_root = require('fs').realpathSync( process.cwd() + '/../' );
-		
+	  //var meteor_root = require('fs').realpathSync( process.cwd() + '/../' );
 		//var produccion = meteor_root+"/web.browser/app/archivos/";
-		var produccion = "/home/insude/archivos/";
 		
+		var produccion = "/home/insude/archivos/";
 		
 		var opts = {}
 			opts.centered = false;
@@ -66,6 +65,90 @@ Meteor.methods({
 		//Pasar a base64
 		// read binary data
     var bitmap = fs.readFileSync(produccion+"gafeteSalida.docx");
+    
+    // convert binary data to base64 encoded string
+    return new Buffer(bitmap).toString('base64');
+		
+  },
+  getCredenciales: function (participantes) { 
+		
+		var fs = require('fs');
+    var Docxtemplater = require('docxtemplater');
+		var JSZip = require('jszip');
+		var ImageModule = require('docxtemplater-image-module')
+		var qr = require('qr-image');
+		
+		
+	  //var meteor_root = require('fs').realpathSync( process.cwd() + '/../' );
+		//var produccion = meteor_root+"/web.browser/app/archivos/";
+
+		var produccion = "/home/insude/archivos/";
+		
+		
+		var opts = {}
+			opts.centered = false;
+			opts.getImage=function(tagValue, tagName) {
+					var binaryData =  fs.readFileSync(tagValue,'binary');
+					return binaryData;
+		}
+		
+		opts.getSize=function(img,tagValue, tagName) {
+		    return [110,110];
+		}
+		
+		var imageModule=new ImageModule(opts);
+
+
+
+		_.each(participantes, function(participante){
+				if (participante.foto != "")
+				{											
+					var f = String(participante.foto);
+					participante.foto = f.replace('data:image/jpeg;base64,', '');
+					
+					// create buffer object from base64 encoded string, it is important to tell the constructor that the string is base64 encoded
+			    var bitmap = new Buffer(participante.foto, 'base64');
+			    // write buffer to file					
+					
+					//Usando Meteor_root
+					fs.writeFileSync(produccion+participante.curp+".png", bitmap);
+					participante.foto = produccion+participante.curp+".png";
+					
+					//QR
+					
+					var svg_string = qr.imageSync("http://insude.mazoft.com/participantesver/"+participante._id+"/"+participante.evento_id+"/"+participante.deporte_id+"/"+participante.categoria_id+"/"+participante.rama_id, { type: 'png' });		
+
+					var bitmapTemp = new Buffer(svg_string,'base64');
+					fs.writeFileSync(produccion+participante._id+".png", bitmapTemp);
+					
+					participante.qr = produccion+participante._id+".png";					
+					
+				}
+		})
+
+		//console.log(participantes);
+		
+		var content = fs
+    							.readFileSync(produccion+"credencial.docx", "binary");
+	  
+		var zip = new JSZip(content);
+		var doc=new Docxtemplater()
+								.attachModule(imageModule)
+								.loadZip(zip)
+		
+		doc.setData({participantes})
+		
+		doc.render();
+ 
+		var buf = doc.getZip()
+             		 .generate({type:"nodebuffer"});
+ 
+		fs.writeFileSync(produccion+"credencialSalida.docx",buf);
+		
+		
+		//Pasar a base64
+		// read binary data
+    var bitmap = fs.readFileSync(produccion+"credencialSalida.docx");
     
     // convert binary data to base64 encoded string
     return new Buffer(bitmap).toString('base64');

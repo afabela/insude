@@ -343,6 +343,9 @@ function ParticipantesNuevoCtrl($scope, $meteor, $reactive, $state, toastr, $sta
 					case "MÉDICO":
 					case "PRENSA":
 					case "INVITADO ESPECIAL":
+					case "COMITE ORGANIZADOR":
+					case "SERVICIOS MEDICOS":
+					
 							//console.log("entro");
 							
 							participante.fechaNacimiento= new Date();
@@ -352,6 +355,7 @@ function ParticipantesNuevoCtrl($scope, $meteor, $reactive, $state, toastr, $sta
 							participante.identificacion = "s/a";
 							participante.categoria_id = "s/a";
 							participante.rama_id = "s/a";
+							participante.deporte_id = "s/a";
 							break;
 			}
 			//console.log(participante);
