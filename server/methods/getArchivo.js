@@ -269,9 +269,9 @@ Meteor.methods({
 				var ws_name = "SheetJS";
 				
 				var meteor_root = require('fs').realpathSync( process.cwd() + '/../' );
-				var produccion = meteor_root+"/web.browser/app/archivos/";
+				//var produccion = meteor_root+"/web.browser/app/archivos/";
 
-				//var produccion = "/home/insude/archivos/";	
+				var produccion = "/home/insude/archivos/";	
 
 				var wscols = [
 					{wch:5},
@@ -282,7 +282,8 @@ Meteor.methods({
 					{wch:25},
 					{wch:15},
 					{wch:20},
-					{wch:10}
+					{wch:10},
+					{wch:20}
 				];
 				
 				if(typeof require !== 'undefined') 
@@ -343,9 +344,6 @@ Meteor.methods({
 				
 				/* TEST: column widths */
 				ws['!cols'] = wscols;
-				
-				//var meteor_root = Npm.require('fs').realpathSync( process.cwd() + '/../' );
-				//console.log(meteor_root);
 				
 				/* write file */
 				XLSX.writeFile(wb, produccion+"sheetjs.xlsx");

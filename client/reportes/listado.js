@@ -21,14 +21,14 @@ function listadoCtrl($scope, $meteor, $reactive, $state, toastr, $stateParams) {
 	this.categoriaNombre = "";
 	
 	
-	let part = this.subscribe('participantesCred',()=>{
+	let part = this.subscribe('participantesListado',()=>{
 				
-				if (this.getReactively('evento.municipio_id') != undefined && this.getReactively('evento.evento_id') != undefined && this.getReactively('evento.deporte_id') == undefined && this.getReactively('evento.categoria_id') == undefined && this.getReactively('evento.rama_id') == undefined)
+				if (this.getReactively('evento.municipio_id') != undefined && this.getReactively('evento.evento_id') != undefined && this.getReactively('evento.deporte_id') == undefined)
 				{			
 							return [{evento_id: this.getReactively('evento.evento_id')!= undefined ? this.getReactively('evento.evento_id'): "" 
 										  ,municipio_id : this.getReactively('evento.municipio_id')
 										  }];
-				} else if (this.getReactively('evento.municipio_id') != undefined && this.getReactively('evento.evento_id') != undefined && this.getReactively('evento.deporte_id') != undefined && this.getReactively('evento.categoria_id') == undefined && this.getReactively('evento.rama_id') == undefined)
+				} else if (this.getReactively('evento.municipio_id') != undefined && this.getReactively('evento.evento_id') != undefined && this.getReactively('evento.deporte_id') != undefined)
 				{
 							return [{evento_id: this.getReactively('evento.evento_id')!= undefined ? this.getReactively('evento.evento_id'): "" 
 										  ,municipio_id : this.getReactively('evento.municipio_id')
@@ -36,24 +36,7 @@ function listadoCtrl($scope, $meteor, $reactive, $state, toastr, $stateParams) {
 										  }];
 					
 					
-				} else if (this.getReactively('evento.municipio_id') != undefined && this.getReactively('evento.evento_id') != undefined && this.getReactively('evento.deporte_id') != undefined && this.getReactively('evento.categoria_id') != undefined && this.getReactively('evento.rama_id') == undefined)
-				{
-							return [{evento_id: this.getReactively('evento.evento_id')!= undefined ? this.getReactively('evento.evento_id'): "" 
-										  ,municipio_id : this.getReactively('evento.municipio_id')
-										  ,deporte_id: this.getReactively('evento.deporte_id')!= undefined ? this.getReactively('evento.deporte_id'): ""
-										  ,categoria_id: this.getReactively('evento.categoria_id')!= undefined ? this.getReactively('evento.categoria_id'): ""
-										  }];
-				} 
-				else
-				{
-							return [{evento_id: this.getReactively('evento.evento_id')!= undefined ? this.getReactively('evento.evento_id'): "" 
-										  ,municipio_id : this.getReactively('evento.municipio_id')
-										  ,deporte_id: this.getReactively('evento.deporte_id')!= undefined ? this.getReactively('evento.deporte_id'): ""
-											,categoria_id: this.getReactively('evento.categoria_id')!= undefined ? this.getReactively('evento.categoria_id'): ""
-										  ,rama_id: this.getReactively('evento.rama_id')!= undefined ? this.getReactively('evento.rama_id'): ""
-										  }];
-					
-				}	  			  
+				}   			  
 	});
 	
 	this.subscribe('municipios',()=>{
@@ -120,7 +103,7 @@ function listadoCtrl($scope, $meteor, $reactive, $state, toastr, $stateParams) {
 		
 	
 			var participantesArray = [];
-					participantesArray.push(["NUM", "NOMBRE", "APELLIDO PATERNO", "APELLIDO MATERNO", "FECHA NACIMIENTO", "CURP", "DEPORTE", "CATEGORIA", "RAMA"]);
+					participantesArray.push(["NUM", "NOMBRE", "APELLIDO PATERNO", "APELLIDO MATERNO", "FECHA NACIMIENTO", "CURP", "DEPORTE", "CATEGORIA", "RAMA", "PRUEBAS"]);
 					var con = 1;
 			 _.each(rc.participantes, function(participante){
 					
@@ -164,8 +147,24 @@ function listadoCtrl($scope, $meteor, $reactive, $state, toastr, $stateParams) {
 					}		
 					else
 							participante.rama = "Sin Rama";
+							
+							
+					var pruebas = "";
+					if (participante.pruebas != undefined)
+					{
+							for	(i=0; i<participante.pruebas.length; i++)
+							{
+									var p = Pruebas.findOne(participante.pruebas[i]);
+									if (i + 1 == participante.pruebas.length)
+											pruebas = pruebas + p.nombre;
+									else
+											pruebas = pruebas + p.nombre + ", ";
+								
+							}
+					}		
+					console.log(pruebas);
 						
-				 	participantesArray.push([con, participante.nombre, participante.apellidoPaterno, participante.apellidoMaterno, (participante.fechaNacimiento.getUTCDate() +"/"+ (participante.fechaNacimiento.getUTCMonth()+1) +"/"+ participante.fechaNacimiento.getUTCFullYear()), participante.curp, participante.deporte, participante.categoria, participante.rama]);
+				 	participantesArray.push([con, participante.nombre, participante.apellidoPaterno, participante.apellidoMaterno, (participante.fechaNacimiento.getUTCDate() +"/"+ (participante.fechaNacimiento.getUTCMonth()+1) +"/"+ participante.fechaNacimiento.getUTCFullYear()), participante.curp, participante.deporte, participante.categoria, participante.rama, pruebas]);
 				 	con++;
 			})	 
 			
