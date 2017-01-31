@@ -29,8 +29,8 @@ function ListarParticipantesCtrl($scope, $meteor, $reactive, $state, toastr, $st
 				    where : { 
 					    nombreCompleto : this.getReactively('buscar.nombre'),
 					    evento_id : this.getReactively('buscar.evento_id'),
-					    municipio_id : Meteor.user() != undefined ? Meteor.user().profile.municipio_id : ""	  
-					  }  
+					    municipio_id : Meteor.user() != undefined ? Meteor.user().profile.municipio_id : ""
+					  }
 			    }];
 	    }
     }

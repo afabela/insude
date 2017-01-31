@@ -269,8 +269,8 @@ Meteor.methods({
 				var ws_name = "SheetJS";
 				
 				var meteor_root = require('fs').realpathSync( process.cwd() + '/../' );
+				
 				//var produccion = meteor_root+"/web.browser/app/archivos/";
-
 				var produccion = "/home/insude/archivos/";	
 
 				var wscols = [

@@ -155,11 +155,14 @@ function listadoCtrl($scope, $meteor, $reactive, $state, toastr, $stateParams) {
 							for	(i=0; i<participante.pruebas.length; i++)
 							{
 									var p = Pruebas.findOne(participante.pruebas[i]);
-									if (i + 1 == participante.pruebas.length)
+									console.log(p);
+									if (p != undefined)
+									{
+										if (i + 1 == participante.pruebas.length)
 											pruebas = pruebas + p.nombre;
-									else
-											pruebas = pruebas + p.nombre + ", ";
-								
+										else
+											pruebas = pruebas + p.nombre + ", ";	
+									}
 							}
 					}		
 					console.log(pruebas);
