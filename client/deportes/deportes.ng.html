@@ -11,7 +11,7 @@
 			    <div class="row">
 			    	<div class="col-sm-4" valida>
 				    	<label>Nombre *</label>
-					    <input name="nombre" type="text" class="form-control" ng-model="dep.deporte.nombre" required>
+					    <input name="nombre" type="text" class="form-control" ng-model="dep.deporte.nombre" required capitalize>
 			    	</div>
 			    	<div class="col-sm-4" valida>
 							<label >Evento</label>
@@ -39,7 +39,7 @@
 		<div class="col-md-4">
 				<label >Buscar Deporte</label>
 				<div class="icon-addon addon-md">
-					<input type="text" class="form-control" placeholder="..." ng-model="query">
+					<input type="text" class="form-control" placeholder="..." ng-model="query" capitalize>
 					<label for="buscar" class="glyphicon glyphicon-search" rel="tooltip" title="" data-original-title="Buscar"></label>
 	      </div>
 		</div>

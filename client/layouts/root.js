@@ -13,4 +13,13 @@ angular.module("insude")
 	    
 	  });
 	 }
+	 
+	//Funcion Evalua la sessión del usuario
+	this.autorun(function() {
+    if(!Meteor.user()){	    
+	    console.log("usuario:",Meteor.user());
+    	$state.go('anon.login');
+    }    
+  });	
+	 
 };

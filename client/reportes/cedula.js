@@ -20,7 +20,32 @@ function CedulaCtrl($scope, $meteor, $reactive, $state, toastr, $stateParams) {
 	this.categoriaNombre = "";
 	
 	
+	let part = this.subscribe('participanteEventos',()=>{
+		
+				if (this.getReactively('evento.evento_id') != undefined && this.getReactively('evento.deporte_id') != undefined && this.getReactively('evento.categoria_id') != undefined && this.getReactively('evento.rama_id') != undefined)
+				{	
+					
+						if ((Meteor.user().roles[0] == 'admin') && (this.getReactively('evento.municipio_id') == undefined))
+								return;
+								
+				
+				return [{evento_id: this.getReactively('evento.evento_id')!= undefined ? this.getReactively('evento.evento_id'): "" 
+							  ,municipio_id : ((Meteor.user().roles[0] == 'admin') && (this.getReactively('evento.municipio_id') != undefined)) 
+							  									? this.getReactively('evento.municipio_id')  
+							  									: Meteor.user().profile.municipio_id
+							  ,deporte_id: this.getReactively('evento.deporte_id')!= undefined ? this.getReactively('evento.deporte_id'): ""
+								,categoria_id: this.getReactively('evento.categoria_id')!= undefined ? this.getReactively('evento.categoria_id'): ""
+							  ,rama_id: this.getReactively('evento.rama_id')!= undefined ? this.getReactively('evento.rama_id'): ""
+							  ,funcionEspecifica: this.getReactively('evento.funcionEspecifica')!= undefined ? this.getReactively('evento.funcionEspecifica'): ""}]
+							  
+				}			  
+	});
+	
+/*
 	let part = this.subscribe('participantesCred',()=>{
+		
+		
+		
 		return [{evento_id: this.getReactively('evento.evento_id')!= undefined ? this.getReactively('evento.evento_id'): "" 
 					  ,municipio_id : Meteor.user() != undefined ? Meteor.user().profile.municipio_id : ""
 					  ,deporte_id: this.getReactively('evento.deporte_id')!= undefined ? this.getReactively('evento.deporte_id'): ""
@@ -29,6 +54,7 @@ function CedulaCtrl($scope, $meteor, $reactive, $state, toastr, $stateParams) {
 					  ,funcionEspecifica: this.getReactively('evento.funcionEspecifica')!= undefined ? this.getReactively('evento.funcionEspecifica'): ""
 						,estatus: true}]
 	});
+*/
 	/*
 	this.subscribe('buscarNombre',()=>{
 		return [{$and:[ {municipio_id : Meteor.user() != undefined ? Meteor.user().profile.municipio_id : ""}
@@ -69,7 +95,7 @@ function CedulaCtrl($scope, $meteor, $reactive, $state, toastr, $stateParams) {
 	
 	this.helpers({
 	  participantes : () => {
-		  return Participantes.find();
+		  return ParticipanteEventos.find();
 	  },
 		municipios : () => {
 			return Municipios.find();
@@ -120,6 +146,8 @@ function CedulaCtrl($scope, $meteor, $reactive, $state, toastr, $stateParams) {
 		
 	});
 	
+	
+	
 	this.download = function(participantes) 
   {
 	  
@@ -129,20 +157,17 @@ function CedulaCtrl($scope, $meteor, $reactive, $state, toastr, $stateParams) {
 				return;
 		}
 		
+		loading(true);
 		Meteor.call('getCedula', participantes, function(error, response) {
 		   if(error){
 		    console.log('ERROR :', error);
 		    return;
-		   }else{
-
-			  var pdf = 'data:application/docx;base64,';
-		    var dlnk = document.getElementById('dwnldLnk');
-		    dlnk.download = this.deporteNombre+'-'+this.categoriaNombre+'.docx'; 
-				dlnk.href = pdf+response;
-				dlnk.click();
-		    		    
+		   }else if (response){
+			 	
+			 	 downloadFile(response);
 		   }
 		});
+		loading(false);
 		
 	};
 

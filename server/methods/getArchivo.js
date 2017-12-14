@@ -1,14 +1,14 @@
 
 Meteor.methods({
   
-  getGafetes: function (participantes) { 
+  getGafetes: function (participantes, municipio, FE, deporte, categoria, rama) { 
 		
 		var fs = require('fs');
     var Docxtemplater = require('docxtemplater');
 		var JSZip = require('jszip');
 		var ImageModule = require('docxtemplater-image-module')
 		
-	  //var meteor_root = require('fs').realpathSync( process.cwd() + '/../' );
+	  var meteor_root = require('fs').realpathSync( process.cwd() + '/../' );
 		//var produccion = meteor_root+"/web.browser/app/archivos/";
 		
 		var produccion = "/home/insude/archivos/";
@@ -26,6 +26,11 @@ Meteor.methods({
 		
 		var imageModule=new ImageModule(opts);
 		
+		var mun = Municipios.findOne({_id: municipio});
+		var dep = Deportes.findOne({_id: deporte});
+		var cat = Categorias.findOne({_id: categoria});
+		var ram = Ramas.findOne({_id: rama});
+		
 		_.each(participantes, function(participante){
 				if (participante.foto != "")
 				{											
@@ -39,6 +44,15 @@ Meteor.methods({
 					//Usando Meteor_root
 					fs.writeFileSync(produccion+participante.curp+".png", bitmap);
 					participante.foto = produccion+participante.curp+".png";
+					
+					participante.municipio = mun.nombre;
+					participante.deporte = dep.nombre; 
+					participante.categoria = cat.nombre;
+					participante.rama = ram.nombre;
+					
+					participante.nombre = participante.nombre.toUpperCase();
+					participante.apellidoPaterno = participante.apellidoPaterno.toUpperCase();
+					participante.apellidoMaterno = participante.apellidoMaterno.toUpperCase();
 					
 				}
 		})
@@ -161,10 +175,25 @@ Meteor.methods({
 		var JSZip = require('jszip');
 		var Docxtemplater = require('docxtemplater');
 		var ImageModule = require('docxtemplater-image-module');
-		//var unoconv = Npm.require('unoconv');
+		var unoconv = require('better-unoconv');
+    var future = require('fibers/future');
 		
 		var meteor_root = Npm.require('fs').realpathSync( process.cwd() + '/../' );
-		console.log("Root: ", meteor_root);
+		
+		var produccion 					= "";
+		var produccionFotos 		= "";
+		var produccionDescargas = "";
+				
+		if(Meteor.isDevelopment){
+      produccion 					= meteor_root+"/web.browser/app/archivos/";
+      produccionFotos 		= meteor_root+"/web.browser/app/fotos/";
+      produccionDescargas = meteor_root+"/web.browser/app/descargas/";
+    }else{
+      produccion 					= "/home/insude/archivos/";
+      produccionFotos 		= "/home/insude/fotos/";
+      produccionDescargas = "/home/insude/descargas/";
+    }
+		
 		
 		var opts = {}
 			opts.centered = false;
@@ -209,19 +238,19 @@ Meteor.methods({
 					//participante.foto = process.cwd()+"/app/server/fotos/"+participante.curp+".png";									
 					
 					//Usando Meteor_root
-					fs.writeFileSync(meteor_root+"/web.browser/app/fotos/"+participante.curp+".png", bitmap);
-					participante.foto = meteor_root + "/web.browser/app/fotos/"+participante.curp+".png";
-					
+					fs.writeFileSync(produccionFotos + participante.curp+".png", bitmap);
+					participante.foto = produccionFotos + participante.curp+".png";
 					
 				}
 		})
 		
 		
 		var content = fs
-    							.readFileSync(meteor_root+"/web.browser/app/archivos/cedula.docx", "binary");
+    							.readFileSync(produccion + "cedula.docx", "binary");
 
 	  
 		var zip = new JSZip(content);
+		var res = new future();
 		var doc=new Docxtemplater()
 								.attachModule(imageModule)
 								.loadZip(zip)
@@ -242,9 +271,22 @@ Meteor.methods({
 		var buf = doc.getZip()
              		 .generate({type:"nodebuffer"});
  
-		fs.writeFileSync(meteor_root+"/web.browser/app/descargas/cedulaSalida.docx",buf);
+		fs.writeFileSync(produccionDescargas + "cedulaSalida.docx",buf);
 
 		
+		var buf = doc.getZip().generate({ type: "nodebuffer" });
+		
+		
+		var rutaOutput = produccionDescargas + "Cedula" + moment().format('x') + "docx";
+    fs.writeFileSync(rutaOutput, buf);
+    unoconv.convert(rutaOutput, 'pdf', function(err, result) {
+      if(!err){
+        fs.unlink(rutaOutput);
+        res['return']({ uri: 'data:application/pdf;base64,' + result.toString('base64'), nombre: 'Cedula.pdf' });
+      }else{
+        res['return']({err: err});
+      }
+    });
 		
 		//Convertir a PDF
 		
@@ -256,11 +298,13 @@ Meteor.methods({
 		
 		//Pasar a base64
 		// read binary data
-    var bitmap = fs.readFileSync(meteor_root+"/web.browser/app/descargas/cedulaSalida.docx");
+    //var bitmap = fs.readFileSync(meteor_root+"/web.browser/app/descargas/cedulaSalida.docx");
     
     // convert binary data to base64 encoded string
-    return new Buffer(bitmap).toString('base64');
+    //return new Buffer(bitmap).toString('base64');
 		
+		
+		return res.wait();
 		
   },
   getExcel: function (participantes) {
@@ -270,8 +314,13 @@ Meteor.methods({
 				
 				var meteor_root = require('fs').realpathSync( process.cwd() + '/../' );
 				
-				//var produccion = meteor_root+"/web.browser/app/archivos/";
-				var produccion = "/home/insude/archivos/";	
+				var produccion = "";
+				
+				if(Meteor.isDevelopment){
+		      produccion = meteor_root+"/web.browser/app/archivos/";
+		    }else{
+		      produccion = "/home/insude/archivos/";
+		    }
 
 				var wscols = [
 					{wch:5},
@@ -358,6 +407,99 @@ Meteor.methods({
 		
 	  		
 	},
+  
+  report: function(params) {
+    var Docxtemplater = require('docxtemplater');
+    var JSZip = require('jszip');
+    var unoconv = require('better-unoconv');
+    var future = require('fibers/future');
+    var fs = require('fs');
+    var objParse = function(datos, obj, prof) {
+      if (!obj) {
+        obj = {};
+      }
+      _.each(datos, function(d, dd) {
+        var i = prof ? prof + dd : dd;
+        if (_.isDate(d)) {
+          obj[i] = moment(d).format('DD-MM-YYYY');
+        } else if (_.isArray(d)) {
+          obj[i] = arrParse(d, []);
+        } else if (_.isObject(d)) {
+          objParse(d, obj, i + '.');
+        } else {
+          obj[i] = d;
+        }
+      });
+      return obj
+    };
+
+    var arrParse = function(datos, arr) {
+      _.each(datos, function(d) {
+        if (_.isArray(d)){
+          arr.push(arrParse(d, []));
+        }else if (_.isObject(d)){
+          var obj = objParse(d, {});
+          arr.push(obj);
+        } else {
+          arr.push(!_.isDate(d) ? d : moment(d).format('DD-MM-YYYY'));
+        }
+      });
+      return arr
+    };
+
+    params.datos = objParse(params.datos);
+    params.datos.fechaReporte = moment().format('DD-MM-YYYY');  
+    var templateType = (params.type === 'pdf') ? '.docx' : (params.type === 'excel' ? '.xlsx' : '.docx');
+    if(Meteor.isDevelopment){
+      var path = require('path');
+      var publicPath = path.resolve('.').split('.meteor')[0];
+      var templateRoute = publicPath + "public/templates/" + params.templateNombre + templateType;
+    }else{
+      var publicPath = '/home/casserole/bundle/programs/web.browser/app/';
+      var templateRoute = publicPath + "templates/" + params.templateNombre + templateType;
+    }
+
+    var content = fs.readFileSync(templateRoute, "binary");
+    var res = new future();
+    var zip = new JSZip(content);
+    var doc = new Docxtemplater().loadZip(zip).setOptions({
+      nullGetter: function(part) {
+        if (!part.module) {
+          return "";
+        }
+        if (part.module === "rawxml") {
+          return "";
+        }
+        return "";
+      }
+    });
+
+    doc.setData(params.datos);
+    doc.render();
+    var buf = doc.getZip().generate({ type: "nodebuffer" });
+    
+    if (params.type == 'pdf') {
+      var rutaOutput = publicPath + (Meteor.isDevelopment ? ".outputs/" : "templates/") + params.reportNombre + moment().format('x') + templateType;
+      fs.writeFileSync(rutaOutput, buf);
+      unoconv.convert(rutaOutput, 'pdf', function(err, result) {
+        if(!err){
+          fs.unlink(rutaOutput);
+          res['return']({ uri: 'data:application/pdf;base64,' + result.toString('base64'), nombre: params.reportNombre + '.pdf' });
+        }else{
+          res['return']({err: err});
+        }
+      });
+    } else {
+      var mime;
+      if (templateType === '.xlsx') {
+        mime = 'vnd.openxmlformats-officedocument.spreadsheetml.sheet';
+      } else {
+        mime = 'application/vnd.openxmlformats-officedocument.wordprocessingml.document';
+      }
+      res['return']({ uri: 'data:application/' + mime + ';base64,' + buf.toString('base64'), nombre: params.reportNombre + templateType });
+    }
+    return res.wait();
+  }
   
 });
 

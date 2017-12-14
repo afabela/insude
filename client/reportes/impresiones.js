@@ -55,9 +55,12 @@ function ImpresionesCtrl($scope, $meteor, $reactive, $state, toastr, $stateParam
 		return [{estatus: true}]
 	});
 	
+	
 	this.subscribe('deportes',()=>{
-		return [{evento_id: this.getReactively('evento.evento_id')? this.getReactively('evento.evento_id'):""}]
+		return [{evento_id: this.getReactively('evento.evento_id')? this.getReactively('evento.evento_id'):""
+						,estatus: true}]
 	});
+	
 	
 	this.subscribe('categorias',()=>{
 		return [{evento_id:  this.getReactively('evento.evento_id')? this.getReactively('evento.evento_id'):""
@@ -101,6 +104,7 @@ function ImpresionesCtrl($scope, $meteor, $reactive, $state, toastr, $stateParam
 		todosParticipantes : () => {
 			if(part.ready()){
 				_.each(rc.participantes, function(participante){
+					/*
 					var m = Municipios.findOne(participante.municipio_id);
 					participante.municipio = m.nombre;
 					var e = Eventos.findOne(participante.evento_id);
@@ -113,6 +117,7 @@ function ImpresionesCtrl($scope, $meteor, $reactive, $state, toastr, $stateParam
 					this.categoriaNombre = c.nombre;
 					var r = Ramas.findOne(participante.rama_id);
 					participante.rama = 	r.nombre;
+					*/
 					
 					participante.imprimir = true;
 					
@@ -194,7 +199,7 @@ function ImpresionesCtrl($scope, $meteor, $reactive, $state, toastr, $stateParam
 		{
 	  		
 				$( "#registrar2" ).prop( "disabled", true );
-				Meteor.call('getGafetes', p, function(error, response) {
+				Meteor.call('getGafetes', p, rc.evento.municipio_id, rc.evento.funcionEspecifica, rc.evento.deporte_id, rc.evento.categoria_id, rc.evento.rama_id, function(error, response) {
 				   if(error){
 					  $( "#registrar2" ).prop( "disabled", false ); 
 				    console.log('ERROR :', error);
@@ -232,7 +237,7 @@ function ImpresionesCtrl($scope, $meteor, $reactive, $state, toastr, $stateParam
 						  
 						  //console.log(url);
 						  var dlnk = document.getElementById('dwnldLnkG');
-					    dlnk.download = "Gaf-"+this.deporteNombre+'-'+this.categoriaNombre+'.docx'; 
+					    dlnk.download = "Gafetes.docx"; 
 							dlnk.href = url;
 							dlnk.click();		    
 						  window.URL.revokeObjectURL(url);

@@ -21,7 +21,12 @@ function listadoCtrl($scope, $meteor, $reactive, $state, toastr, $stateParams) {
 	this.categoriaNombre = "";
 	
 	
-	let part = this.subscribe('participantesListado',()=>{
+	let part = this.subscribe('participanteListado',()=>{
+				
+				var user = Meteor.users.findOne(Meteor.userId());
+				if (user.roles[0] != "admin")
+						this.evento.municipio_id = user.profile.municipio_id;
+				
 				
 				if (this.getReactively('evento.municipio_id') != undefined && this.getReactively('evento.evento_id') != undefined && this.getReactively('evento.deporte_id') == undefined)
 				{			
@@ -69,7 +74,7 @@ function listadoCtrl($scope, $meteor, $reactive, $state, toastr, $stateParams) {
 	
 	this.helpers({
 	  participantes : () => {
-		  return Participantes.find();
+		  return ParticipanteEventos.find();
 	  },
 		municipios : () => {
 			return Municipios.find();

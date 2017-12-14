@@ -23,10 +23,10 @@ function CategoriasCtrl($scope, $meteor, $reactive, $state, toastr) {
 	  
   this.helpers({
 		categorias : () => {
-		  return Categorias.find();
+		  return Categorias.find({},{sort : {nombre : 1}});
 	  },
 	  eventos : () => {
-		  return Eventos.find();
+		  return Eventos.find({},{sort : {nombre : 1}});
 	  },
 	  deportesBuscar : () => {
 		  return Deportes.find({evento_id: this.getReactively('buscar.buscarEvento_id')? this.getReactively('buscar.buscarEvento_id'):""});
