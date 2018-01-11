@@ -11,7 +11,7 @@ Meteor.methods({
 	  var meteor_root = require('fs').realpathSync( process.cwd() + '/../' );
 		//var produccion = meteor_root+"/web.browser/app/archivos/";
 		
-		var produccion = "/home/insude/archivos/";
+		var produccion = "/var/www/insude/archivos/";
 		
 		var opts = {}
 			opts.centered = false;
@@ -96,7 +96,7 @@ Meteor.methods({
 	  //var meteor_root = require('fs').realpathSync( process.cwd() + '/../' );
 		//var produccion = meteor_root+"/web.browser/app/archivos/";
 
-		var produccion = "/home/insude/archivos/";
+		var produccion = "/var/www/insude/archivos/";
 		
 		
 		var opts = {}
@@ -189,9 +189,9 @@ Meteor.methods({
       produccionFotos 		= meteor_root+"/web.browser/app/fotos/";
       produccionDescargas = meteor_root+"/web.browser/app/descargas/";
     }else{
-      produccion 					= "/home/insude/archivos/";
-      produccionFotos 		= "/home/insude/fotos/";
-      produccionDescargas = "/home/insude/descargas/";
+      produccion 					= "/var/www/insude/archivos/";
+      produccionFotos 		= "/var/www/insude/fotos/";
+      produccionDescargas = "/var/www/insude/descargas/";
     }
 		
 		
@@ -319,7 +319,7 @@ Meteor.methods({
 				if(Meteor.isDevelopment){
 		      produccion = meteor_root+"/web.browser/app/archivos/";
 		    }else{
-		      produccion = "/home/insude/archivos/";
+		      produccion = "/var/www/insude/archivos/";
 		    }
 
 				var wscols = [

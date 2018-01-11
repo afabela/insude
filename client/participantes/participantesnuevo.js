@@ -9,6 +9,12 @@ function ParticipantesNuevoCtrl($scope, $meteor, $reactive, $state, toastr, $sta
 	
 	Window = rc;
 	
+	this.buscar = {};
+	this.buscar.nombre = "";
+	this.buscando = false;
+	
+	this.participantes = [];
+	
 	this.participante = {};
 	this.participante.estado = "BAJA CALIFORNIA SUR";
 	
@@ -17,6 +23,23 @@ function ParticipantesNuevoCtrl($scope, $meteor, $reactive, $state, toastr, $sta
   this.buscar.nombre = '';
 	
 	this.participanteEventos.evento_id = $stateParams.id;
+	
+	
+	this.subscribe('buscarPorNombre', () => {
+		
+		if(rc.getReactively("buscar.nombre").length > 4){
+			console.log(this.buscar)
+			rc.participantes = [];
+			rc.buscando = true;			
+			return [{
+		    options : { limit: 20 },
+		    where : { 
+					nombreCompleto : rc.getReactively('buscar.nombre')
+				} 		   
+	    }];
+		}
+
+  }); 
 	
 	
 	this.subscribe('ramas',()=>{
@@ -57,7 +80,6 @@ function ParticipantesNuevoCtrl($scope, $meteor, $reactive, $state, toastr, $sta
 		}]
 	});
 	
-  
   this.helpers({
 	  eventos : () => {
 		  return Eventos.find();
@@ -78,8 +100,10 @@ function ParticipantesNuevoCtrl($scope, $meteor, $reactive, $state, toastr, $sta
 		  return ModalidadDeportivas.find();
 	  },
 	  participantes : () => {
-		  return Participantes.find();
-	  },
+		  return Participantes.find({
+					nombreCompleto: { '$regex' : '.*' + rc.getReactively('buscar.nombre') || '' + '.*', '$options' : 'i' }
+				}, { sort : {"nombreCompleto" : 1 }})
+		},
 	  municipios : () => {
 		  return Municipios.find();
 	  },
@@ -625,10 +649,11 @@ function ParticipantesNuevoCtrl($scope, $meteor, $reactive, $state, toastr, $sta
 	
 	this.ValidaCurpParticipante = function(curp)
 	{
-				
+				loading(true);
 				Meteor.call('getParticipanteCurp', curp, function(error, response) {
 							if(error){
 									console.log('ERROR :', error);
+									loading(false);
 							    return;
 							}else{
 							    if (response)
@@ -646,6 +671,8 @@ function ParticipantesNuevoCtrl($scope, $meteor, $reactive, $state, toastr, $sta
 											img.height=200;
 											
 											fileDisplayArea1.appendChild(img);
+											
+											loading(false);
 
 							    }
 						  }
@@ -919,5 +946,51 @@ function ParticipantesNuevoCtrl($scope, $meteor, $reactive, $state, toastr, $sta
 			
 			return e;		
 	}	
+	
+	this.modalDoc= function(img)
+	{
+		var imagen = '<img class="img-responsive" src="'+img+'" style="margin:auto;">';
+		$('#imagenDiv').empty().append(imagen);
+		$("#modaldoc").modal('show');
+	};
+	
+	this.download = function(archivo, op) 
+  {
+				//console.log(archivo.indexOf("application"));
+				//console.log(archivo.indexOf("image"));
+		    if (archivo.indexOf("application") > 0)
+		    {
+
+			    	var pdf = 'data:application/octet-stream;base64,';
+			  		var d = archivo.replace('data:application/pdf;base64,','');  
+						var dlnk = document.getElementById('dwnldLnk');
+						if (op==1)
+							 dlnk.download= "curp.pdf";
+						else if (op==2)
+							 dlnk.download= "AN.pdf";
+						else if (op==3)
+							 dlnk.download= "Ide.pdf";
+				    dlnk.href = pdf+d;
+				    dlnk.click();
+		    }else if(archivo.indexOf("image") > 0)
+		    {
+
+			    	var jpeg = 'data:image/jpeg;base64,';
+			  		var d = archivo.replace('data:image/jpeg;base64,','');  
+						var dlnk = document.getElementById('dwnldLnk');
+				    if (op==1)
+							 dlnk.download= "curp.jpeg";
+						else if (op==2)
+							 dlnk.download= "AN.jpeg";
+						else if (op==3)
+							 dlnk.download= "Ide.jpeg";				    
+						dlnk.href = jpeg+d;
+				    dlnk.click();
+		    }
+		    else
+		    {
+			    console.log("no entro")
+		    }
+	};
 	
 };

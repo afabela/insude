@@ -27,6 +27,7 @@ function listadoCtrl($scope, $meteor, $reactive, $state, toastr, $stateParams) {
 				if (user.roles[0] != "admin")
 						this.evento.municipio_id = user.profile.municipio_id;
 				
+				console.log(this.evento.municipio_id);
 				
 				if (this.getReactively('evento.municipio_id') != undefined && this.getReactively('evento.evento_id') != undefined && this.getReactively('evento.deporte_id') == undefined)
 				{			
@@ -59,17 +60,15 @@ function listadoCtrl($scope, $meteor, $reactive, $state, toastr, $stateParams) {
 	});
 	
 	this.subscribe('categorias',()=>{
-		return [{estatus: true
-		}]
+		return [{}]
 	});
 	
 	this.subscribe('pruebas',()=>{
-		return [{estatus: true
-		}]
+		return [{}]
 	});
 
 	this.subscribe('ramas',()=>{
-		return [{estatus: true}]
+		return [{}]
 	});
 	
 	this.helpers({

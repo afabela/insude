@@ -45,6 +45,19 @@ Meteor.publish("participantesListado",function(params){
 });
 */
 
+
+Meteor.publish("buscarPorNombre",function(options){
+	if (options != undefined)
+			if(options.where.nombreCompleto.length > 0){
+					let selector = {
+				  	nombreCompleto: { '$regex' : '.*' + options.where.nombreCompleto || '' + '.*', '$options' : 'i' }
+				  }
+				  				
+					return Participantes.find(selector, { fields: {nombreCompleto: 1, curp: 1 }}, options.options);
+			}
+			
+});
+
 Meteor.publish("buscarNombre",function(options){
 	
 	if (options != undefined)
@@ -56,7 +69,7 @@ Meteor.publish("buscarNombre",function(options){
 		  	
 			}
 
-			return Participantes.find(selector, {fields:{ nombre: 1,apellidoPaterno:1,apellidoMaterno:1, foto: 1, _id: 1 }} );
+			return Participantes.find(selector, {fields: { nombre: 1,apellidoPaterno:1,apellidoMaterno:1, foto: 1, _id: 1 }} );
 		}
 				  																						
 });

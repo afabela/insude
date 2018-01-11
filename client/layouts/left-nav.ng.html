@@ -1,5 +1,13 @@
 <nav>
 	<ul data-smart-menu>
+		
+		<li data-ui-sref-active="active">
+     	 <a ui-sref="root.home" tilte="Insude" ng-if="currentUser.roles[0] == 'admin'">
+      	  <i class="fa fa-lg fa-fw fa-home"></i>
+					<span class="menu-item-parent">Home</span>
+			 </a>
+		 </li>
+		
      <li data-ui-sref-active="active">
      	 <a ui-sref="root.usuarios" tilte="Insude" ng-if="currentUser.roles[0] == 'admin'">
       	  <i class="fa fa-lg fa-fw fa-users"></i>
