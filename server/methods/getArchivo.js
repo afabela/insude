@@ -1,17 +1,37 @@
 
 Meteor.methods({
   
-  getGafetes: function (participantes, municipio, FE, deporte, categoria, rama) { 
+  getGafetes: function (participantes, evento_id, municipio_id, deporte_id, categoria_id, rama_id) { 
+		
+		//var evento 		= Eventos.findOne(evento_id).nombre;
+		var municipio = Municipios.findOne(municipio_id).nombre;
+		var deporte 	= Deportes.findOne(deporte_id).nombre;
+	  var categoria = Categorias.findOne(categoria_id).nombre;
+	  var rama 			= Ramas.findOne({_id: rama_id}).nombre;
+		
 		
 		var fs = require('fs');
     var Docxtemplater = require('docxtemplater');
 		var JSZip = require('jszip');
-		var ImageModule = require('docxtemplater-image-module')
+		var ImageModule = require('docxtemplater-image-module');
+		var unoconv = require('better-unoconv');
+    var future = require('fibers/future');
 		
 	  var meteor_root = require('fs').realpathSync( process.cwd() + '/../' );
-		//var produccion = meteor_root+"/web.browser/app/archivos/";
 		
-		var produccion = "/var/www/insude/archivos/";
+		var produccion 					= "";
+		var produccionFotos 		= "";
+		var produccionDescargas = "";
+				
+		if(Meteor.isDevelopment){
+      produccion 					= meteor_root+"/web.browser/app/archivos/";
+      produccionFotos 		= meteor_root+"/web.browser/app/fotos/";
+      produccionDescargas = meteor_root+"/web.browser/app/descargas/";
+    }else{
+      produccion 					= "/var/www/insude/archivos/";
+      produccionFotos 		= "/var/www/insude/fotos/";
+      produccionDescargas = "/var/www/insude/descargas/";
+    }
 		
 		var opts = {}
 			opts.centered = false;
@@ -26,42 +46,52 @@ Meteor.methods({
 		
 		var imageModule=new ImageModule(opts);
 		
-		var mun = Municipios.findOne({_id: municipio});
-		var dep = Deportes.findOne({_id: deporte});
-		var cat = Categorias.findOne({_id: categoria});
-		var ram = Ramas.findOne({_id: rama});
-		
 		_.each(participantes, function(participante){
 				if (participante.foto != "")
 				{											
 					var f = String(participante.foto);
-					participante.foto = f.replace('data:image/jpeg;base64,', '');
+					var tipo = f.substr(11,4);	
+					if (tipo == 'jpeg')
+					{						
+							participante.foto = f.replace('data:image/jpeg;base64,', '');					
+							// create buffer object from base64 encoded string, it is important to tell the constructor that the string is base64 encoded
+					    var bitmap = new Buffer(participante.foto, 'base64');
+							//Usando Meteor_root
+							fs.writeFileSync(produccionFotos + participante.curp+".jpeg", bitmap);
+							participante.foto = produccionFotos + participante.curp+".jpeg";	
+					}
+					else if (tipo == 'png;')
+					{
+							participante.foto = f.replace('data:image/jpeg;base64,', '');					
+							// create buffer object from base64 encoded string, it is important to tell the constructor that the string is base64 encoded
+					    var bitmap = new Buffer(participante.foto, 'base64');
+							//Usando Meteor_root
+							fs.writeFileSync(produccionFotos + participante.curp+".png", bitmap);
+							participante.foto = produccionFotos + participante.curp+".png";						
+					}
+
+					//participante.foto 					 = produccionFotos + participante.curp+".png";					
+					participante.municipio 			 = municipio;
+					participante.deporte 				 = deporte; 
+					participante.categoria 			 = categoria;
+					participante.rama 					 = rama;
 					
-					// create buffer object from base64 encoded string, it is important to tell the constructor that the string is base64 encoded
-			    var bitmap = new Buffer(participante.foto, 'base64');
-			    // write buffer to file					
-					
-					//Usando Meteor_root
-					fs.writeFileSync(produccion+participante.curp+".png", bitmap);
-					participante.foto = produccion+participante.curp+".png";
-					
-					participante.municipio = mun.nombre;
-					participante.deporte = dep.nombre; 
-					participante.categoria = cat.nombre;
-					participante.rama = ram.nombre;
-					
-					participante.nombre = participante.nombre.toUpperCase();
+					participante.nombre 				 = participante.nombre.toUpperCase();
 					participante.apellidoPaterno = participante.apellidoPaterno.toUpperCase();
-					participante.apellidoMaterno = participante.apellidoMaterno.toUpperCase();
+					
+					if (participante.apellidoMaterno != undefined && participante.apellidoMaterno != "")
+	 					participante.apellidoMaterno = participante.apellidoMaterno.toUpperCase();
+	 				else
+	 					participante.apellidoMaterno = "";				
 					
 				}
 		})
-
 		
-		var content = fs
-    							.readFileSync(produccion+"gafete.docx", "binary");
+		
+		var content = fs.readFileSync(produccion + "gafete.docx", "binary");
 	  
 		var zip = new JSZip(content);
+		var res = new future();
 		var doc=new Docxtemplater()
 								.attachModule(imageModule)
 								.loadZip(zip)
@@ -73,18 +103,47 @@ Meteor.methods({
 		var buf = doc.getZip()
              		 .generate({type:"nodebuffer"});
  
-		fs.writeFileSync(produccion+"gafeteSalida.docx",buf);
+		fs.writeFileSync(produccionDescargas + "gafeteSalida.docx",buf);
 		
-		
+/*
+		var rutaOutput = produccionDescargas + "gafeteSalida" + moment().format('x') + "docx";
+    fs.writeFileSync(rutaOutput, buf);
+    unoconv.convert(rutaOutput, 'pdf', function(err, result) {
+      if(!err){
+        fs.unlink(rutaOutput, (error) => {  });
+        res['return']({ uri: 'data:application/pdf;base64,' + result.toString('base64'), nombre: 'gafeteSalida.pdf' });
+      }else{
+        res['return']({err: err});
+      }
+    });
+*/
+
+				
 		//Pasar a base64
 		// read binary data
-    var bitmap = fs.readFileSync(produccion+"gafeteSalida.docx");
+    var bitmap = fs.readFileSync(produccionDescargas + "gafeteSalida.docx");
     
     // convert binary data to base64 encoded string
     return new Buffer(bitmap).toString('base64');
 		
+		//return res.wait();
+		
   },
-  getCredenciales: function (participantes) { 
+  getCredenciales: function (participantes, evento_id, municipio_id, deporte_id, categoria_id, rama_id) { 
+		
+		/*
+var participantes = [];
+		
+		participantes = ParticipanteEventos.find({ evento_id				: evento_id
+																						  ,municipio_id 		: municipio_id
+																						  ,deporte_id				: deporte_id
+																							,categoria_id			: categoria_id
+																						  ,rama_id					: rama_id
+																							}).fetch();
+*/
+																							
+		var municipio = Municipios.findOne(municipio_id).nombre;
+		var deporte 	= Deportes.findOne(deporte_id).nombre;
 		
 		var fs = require('fs');
     var Docxtemplater = require('docxtemplater');
@@ -93,10 +152,24 @@ Meteor.methods({
 		var qr = require('qr-image');
 		
 		
-	  //var meteor_root = require('fs').realpathSync( process.cwd() + '/../' );
+	  var meteor_root = require('fs').realpathSync( process.cwd() + '/../' );
+		
 		//var produccion = meteor_root+"/web.browser/app/archivos/";
-
-		var produccion = "/var/www/insude/archivos/";
+		//var produccion = "/var/www/insude/archivos/";
+		
+		var produccion 					= "";
+		var produccionFotos 		= "";
+		var produccionDescargas = "";
+				
+		if(Meteor.isDevelopment){
+      produccion 					= meteor_root+"/web.browser/app/archivos/";
+      produccionFotos 		= meteor_root+"/web.browser/app/fotos/";
+      produccionDescargas = meteor_root+"/web.browser/app/descargas/";
+    }else{
+      produccion 					= "/var/www/insude/archivos/";
+      produccionFotos 		= "/var/www/insude/fotos/";
+      produccionDescargas = "/var/www/insude/descargas/";
+    }
 		
 		
 		var opts = {}
@@ -125,17 +198,20 @@ Meteor.methods({
 			    // write buffer to file					
 					
 					//Usando Meteor_root
-					fs.writeFileSync(produccion+participante.curp+".png", bitmap);
-					participante.foto = produccion+participante.curp+".png";
+					fs.writeFileSync(produccionFotos + participante.curp+".png", bitmap);
+					participante.foto = produccionFotos + participante.curp+".png";
+					
+					participante.municipio	= municipio;
+					participante.deporte	= deporte;
 					
 					//QR
 					
-					var svg_string = qr.imageSync("http://insude.mazoft.com/participantesver/"+participante._id+"/"+participante.evento_id+"/"+participante.deporte_id+"/"+participante.categoria_id+"/"+participante.rama_id, { type: 'png' });		
+					var svg_string = qr.imageSync("http://insude.masoft.mx/participantesver/"+participante._id+"/"+participante.evento_id+"/"+participante.deporte_id+"/"+participante.categoria_id+"/"+participante.rama_id, { type: 'png' });		
 
 					var bitmapTemp = new Buffer(svg_string,'base64');
-					fs.writeFileSync(produccion+participante._id+".png", bitmapTemp);
+					fs.writeFileSync(produccionFotos + participante._id+".png", bitmapTemp);
 					
-					participante.qr = produccion+participante._id+".png";					
+					participante.qr = produccionFotos + participante._id+".png";					
 					
 				}
 		})
@@ -157,19 +233,33 @@ Meteor.methods({
 		var buf = doc.getZip()
              		 .generate({type:"nodebuffer"});
  
-		fs.writeFileSync(produccion+"credencialSalida.docx",buf);
+		fs.writeFileSync(produccionDescargas+"credencialSalida.docx",buf);
 		
 		
 		//Pasar a base64
 		// read binary data
-    var bitmap = fs.readFileSync(produccion+"credencialSalida.docx");
+    var bitmap = fs.readFileSync(produccionDescargas+"credencialSalida.docx");
     
     // convert binary data to base64 encoded string
     return new Buffer(bitmap).toString('base64');
 		
   },
-  getCedula: function (participantes) {
+  getCedula: function (evento_id, municipio_id, deporte_id, categoria_id, rama_id, funcionEspecifica) {
+				
+		var participantes = [];
 		
+		participantes = ParticipanteEventos.find({ evento_id				: evento_id
+																						  ,municipio_id 		: municipio_id
+																						  ,deporte_id				: deporte_id
+																							,categoria_id			: categoria_id
+																						  ,rama_id					: rama_id
+																						  ,funcionEspecifica: funcionEspecifica
+																							}).fetch();
+		var evento 		= Eventos.findOne(evento_id).nombre;
+		var municipio = Municipios.findOne(municipio_id).nombre;
+		var deporte 	= Deportes.findOne(deporte_id).nombre;
+	  var categoria = Categorias.findOne(categoria_id).nombre;
+
 		var fs = Npm.require('fs');
     
 		var JSZip = require('jszip');
@@ -223,30 +313,44 @@ Meteor.methods({
 		}		 
 		
 		_.each(participantes, function(participante){
+				
+				participante.pruebasNombre = [];
+					_.each(participante.pruebas, function(prueba){
+							//participante.pruebasNombre.push(Pruebas.findOne(prueba, { fields : { nombre : 1}}))
+							var p = Pruebas.findOne(prueba,{ fields : { nombre : 1}});
+							participante.pruebasNombre.push({"nombre": p.nombre});
+				});
+			
 				if (participante.foto != "")
 				{						
 					participante.fechaNacimiento = participante.fechaNacimiento.getUTCDate() +"-"+ (participante.fechaNacimiento.getUTCMonth()+1) +"-"+ participante.fechaNacimiento.getUTCFullYear();
 					
 					var f = String(participante.foto);
-					participante.foto = f.replace('data:image/jpeg;base64,', '');
-					
-					// create buffer object from base64 encoded string, it is important to tell the constructor that the string is base64 encoded
-			    var bitmap = new Buffer(participante.foto, 'base64');
-			    // write buffer to file
-			    
-			    //fs.writeFileSync(process.cwd()+"/app/server/fotos/"+participante.curp+".png", bitmap);
-					//participante.foto = process.cwd()+"/app/server/fotos/"+participante.curp+".png";									
-					
-					//Usando Meteor_root
-					fs.writeFileSync(produccionFotos + participante.curp+".png", bitmap);
-					participante.foto = produccionFotos + participante.curp+".png";
+					var tipo = f.substr(11,4);	
+					if (tipo == 'jpeg')
+					{						
+							participante.foto = f.replace('data:image/jpeg;base64,', '');					
+							// create buffer object from base64 encoded string, it is important to tell the constructor that the string is base64 encoded
+					    var bitmap = new Buffer(participante.foto, 'base64');
+							//Usando Meteor_root
+							fs.writeFileSync(produccionFotos + participante.curp+".jpeg", bitmap);
+							participante.foto = produccionFotos + participante.curp+".jpeg";	
+					}
+					else if (tipo == 'png;')
+					{
+							participante.foto = f.replace('data:image/png;base64,', '');					
+							// create buffer object from base64 encoded string, it is important to tell the constructor that the string is base64 encoded
+					    var bitmap = new Buffer(participante.foto, 'base64');
+							//Usando Meteor_root
+							fs.writeFileSync(produccionFotos + participante.curp+".png", bitmap);
+							participante.foto = produccionFotos + participante.curp+".png";						
+					}
 					
 				}
 		})
 		
 		
-		var content = fs
-    							.readFileSync(produccion + "cedula.docx", "binary");
+		var content = fs.readFileSync(produccion + "cedula.docx", "binary");
 
 	  
 		var zip = new JSZip(content);
@@ -259,11 +363,11 @@ Meteor.methods({
 		var f = fecha;
 		f = fecha.getUTCDate()+'-'+(fecha.getUTCMonth()+1)+'-'+fecha.getUTCFullYear();//+', Hora:'+fecha.getUTCHours()+':'+fecha.getMinutes()+':'+fecha.getSeconds();
 		
-		doc.setData({	evento: participantes[0].evento, 
-									municipio: participantes[0].municipio, 
-									deporte: participantes[0].deporte, 
-									categoria: participantes[0].categoria,
-									fechaEmision: f,
+		doc.setData({	evento				:	evento, 
+									municipio			: municipio, 
+									deporte				: deporte, 
+									categoria			: categoria,
+									fechaEmision	: f,
 									participantes});
 								
 		doc.render();
@@ -281,7 +385,7 @@ Meteor.methods({
     fs.writeFileSync(rutaOutput, buf);
     unoconv.convert(rutaOutput, 'pdf', function(err, result) {
       if(!err){
-        fs.unlink(rutaOutput);
+        fs.unlink(rutaOutput, (error) => { /* handle error */ });
         res['return']({ uri: 'data:application/pdf;base64,' + result.toString('base64'), nombre: 'Cedula.pdf' });
       }else{
         res['return']({err: err});
@@ -332,6 +436,7 @@ Meteor.methods({
 					{wch:15},
 					{wch:20},
 					{wch:10},
+					{wch:20},
 					{wch:20}
 				];
 				

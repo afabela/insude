@@ -5,17 +5,16 @@ function cantidadPorDeporteCtrl($scope, $meteor, $reactive,  $state, toastr) {
 	
 	let rc = $reactive(this).attach($scope);
 	
-	Window = rc;
+	window = rc;
 	
 
   this.participante_id = "";
   this.participantes_id = [];
   
 		
-	let part = this.subscribe('participantesCred',()=>{
+	let part = this.subscribe('participanteListado',()=>{
 		return [{municipio_id: this.getReactively('municipio_id')!= undefined ? this.getReactively('municipio_id'): ""
-						,evento_id: this.getReactively('evento_id')!= undefined ? this.getReactively('evento_id'): ""
-						,estatus: true				
+						,evento_id: this.getReactively('evento_id')!= undefined ? this.getReactively('evento_id'): ""			
 			}]
 	});
 	
@@ -29,7 +28,6 @@ function cantidadPorDeporteCtrl($scope, $meteor, $reactive,  $state, toastr) {
 	
 	let depor = this.subscribe('deportes',()=>{
 		return [{evento_id: this.getReactively('evento_id')? this.getReactively('evento_id'):""
-						,estatus: true
 		}]
 	});
 
@@ -47,22 +45,24 @@ function cantidadPorDeporteCtrl($scope, $meteor, $reactive,  $state, toastr) {
 		  	return Deportes.find();
 	  },
 	  cantidadPorDeporte : () => {
-		  var arreglo = [];
+		  
 		  if(part.ready() ){
-			   
+				var arreglo = [];   
 			  _.each(this.deportes, function(deporte){
 
-				  arreglo.push(Participantes.find({deporte_id : deporte._id, 
-																					}).count());
-
+				  arreglo.push(ParticipanteEventos.find({deporte_id : deporte._id}).count());
+					
 			  });
+			  
+			  return arreglo;
 			}	
-		  return arreglo;
+ 
 	  },
-	   deportesNombres : () => {
+	  deportesNombres : () => {
 		  deporteNombre = [];
-		  if(depor.ready()){
+		  if(part.ready()){
 			  _.each(this.deportes, function(deporte){
+				  console.log(deporte.nombre)
 				  var nombre = deporte.nombre;
 				  deporteNombre.push(nombre);
 			  });

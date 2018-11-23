@@ -17,32 +17,6 @@
 					</option>
 			</select>
 		</div>
-		<!--
-		<div class="col-sm-2">
-			<label >Deporte</label>
-			<select name="deporte" class="form-control select2" placeholder="Seleccione" ng-model="lp.buscar.deporte_id">
-					<option  value="{{deporte._id}}" ng-repeat="deporte in lp.deportes">
-						{{deporte.nombre}}
-					</option>
-			</select>
-		</div>
-		<div class="col-sm-3">
-			<label >Categoria</label>
-			<select name="categoria" class="form-control select2" placeholder="Seleccione" ng-model="lp.buscar.categoria_id">
-					<option  value="{{categoria._id}}" ng-repeat="categoria in lp.categorias">
-						{{categoria.nombre}}
-					</option>
-			</select>
-		</div>
-		<div class="col-sm-2">
-			<label >Rama</label>
-			<select name="rama" class="form-control select2" placeholder="Seleccione" ng-model="lp.buscar.rama_id">
-					<option  value="{{rama._id}}" ng-repeat="rama in lp.ramas">
-						{{rama.nombre}}
-					</option>
-			</select>
-		</div>
-		-->
 	</div>
 </div>	
 <div class="row">
@@ -56,14 +30,14 @@
 			<input class="form-control" type="text" placeholder="Buscar..." ng-model="lp.buscar.nombre" capitalize>
 		</div>
 	</div>
-</div>
+</div> 
 <div class="row">
 	<div class="superbox col-sm-12">
 		<div class="superbox-list" ng-repeat="participante in lp.participantes">
 			<div class="img-box" style="margin:20px;">
 				<img ng-src="{{lp.tieneFoto(participante.sexo, participante.foto)}}" style="width: 60px; height: 60px" data-img="img/superbox/superbox-full-1.jpg" alt="{{participante.nombreCompleto}}" title="{{participante.nombreCompleto" class="superbox-img">
 				<ul class="text-center" style="margin-left: -20px;width: 5px; height: 5px;">
-	        <a href="/participanteseditar/{{participante.participante_id}}"><li><i class="fa fa-pencil"></i></li></a>
+	        <a href="/participanteseditar/{{participante._id}}"><li><i class="fa fa-pencil"></i></li></a>
 	      </ul>
 	      <ul class="text-center" style="margin-left: 30px;width: 5px; height: 5px;">
 	        <a href="#" ng-click="lp.eliminar(participante._id)"><li><i class="fa fa-eraser"></i></li></a>

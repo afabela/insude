@@ -120,21 +120,35 @@ function CedulaCtrl($scope, $meteor, $reactive, $state, toastr, $stateParams) {
 				
 				_.each(rc.participantes, function(participante){
 					var m = Municipios.findOne(participante.municipio_id);
-					participante.municipio = m.nombre;
+					if (m != undefined)
+					{
+	 					 participante.municipio = m.nombre;
+	 					 
+	 				}	 
 					var e = Eventos.findOne(participante.evento_id);
-					participante.evento = e.nombre;
+					if (e != undefined)
+					{
+						 participante.evento = e.nombre;
+					}	 
 					var d = Deportes.findOne(participante.deporte_id);
-					participante.deporte = d.nombre;
-					this.deporteNombre = d.nombre;
+					if (d != undefined)
+					{
+							participante.deporte = d.nombre;
+							this.deporteNombre = d.nombre;
+					}		
 					var c = Categorias.findOne(participante.categoria_id);
-					participante.categoria = 	c.nombre;
-					this.categoriaNombre = c.nombre;
+					if (c != undefined)
+					{
+							participante.categoria = 	c.nombre;
+							this.categoriaNombre = c.nombre;
+					}		
 					var r = Ramas.findOne(participante.rama_id);
-					participante.rama = 	r.nombre;	
+					if (r != undefined)
+						 participante.rama = 	r.nombre;	
 										
 					participante.pruebasNombre = [];
 					_.each(participante.pruebas, function(prueba){
-							//participante.pruebasNombre.push(Pruebas.findOne(prueba, { fields : { nombre : 1}}))
+
 							var p = Pruebas.findOne(prueba,{ fields : { nombre : 1}});
 							participante.pruebasNombre.push({"nombre": p.nombre});
 					})
@@ -157,17 +171,22 @@ function CedulaCtrl($scope, $meteor, $reactive, $state, toastr, $stateParams) {
 				return;
 		}
 		
+		
+		var municipio_id = Meteor.user().profile.municipio_id;
+		
+		
 		loading(true);
-		Meteor.call('getCedula', participantes, function(error, response) {
+		Meteor.call('getCedula', this.evento.evento_id, municipio_id, this.evento.deporte_id, this.evento.categoria_id, this.evento.rama_id, this.evento.funcionEspecifica, function(error, response) {
 		   if(error){
 		    console.log('ERROR :', error);
+		    loading(false);
 		    return;
 		   }else if (response){
-			 	
+			 	 loading(false);
 			 	 downloadFile(response);
 		   }
 		});
-		loading(false);
+		
 		
 	};
 

@@ -107,7 +107,7 @@ function listadoCtrl($scope, $meteor, $reactive, $state, toastr, $stateParams) {
 		
 	
 			var participantesArray = [];
-					participantesArray.push(["NUM", "NOMBRE", "APELLIDO PATERNO", "APELLIDO MATERNO", "FECHA NACIMIENTO", "CURP", "DEPORTE", "CATEGORIA", "RAMA", "PRUEBAS"]);
+					participantesArray.push(["NUM", "NOMBRE", "APELLIDO PATERNO", "APELLIDO MATERNO", "FECHA NACIMIENTO", "CURP", "DEPORTE", "CATEGORIA", "RAMA", "PRUEBAS","FUNCION ESPECIFICA"]);
 					var con = 1;
 			 _.each(rc.participantes, function(participante){
 					
@@ -169,19 +169,20 @@ function listadoCtrl($scope, $meteor, $reactive, $state, toastr, $stateParams) {
 									}
 							}
 					}		
-					console.log(pruebas);
+					//console.log(pruebas);
 						
-				 	participantesArray.push([con, participante.nombre, participante.apellidoPaterno, participante.apellidoMaterno, (participante.fechaNacimiento.getUTCDate() +"/"+ (participante.fechaNacimiento.getUTCMonth()+1) +"/"+ participante.fechaNacimiento.getUTCFullYear()), participante.curp, participante.deporte, participante.categoria, participante.rama, pruebas]);
+				 	participantesArray.push([con, participante.nombre, participante.apellidoPaterno, participante.apellidoMaterno, (participante.fechaNacimiento.getUTCDate() +"/"+ (participante.fechaNacimiento.getUTCMonth()+1) +"/"+ participante.fechaNacimiento.getUTCFullYear()), participante.curp, participante.deporte, participante.categoria, participante.rama, pruebas, participante.funcionEspecifica]);
 				 	con++;
 			})	 
 			
-			
+			loading(true);
 			Meteor.call('getExcel', participantesArray, function(error, response) {
 				   if(error){
 				    console.log('ERROR :', error);
+				    loading(false);
 				    return;
 				   }else{
-					 	
+					 	loading(false);
 					  var pdf = 'data:application/xlsx;base64,';
 				    var dlnk = document.getElementById('dwnldLnk');
 				    dlnk.download = 'Lista.xlsx'; 

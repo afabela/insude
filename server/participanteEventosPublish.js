@@ -6,7 +6,7 @@ Meteor.publish("participanteEventos",function(params){
 
 
 Meteor.publish("participanteListado",function(params){																					
-	  																						
+
   	return ParticipanteEventos.find(params, {fields: { _id:1
 	  																						, nombre:1
 	  																						,apellidoPaterno:1

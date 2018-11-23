@@ -29,13 +29,12 @@ function ImpresionesCtrl($scope, $meteor, $reactive, $state, toastr, $stateParam
 	});
 	*/
 	
-	let part = this.subscribe('participantesCred',()=>{
+	let part = this.subscribe('participanteEventos',()=>{
 		return [{municipio_id: this.getReactively('evento.municipio_id')!= undefined ? this.getReactively('evento.municipio_id'): ""
 						,evento_id: this.getReactively('evento.evento_id')!= undefined ? this.getReactively('evento.evento_id'): "" 
 						,deporte_id: this.getReactively('evento.deporte_id')!= undefined ? this.getReactively('evento.deporte_id'): "" 
 						,categoria_id: this.getReactively('evento.categoria_id')!= undefined ? this.getReactively('evento.categoria_id'): "" 
 						,rama_id: this.getReactively('evento.rama_id')!= undefined ? this.getReactively('evento.rama_id'): "" 
-						,estatus: true				
 			}]
 	});
 	
@@ -81,7 +80,7 @@ function ImpresionesCtrl($scope, $meteor, $reactive, $state, toastr, $stateParam
 	
 	this.helpers({
 	  participantes : () => {
-		  return Participantes.find();
+		  return ParticipanteEventos.find();
 	  },
 		municipios : () => {
 			return Municipios.find();
@@ -104,21 +103,6 @@ function ImpresionesCtrl($scope, $meteor, $reactive, $state, toastr, $stateParam
 		todosParticipantes : () => {
 			if(part.ready()){
 				_.each(rc.participantes, function(participante){
-					/*
-					var m = Municipios.findOne(participante.municipio_id);
-					participante.municipio = m.nombre;
-					var e = Eventos.findOne(participante.evento_id);
-					participante.evento = e.nombre;
-					var d = Deportes.findOne(participante.deporte_id);
-					participante.deporte = d.nombre;
-					this.deporteNombre = d.nombre;
-					var c = Categorias.findOne(participante.categoria_id);
-					participante.categoria = 	c.nombre;
-					this.categoriaNombre = c.nombre;
-					var r = Ramas.findOne(participante.rama_id);
-					participante.rama = 	r.nombre;
-					*/
-					
 					participante.imprimir = true;
 					
 				})
@@ -147,16 +131,21 @@ function ImpresionesCtrl($scope, $meteor, $reactive, $state, toastr, $stateParam
 		
 		if (op == 1)
 		{
-				$( "#registrar1" ).prop( "disabled", true );
-				Meteor.call('getCredenciales', p, function(error, response) {
+				loading(true);
+				Meteor.call('getCredenciales', p,
+																			 rc.evento.evento_id, 
+																			 rc.evento.municipio_id, 
+																			 rc.evento.deporte_id, 
+																			 rc.evento.categoria_id, 
+																			 rc.evento.rama_id, function(error, response) {
 				   if(error){
-					  $( "#registrar1" ).prop( "disabled", false ); 
+					 	loading(false);
 				    console.log('ERROR :', error);
 				    return;
 				   }
 				   if (response)
 					 {	
-						 
+						 	loading(false);
 						  function b64toBlob(b64Data, contentType, sliceSize) {
 								  contentType = contentType || '';
 								  sliceSize = sliceSize || 512;
@@ -185,7 +174,7 @@ function ImpresionesCtrl($scope, $meteor, $reactive, $state, toastr, $stateParam
 						  var url = window.URL.createObjectURL(blob);
 						  
 						  var dlnk = document.getElementById('dwnldLnkG');
-					    dlnk.download = "cred-"+this.deporteNombre+'-'+this.categoriaNombre+'.docx'; 
+					    dlnk.download = "credendiales.docx"; 
 							dlnk.href = url;
 							dlnk.click();		    
 						  window.URL.revokeObjectURL(url);
@@ -197,17 +186,24 @@ function ImpresionesCtrl($scope, $meteor, $reactive, $state, toastr, $stateParam
 		}
 		else if (op == 2)
 		{
-	  		
-				$( "#registrar2" ).prop( "disabled", true );
-				Meteor.call('getGafetes', p, rc.evento.municipio_id, rc.evento.funcionEspecifica, rc.evento.deporte_id, rc.evento.categoria_id, rc.evento.rama_id, function(error, response) {
+	  		console.log(rc.participantes);
+
+				loading(true);
+				Meteor.call('getGafetes', p, 
+																	rc.evento.evento_id, 
+																	rc.evento.municipio_id, 
+																	rc.evento.deporte_id, 
+																	rc.evento.categoria_id, 
+																	rc.evento.rama_id, function(error, response) {
 				   if(error){
-					  $( "#registrar2" ).prop( "disabled", false ); 
+					  loading(false);
 				    console.log('ERROR :', error);
 				    return;
 				   }
 				   if (response)
 					 {	
-						 
+							loading(false);
+							//downloadFile(response);
 						  function b64toBlob(b64Data, contentType, sliceSize) {
 								  contentType = contentType || '';
 								  sliceSize = sliceSize || 512;

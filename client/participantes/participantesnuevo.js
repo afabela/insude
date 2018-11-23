@@ -7,7 +7,7 @@ function ParticipantesNuevoCtrl($scope, $meteor, $reactive, $state, toastr, $sta
 	
 	let rc = $reactive(this).attach($scope);
 	
-	Window = rc;
+	window = rc;
 	
 	this.buscar = {};
 	this.buscar.nombre = "";
@@ -16,7 +16,7 @@ function ParticipantesNuevoCtrl($scope, $meteor, $reactive, $state, toastr, $sta
 	this.participantes = [];
 	
 	this.participante = {};
-	this.participante.estado = "BAJA CALIFORNIA SUR";
+	//this.participante.estado = "BAJA CALIFORNIA SUR";
 	
 	this.participanteEventos = {}; 
 	this.buscar = {};
@@ -24,19 +24,25 @@ function ParticipantesNuevoCtrl($scope, $meteor, $reactive, $state, toastr, $sta
 	
 	this.participanteEventos.evento_id = $stateParams.id;
 	
-	
 	this.subscribe('buscarPorNombre', () => {
 		
 		if(rc.getReactively("buscar.nombre").length > 4){
-			console.log(this.buscar)
+
 			rc.participantes = [];
 			rc.buscando = true;			
 			return [{
 		    options : { limit: 20 },
 		    where : { 
+					municipio_id 		: ((Meteor.user().roles[0] == 'admin') && (this.getReactively('buscar.municipio_id') != undefined)) 
+							  									? this.getReactively('buscar.municipio_id')  
+							  									: Meteor.user().profile.municipio_id,
 					nombreCompleto : rc.getReactively('buscar.nombre')
 				} 		   
 	    }];
+		}
+		else if (rc.getReactively("buscar.nombre").length  == 0 )
+		{
+			this.buscando = false;	
 		}
 
   }); 
@@ -122,7 +128,7 @@ function ParticipantesNuevoCtrl($scope, $meteor, $reactive, $state, toastr, $sta
 		    toastr.error('Error no se ha cargado la foto del participante.');
 	      return;
 	    }
-
+			
 	    if (participante.curpImagen == undefined)
 	    {
 		    toastr.error('Error no se ha cargado el comprobante del CURP del participante.');
@@ -147,7 +153,7 @@ function ParticipantesNuevoCtrl($scope, $meteor, $reactive, $state, toastr, $sta
 	    // Enable #x
 			$( "#registrar" ).prop( "disabled", true );
 	    
-	    loading(true);
+	    
 	    if (participanteEventos.categoria_id != "s/a")
 	    {
 			
@@ -180,7 +186,8 @@ function ParticipantesNuevoCtrl($scope, $meteor, $reactive, $state, toastr, $sta
 							   		//Ya Existe
 							 			if (response)
 							 			{
-								 				var idTemp = participante._id;
+								 				/*
+var idTemp = participante._id;
 												delete participante._id;		
 												Participantes.update({_id:idTemp},{$set:participante}, 
 																						function(error,result){
@@ -205,56 +212,57 @@ function ParticipantesNuevoCtrl($scope, $meteor, $reactive, $state, toastr, $sta
 																											participanteEventos.municipio_id = participante.municipio_id;
 																											participanteEventos.usuarioInserto = Meteor.userId();
 																											
-																											Meteor.call('insertParticipanteEventos', participanteEventos, $stateParams.id, function(error, response) {
+																											
+																											Meteor.call('updateParticipanteEventos', participante, participanteEventos, $stateParams.id, function(error, response) {
 																												  if(error){
 																													    console.log('ERROR :', error);
 																													    return;
 																												  }
-																												  if (result)
+																												  if (response)
 																													{
 																																													
-																																													 	toastr.success('Guardado correctamente.');
-																																														participante = {};
-																																														participanteEvento = {};
-																																														$('.collapse').collapse('hide');
-																																														this.nuevo = true;
-																																														$state.go('root.listarparticipantes');
-																																														
-																																														form.$setPristine();
-																																												    form.$setUntouched();	
+																																 	toastr.success('Guardado correctamente.');
+																																	participante = {};
+																																	participanteEvento = {};
+																																	$('.collapse').collapse('hide');
+																																	this.nuevo = true;
+																																	$state.go('root.listarparticipantes');
+																																	
+																																	form.$setPristine();
+																															    form.$setUntouched();	
 																													}	
 																												  
 																											
 																											});
-																											
-																											/*
-																											ParticipanteEventos.insert(participanteEventos,
-																																										function(error, result){
-																																												if (error){
-																																													 $( "#registrar" ).prop( "disabled", false );
-																																													 console.log("Error:",error);
-																																													 if (error.error == 409) toastr.error('Error registro duplicado en participanteEventos.');
-																																													  	 return;		
-																																												}	
-																																												
-																																												if (result)
-																																												{
-																																													
-																																													 	toastr.success('Guardado correctamente.');
-																																														participante = {};
-																																														participanteEvento = {};
-																																														$('.collapse').collapse('hide');
-																																														this.nuevo = true;
-																																														$state.go('root.listarparticipantes');
-																																														
-																																														form.$setPristine();
-																																												    form.$setUntouched();	
-																																												}	
-																											});
-																											*/
 																								}	 																											
 																						}
-												);
+												);	
+*/		 
+								 				
+								 				loading(true);
+								 				Meteor.call('updateParticipanteEventos', participante, participanteEventos, $stateParams.id, function(error, response) {
+													  if(error){
+														    console.log('ERROR :', error);
+														    loading(false);
+														    return;
+													  }
+													  if (response)
+														{
+																														
+																	 	toastr.success('Guardado correctamente.');
+																		participante = {};
+																		participanteEvento = {};
+																		this.nuevo = true;
+																		loading(false);
+																		$state.go('root.listarparticipantes');
+																	
+																		form.$setPristine();
+																    form.$setUntouched();	
+														}	
+													  
+												
+												});
+								 				
 							 			}  
 							 			else //No existe
 							 			{
@@ -262,22 +270,22 @@ function ParticipantesNuevoCtrl($scope, $meteor, $reactive, $state, toastr, $sta
 											  {
 											  		participante.municipio_id = Meteor.user() != undefined ? Meteor.user().profile.municipio_id : "";
 											  }
-					
 												
+	
+												loading(true);
 												participante.nombreCompleto = participante.nombre + " " + participante.apellidoPaterno + " " + participante.apellidoMaterno;
 												participante.estatus = true;
 												participante.usuarioInserto = Meteor.userId();
-												
-												
 												Participantes.insert(participante, 
 																								function(error,result){
 																									if (error){
 																											$( "#registrar" ).prop( "disabled", false );
-																										  console.log("Error:",error);
+																										  console.log("Error Participante:",error);
+																										  loading(false);
 																										  if (error.error == 409) toastr.error('Error registro duplicado participante.');
 																										  		return;		
 																									}	  
-
+																									//console.log("Insert No deportista:",result);
 																									if (result)
 																									{
 																											participanteEventos.participante_id = result;
@@ -297,56 +305,31 @@ function ParticipantesNuevoCtrl($scope, $meteor, $reactive, $state, toastr, $sta
 																											Meteor.call('insertParticipanteEventos', participanteEventos, $stateParams.id, function(error, response) {
 																												  if(error){
 																													    console.log('ERROR :', error);
+																													    loading(false);
 																													    return;
 																												  }
-																												  if (result)
+																												  if (response)
 																													{
-																																													
-																																													 	toastr.success('Guardado correctamente.');
-																																														participante = {};
-																																														participanteEvento = {};
-																																														$('.collapse').collapse('hide');
-																																														this.nuevo = true;
-																																														$state.go('root.listarparticipantes');
-																																														
-																																														form.$setPristine();
-																																												    form.$setUntouched();	
+																																		loading(false);											
+																																	 	toastr.success('Guardado correctamente.');
+																																		participante = {};
+																																		participanteEvento = {};
+																																		$('.collapse').collapse('hide');
+																																		this.nuevo = true;
+																																		$state.go('root.listarparticipantes');
+																																		
+																																		form.$setPristine();
+																																    form.$setUntouched();	
 																													}	
 																												  
 																											
 																											});
-																											
-																											/*
-																											ParticipanteEventos.insert(participanteEventos,
-																																										function(error, result){
-																																												if (error){
-																																													 $( "#registrar" ).prop( "disabled", false );
-																																													 console.log("Error:",error);
-																																													 if (error.error == 409) toastr.error('Error registro duplicado en participanteEventos.');
-																																													  	 return;		
-																																												}	
-																																												
-																																												if (result)
-																																												{
-																																													
-																																													 	toastr.success('Guardado correctamente.');
-																																														participante = {};
-																																														participanteEvento = {};
-																																														$('.collapse').collapse('hide');
-																																														this.nuevo = true;
-																																														$state.go('root.listarparticipantes');
-																																														
-																																														form.$setPristine();
-																																												    form.$setUntouched();	
-																																												}	
-																											});
-																											
-																											*/
 																									}	 
 																								}
-												);
-								 			
-							 			}
+												);	
+												
+
+								 		}
 
 							});			    
 
@@ -362,7 +345,8 @@ function ParticipantesNuevoCtrl($scope, $meteor, $reactive, $state, toastr, $sta
 							   		//Ya Existe
 							 			if (response)
 							 			{
-								 				var idTemp = participante._id;
+								 				/*
+var idTemp = participante._id;
 												delete participante._id;		
 												Participantes.update({_id:idTemp},{$set:participante}, 
 																						function(error,result){
@@ -388,32 +372,196 @@ function ParticipantesNuevoCtrl($scope, $meteor, $reactive, $state, toastr, $sta
 																											participanteEventos.usuarioInserto = Meteor.userId();
 																											
 																											
-																											Meteor.call('insertParticipanteEventos', participanteEventos, $stateParams.id, function(error, response) {
+																											Meteor.call('updateParticipanteEventos', participante, participanteEventos, $stateParams.id, function(error, response) {
 																												  if(error){
 																													    console.log('ERROR :', error);
 																													    return;
 																												  }
-																												  if (result)
+																												  if (response)
 																													{
 																																													
-																																													 	toastr.success('Guardado correctamente.');
-																																														participante = {};
-																																														participanteEvento = {};
-																																														$('.collapse').collapse('hide');
-																																														this.nuevo = true;
-																																														$state.go('root.listarparticipantes');
-																																														
-																																														form.$setPristine();
-																																												    form.$setUntouched();	
+																																 	toastr.success('Guardado correctamente.');
+																																	participante = {};
+																																	participanteEvento = {};
+																																	$('.collapse').collapse('hide');
+																																	this.nuevo = true;
+																																	$state.go('root.listarparticipantes');
+																																	
+																																	form.$setPristine();
+																															    form.$setUntouched();	
 																													}	
 																												  
 																											
 																											});
 																								}	 																											
 																						}
-												);			 
+												);	
+*/		 
 								 				
+								 				loading(true);
+								 				Meteor.call('updateParticipanteEventos', participante, participanteEventos, $stateParams.id, function(error, response) {
+													  if(error){
+														    console.log('ERROR :', error);
+														    loading(false);
+														    return;
+													  }
+													  if (response)
+														{
+																														
+																	 	toastr.success('Guardado correctamente.');
+																		participante = {};
+																		participanteEvento = {};
+																		this.nuevo = true;
+																		loading(false);
+																		$state.go('root.listarparticipantes');
+																	
+																		form.$setPristine();
+																    form.$setUntouched();	
+														}	
+													  
+												
+												});
 								 				
+							 			}  
+							 			else //No existe
+							 			{
+								 				if (Meteor.user().roles[0] != 'admin')
+											  {
+											  		participante.municipio_id = Meteor.user() != undefined ? Meteor.user().profile.municipio_id : "";
+											  }
+												
+												loading(true);
+												participante.nombreCompleto = participante.nombre + " " + participante.apellidoPaterno + " " + participante.apellidoMaterno;
+												participante.estatus = true;
+												participante.usuarioInserto = Meteor.userId();
+												Participantes.insert(participante, 
+																								function(error,result){
+																									if (error){
+																											$( "#registrar" ).prop( "disabled", false );
+																											loading(false);
+																										  console.log("Error Participante:",error);
+																										  if (error.error == 409) toastr.error('Error registro duplicado participante.');
+																										  		return;		
+																									}	  
+																									//console.log("Insert No deportista:",result);
+																									if (result)
+																									{
+																											participanteEventos.participante_id = result;
+																											
+																											participanteEventos.foto = participante.foto;
+																											participanteEventos.nombre = participante.nombre;
+																											participanteEventos.apellidoPaterno = participante.apellidoPaterno;
+																											participanteEventos.apellidoMaterno = participante.apellidoMaterno;
+																											participanteEventos.sexo = participante.sexo;
+																											participanteEventos.curp = participante.curp;
+																											participanteEventos.fechaNacimiento = participante.fechaNacimiento;
+																											participanteEventos.nombreCompleto = participante.nombreCompleto
+																											
+																											participanteEventos.municipio_id = participante.municipio_id;
+																											participanteEventos.usuarioInserto = Meteor.userId();
+																											
+																											
+																											Meteor.call('insertParticipanteEventos', participanteEventos, $stateParams.id, function(error, response) {
+																												  if(error){
+																													    console.log('ERROR :', error);
+																													    loading(false);
+																													    return;
+																												  }
+																												  if (response)
+																													{
+																																		loading(false);											
+																																	 	toastr.success('Guardado correctamente.');
+																																		participante = {};
+																																		participanteEvento = {};
+																																		$('.collapse').collapse('hide');
+																																		this.nuevo = true;
+																																		$state.go('root.listarparticipantes');
+																																		
+																																		form.$setPristine();
+																																    form.$setUntouched();	
+																													}	
+																												  
+																											
+																											});
+																									}	 
+																								}
+												);	
+												
+												/*
+loading(true);
+								 				Meteor.call('insertParticipanteEventos', participante, participanteEventos, $stateParams.id, function(error, response) {
+													  if(error){
+														    console.log('ERROR :', error);
+														    loading(false);
+														    return;
+													  }
+													  if (response)
+														{
+																														
+																	 	toastr.success('Guardado correctamente.');
+																		participante = {};
+																		participanteEvento = {};
+																		this.nuevo = true;
+																		loading(false);
+																		$state.go('root.listarparticipantes');
+																	
+																		form.$setPristine();
+																    form.$setUntouched();	
+														}	
+													  
+												
+												});
+*/
+												
+
+								 		}
+											 			 		
+							});
+					}	 
+					else
+					{
+							 toastr.error('La edad no corresponde a la categoria verificar por favor.');
+							 $( "#registrar" ).prop( "disabled", false );
+							 loading(false);
+							 return;
+							 
+					}
+			
+			
+			}else
+			{
+							Meteor.call('getParticipanteCurp', participante.curp, function(error, response) {
+									  if(error){
+										    console.log('ERROR :', error);
+										    return;
+									  }
+
+							   		//Ya Existe
+							 			if (response)
+							 			{
+								 				loading(true);
+								 				Meteor.call('updateParticipanteEventos', participante, participanteEventos, $stateParams.id, function(error, response) {
+													  if(error){
+														    console.log('ERROR :', error);
+														    loading(false);
+														    return;
+													  }
+													  if (response)
+														{
+																														
+																	 	toastr.success('Guardado correctamente.');
+																		participante = {};
+																		participanteEvento = {};
+																		this.nuevo = true;
+																		loading(false);
+																		$state.go('root.listarparticipantes');
+																	
+																		form.$setPristine();
+																    form.$setUntouched();	
+														}	
+													  
+												
+												});
 								 				
 							 			}  
 							 			else //No existe
@@ -424,6 +572,7 @@ function ParticipantesNuevoCtrl($scope, $meteor, $reactive, $state, toastr, $sta
 											  }
 												
 	
+												loading(true);
 												participante.nombreCompleto = participante.nombre + " " + participante.apellidoPaterno + " " + participante.apellidoMaterno;
 												participante.estatus = true;
 												participante.usuarioInserto = Meteor.userId();
@@ -458,193 +607,69 @@ function ParticipantesNuevoCtrl($scope, $meteor, $reactive, $state, toastr, $sta
 																													    console.log('ERROR :', error);
 																													    return;
 																												  }
-																												  if (result)
+																												  if (response)
 																													{
-																																													
-																																													 	toastr.success('Guardado correctamente.');
-																																														participante = {};
-																																														participanteEvento = {};
-																																														$('.collapse').collapse('hide');
-																																														this.nuevo = true;
-																																														$state.go('root.listarparticipantes');
-																																														
-																																														form.$setPristine();
-																																												    form.$setUntouched();	
+																																		loading(false);											
+																																	 	toastr.success('Guardado correctamente.');
+																																		participante = {};
+																																		participanteEvento = {};
+																																		$('.collapse').collapse('hide');
+																																		this.nuevo = true;
+																																		$state.go('root.listarparticipantes');
+																																		
+																																		form.$setPristine();
+																																    form.$setUntouched();	
 																													}	
 																												  
 																											
 																											});
 																									}	 
 																								}
-												);
-
-								 		}
-											 			 		
-							});
-					}	 
-					else
-					{
-							 toastr.error('La edad no corresponde a la categoria verificar por favor.');
-							 $( "#registrar" ).prop( "disabled", false );
-							 loading(false);
-							 return;
-							 
-					}
-			
-			
-			}else
-			{
-							Meteor.call('getParticipanteCurp', participante.curp, function(error, response) {
-									  if(error){
-										    console.log('ERROR :', error);
-										    return;
-									  }
-
-							   		//Ya Existe
-							 			if (response)
-							 			{
-								 				var idTemp = participante._id;
-												delete participante._id;		
-												Participantes.update({_id:idTemp},{$set:participante}, 
-																						function(error,result){
-																								if (error){
-																										$( "#registrar" ).prop( "disabled", false );
-																										console.log("Error:",error);
-																										return;		
-																								}
-																								if (result)
-																								{
-																											participanteEventos.participante_id = idTemp;
-																											
-																											participanteEventos.foto = participante.foto;
-																											participanteEventos.nombre = participante.nombre;
-																											participanteEventos.apellidoPaterno = participante.apellidoPaterno;
-																											participanteEventos.apellidoMaterno = participante.apellidoMaterno;
-																											participanteEventos.sexo = participante.sexo;
-																											participanteEventos.curp = participante.curp;
-																											participanteEventos.fechaNacimiento = participante.fechaNacimiento;
-																											participanteEventos.nombreCompleto = participante.nombreCompleto
-																											
-																											participanteEventos.municipio_id = participante.municipio_id;
-																											participanteEventos.usuarioInserto = Meteor.userId();
-																											
-																											Meteor.call('insertParticipanteEventos', participanteEventos, $stateParams.id, function(error, response) {
-																												  if(error){
-																													    console.log('ERROR :', error);
-																													    return;
-																												  }
-																												  if (result)
-																													{
-																																													
-																																													 	toastr.success('Guardado correctamente.');
-																																														participante = {};
-																																														participanteEvento = {};
-																																														$('.collapse').collapse('hide');
-																																														this.nuevo = true;
-																																														$state.go('root.listarparticipantes');
-																																														
-																																														form.$setPristine();
-																																												    form.$setUntouched();	
-																													}	
-																												  
-																											
-																											});
-																								}	 																											
-																						}
-												);			 
-								 				
-								 				
-								 				
-							 			}  
-							 			else //No existe
-							 			{
-								 				if (Meteor.user().roles[0] != 'admin')
-											  {
-											  		participante.municipio_id = Meteor.user() != undefined ? Meteor.user().profile.municipio_id : "";
-											  }
-												//console.log(participante);
+												);	
 												
-												
-												participante.nombreCompleto = participante.nombre + " " + participante.apellidoPaterno + " " + participante.apellidoMaterno;
-												participante.estatus = true;
-												participante.usuarioInserto = Meteor.userId();
-												Participantes.insert(participante, 
-																								function(error,result){
-																									if (error){
-																											$( "#registrar" ).prop( "disabled", false );
-																										  console.log("Error:",error);
-																										  if (error.error == 409) toastr.error('Error registro duplicado participante.');
-																										  		return;		
-																									}	  
-																									//console.log("Insert No deportista:",result);
-																									if (result)
-																									{
-																											participanteEventos.participante_id = result;
-																											
-																											participanteEventos.foto = participante.foto;
-																											participanteEventos.nombre = participante.nombre;
-																											participanteEventos.apellidoPaterno = participante.apellidoPaterno;
-																											participanteEventos.apellidoMaterno = participante.apellidoMaterno;
-																											participanteEventos.sexo = participante.sexo;
-																											participanteEventos.curp = participante.curp;
-																											participanteEventos.fechaNacimiento = participante.fechaNacimiento;
-																											participanteEventos.nombreCompleto = participante.nombreCompleto
-																											
-																											participanteEventos.municipio_id = participante.municipio_id;
-																											participanteEventos.usuarioInserto = Meteor.userId();
-																											
-																											Meteor.call('insertParticipanteEventos', participanteEventos, $stateParams.id, function(error, response) {
-																												  if(error){
-																													    console.log('ERROR :', error);
-																													    return;
-																												  }
-																												  if (result)
-																													{
-																																													
-																																													 	toastr.success('Guardado correctamente.');
-																																														participante = {};
-																																														participanteEvento = {};
-																																														$('.collapse').collapse('hide');
-																																														this.nuevo = true;
-																																														$state.go('root.listarparticipantes');
-																																														
-																																														form.$setPristine();
-																																												    form.$setUntouched();	
-																													}	
-																												  
-																											
-																											});
-																									}	 
-																								}
-												);
 
 								 		}
 											 			 		
 							});
 				
 			}		
-			
-			loading(false);
+
 			
 	};
 		
-	this.funcionEspecifica = function(participante,participanteEvento)
+	this.funcionEspecifica = function(participante, participanteEvento)
 	{		
+			//Entrenador foto.--->
+			//Entrenador y delagado cupr
+			//Todos Foto y curp
 			
 			if (participanteEvento != "DEPORTISTA")
 			{
-							this.participante.foto = "";
-							this.participante.sexo = "Hombre";
-							this.participante.estado = "SINALOA";
-							this.participante.curpImagen = "s/a";
-							this.participante.fechaNacimiento = new Date();
-							this.participante.actaNacimiento = "s/a";
+			
+					if (this.participante.sexo == undefined)
+						  this.participante.sexo = "Hombre";
+					this.participante.estado = "BAJA CALIFORNIA SUR";
+					//this.participante.curpImagen = "s/a";
+					
+					if (this.participanteEventos.deporte_id == undefined)
+							this.participanteEventos.deporte_id = "s/a";
+					
+					//this.participante.fechaNacimiento = new Date();
+					
+					if (this.participante.actaNacimiento == undefined)
+	 					  this.participante.actaNacimiento = "s/a";
+	 				
+	 				if (this.participante.identificacion == undefined)	 
 							this.participante.identificacion = "s/a";
+					
+					if (this.participante.categoria_id == undefined)
 							this.participanteEventos.categoria_id = "s/a";
-							this.participanteEventos.rama_id = "s/a";
+							
+					if (this.participante.rama_id == undefined)		
+	 					  this.participanteEventos.rama_id = "s/a";
 							
 			}
-			console.log(participante);
+			//console.log(participante);
 	}
 	
 	this.ValidaCurpParticipante = function(curp)
@@ -681,6 +706,7 @@ function ParticipantesNuevoCtrl($scope, $meteor, $reactive, $state, toastr, $sta
 	
 	this.AlmacenaImagen = function(imagen, tipo)
 	{
+			//console.log(tipo);
 			if (tipo == 1)
 					this.participante.foto = imagen;
 			else if (tipo == 2)		
@@ -691,8 +717,7 @@ function ParticipantesNuevoCtrl($scope, $meteor, $reactive, $state, toastr, $sta
 					this.participante.identificacion = imagen;		
 						
 	}
-	
-		
+			
 	$(document).ready( function() {
 		
 
@@ -901,7 +926,7 @@ function ParticipantesNuevoCtrl($scope, $meteor, $reactive, $state, toastr, $sta
 			
 		  participante.curp = curp;
 		  
-		  this.ValidaCurpParticipante(curp);
+		  //this.ValidaCurpParticipante(curp);
 		
 	};
 	
@@ -952,6 +977,13 @@ function ParticipantesNuevoCtrl($scope, $meteor, $reactive, $state, toastr, $sta
 		var imagen = '<img class="img-responsive" src="'+img+'" style="margin:auto;">';
 		$('#imagenDiv').empty().append(imagen);
 		$("#modaldoc").modal('show');
+	};
+	
+	this.validaimagen= function(archivo)
+	{
+			
+			return false;		
+		
 	};
 	
 	this.download = function(archivo, op) 

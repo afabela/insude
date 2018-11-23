@@ -94,4 +94,56 @@ function ListarParticipantesCtrl($scope, $meteor, $reactive, $state, toastr, $st
 	  }
   }  
 	
+	this.eliminar  = function (id){
+			
+			customConfirm('¿Estás seguro de eliminar al participante del evento seleccionado?', function() {
+						
+						loading(true);
+						
+						Meteor.call ("removeParticipanteEventos", rc.buscar.evento_id, id,function(error,result){
+								if(error){
+									console.log(error);
+									toastr.error('Error al eliminar los datos.');
+									return
+								}
+								if (result)
+								{
+									toastr.success('Eliminado correctamente.');
+								}	
+						});
+						
+												
+						loading(false);
+						
+						
+						console.log(rc.buscar.evento_id);
+						console.log(id);
+						
+						
+						/*
+	Meteor.call ("corteCaja",caja.cuenta, caja.usuario_id, caja._id,function(error,result){
+						if(error){
+							console.log(error);
+							toastr.error('Error al guardar los datos.');
+							return
+						}
+						if (result)
+						{
+							console.log(result);
+							toastr.success('Cierre efectuado correctamente.');
+							$state.go('root.cajasActivas');						
+							
+							var url = $state.href("anon.imprimirCorte", { corte_id: result });
+							window.open(url, '_blank');
+							
+						}	
+				});
+      
+    })
+*/
+			});
+			
+		
+	}
+	
 };	

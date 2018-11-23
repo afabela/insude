@@ -10,15 +10,15 @@ function cantidadPorMunicipioCtrl($scope, $meteor, $reactive,  $state, toastr) {
 
   this.participante_id = "";
   this.participantes_id = [];
+  rc.cantidadPorMunicipio = [];
+  
+  rc.total = 0;
   
 		
-	let part = this.subscribe('participantesCred',()=>{
-		if (his.getReactively('municipio_id')!= undefined && this.getReactively('evento_id')!= undefined)	
+	let part = this.subscribe('participanteListado',()=>{
+		if (this.getReactively('evento_id')!= undefined)	
 		{		
-			return [{municipio_id: this.getReactively('municipio_id')!= undefined ? this.getReactively('municipio_id'): ""
-							,evento_id: this.getReactively('evento_id')!= undefined ? this.getReactively('evento_id'): ""
-							,estatus: true				
-				}]
+			return [{evento_id: this.getReactively('evento_id')}]
 		}	
 	});
 	
@@ -41,15 +41,19 @@ function cantidadPorMunicipioCtrl($scope, $meteor, $reactive,  $state, toastr) {
 		  	return Eventos.find();
 	  },
 	  cantidadPorMunicipio : () => {
-		  var arreglo = [];
+		  
 		  if(part.ready()){
-			  
+			  var arreglo = [];
+			  rc.total = 0;
 			  _.each(this.municipios, function(municipio){
-				  arreglo.push(Participantes.find({municipio_id : municipio._id, 
-																					}).count());
+				  arreglo.push(ParticipanteEventos.find({municipio_id : municipio._id }).count());
+					rc.total += ParticipanteEventos.find({municipio_id : municipio._id}).count();																
+					
 			  });
+			  
+			  return arreglo;
 		  }
-		  return arreglo;
+		  
 	  },
 	   municipiosNombres : () => {
 		  municipioNombre = [];
