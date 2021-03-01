@@ -4,6 +4,8 @@ angular
 function UsuariosCtrl($scope, $meteor, $reactive,  $state, $stateParams, toastr) {
 
 	let rc = $reactive(this).attach($scope);
+	
+	rc.cambiarContrasena = false;
 
   this.action = true;
 	this.subscribe('usuarios',()=>{
@@ -16,7 +18,7 @@ function UsuariosCtrl($scope, $meteor, $reactive,  $state, $stateParams, toastr)
 
   this.helpers({
 	  usuarios : () => {
-		  return Meteor.users.find({});
+		  return Meteor.users.find({"profile.nombre": { $ne: "Super Administrador"}});
 	  },
 	  municipios: () => {
 		 	return Municipios.find(); 

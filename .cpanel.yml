@@ -1,0 +1,6 @@
+---
+deployment:
+  tasks:
+    - export DEPLOYPATH=/home/saccscco/insude.sacc-sc.com.mx/
+    - /bin/cp * $DEPLOYPATH
+

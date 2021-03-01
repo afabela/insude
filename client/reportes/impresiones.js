@@ -17,6 +17,8 @@ function ImpresionesCtrl($scope, $meteor, $reactive, $state, toastr, $stateParam
 	this.validation = false;
 	this.carga = false;
 	
+	rc.participantes = [];
+	
 	
 	/*
 	let part = this.subscribe('participantes',()=>{
@@ -29,7 +31,8 @@ function ImpresionesCtrl($scope, $meteor, $reactive, $state, toastr, $stateParam
 	});
 	*/
 	
-	let part = this.subscribe('participanteEventos',()=>{
+	/*
+let part = this.subscribe('participanteEventos',()=>{
 		return [{municipio_id: this.getReactively('evento.municipio_id')!= undefined ? this.getReactively('evento.municipio_id'): ""
 						,evento_id: this.getReactively('evento.evento_id')!= undefined ? this.getReactively('evento.evento_id'): "" 
 						,deporte_id: this.getReactively('evento.deporte_id')!= undefined ? this.getReactively('evento.deporte_id'): "" 
@@ -37,6 +40,7 @@ function ImpresionesCtrl($scope, $meteor, $reactive, $state, toastr, $stateParam
 						,rama_id: this.getReactively('evento.rama_id')!= undefined ? this.getReactively('evento.rama_id'): "" 
 			}]
 	});
+*/
 	
 	/*
 	this.subscribe('buscarNombre',()=>{
@@ -79,28 +83,31 @@ function ImpresionesCtrl($scope, $meteor, $reactive, $state, toastr, $stateParam
 
 	
 	this.helpers({
-	  participantes : () => {
+	 /*
+ participantes : () => {
 		  return ParticipanteEventos.find();
 	  },
+*/
 		municipios : () => {
-			return Municipios.find();
+			return Municipios.find({}, {sort : {nombre:1}} );
 		},
 		eventos : () => {
-			return Eventos.find();
+			return Eventos.find({}, {sort : {nombre:1}} );
 		},
 		deportes : () => {
-			return Deportes.find();
+			return Deportes.find({}, {sort : {nombre:1}} );
 		},
 		categorias : () => {
-			return Categorias.find();
+			return Categorias.find({}, {sort : {nombre:1}} );
 		},
 		pruebas : () => {
-			return Pruebas.find();
+			return Pruebas.find({}, {sort : {nombre:1}} );
 		},
 		ramas : () => {
-			return Ramas.find();
+			return Ramas.find({}, {sort : {nombre:1}} );
 		},
-		todosParticipantes : () => {
+		/*
+todosParticipantes : () => {
 			if(part.ready()){
 				_.each(rc.participantes, function(participante){
 					participante.imprimir = true;
@@ -108,9 +115,8 @@ function ImpresionesCtrl($scope, $meteor, $reactive, $state, toastr, $stateParam
 				})
 				
 			}
-
-		}
-		
+		}		
+*/
 	});
 	
 	 
@@ -186,8 +192,7 @@ function ImpresionesCtrl($scope, $meteor, $reactive, $state, toastr, $stateParam
 		}
 		else if (op == 2)
 		{
-	  		console.log(rc.participantes);
-
+	  		//console.log(rc.participantes);
 				loading(true);
 				Meteor.call('getGafetes', p, 
 																	rc.evento.evento_id, 
@@ -242,16 +247,43 @@ function ImpresionesCtrl($scope, $meteor, $reactive, $state, toastr, $stateParam
 				   }
 				});
 		}		
-		
-		
-		
-		
-		
 	};
-	
-	
 
-
+	
+	this.buscar = function(form){
+			
+			if(form.$invalid){
+	      toastr.error('Seleccione todos los campos.');
+	      return;
+	    }
+			
+			loading(true);
+				Meteor.call('getParticipanteEventos',
+																	rc.evento.municipio_id, 
+																	rc.evento.evento_id, 
+																	rc.evento.deporte_id, 
+																	rc.evento.categoria_id, 
+																	rc.evento.rama_id, 
+																	function(error, response) {
+				   if(error){
+					  loading(false);
+				    console.log('ERROR :', error);
+				    return;
+				   }
+				   if (response)
+					 {	
+							loading(false);
+							//console.log('res :', response);
+							rc.participantes = response;
+							
+							_.each(rc.participantes,function(p){
+								p.imprimir = true;
+							});
+							$scope.$apply();
+				   }
+				});		
+  }
+	
 	this.tieneFoto = function(sexo, foto){
 	  if(foto === undefined){
 		  if(sexo === "Masculino")
@@ -271,11 +303,11 @@ function ImpresionesCtrl($scope, $meteor, $reactive, $state, toastr, $stateParam
   {
 				var chkImprimir = document.getElementById('todos');
 				
-				if(part.ready()){
+
 				_.each(rc.participantes, function(participante){
 					participante.imprimir = chkImprimir.checked;
 				})
-			}
+
 		 			
 	};
 	

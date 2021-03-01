@@ -75,8 +75,6 @@ function ParticipantesEditarCtrl($scope, $meteor, $reactive, $state, toastr, $st
 		}
 	});
 	
-	
-	
 	this.subscribe('ramas',()=>{
 		return [{estatus: true}]
 	});
@@ -157,8 +155,7 @@ participanteEventos : () => {
 		  return Municipios.find();
 	  },
   });
-  	  
-  	
+  	    	
 	this.actualizar = function(participante, participanteEventos,form)
 	{
 	    if(form.$invalid){
@@ -310,7 +307,6 @@ participanteEventos : () => {
 					
 			}
 			
-			
 
 	};
 		
@@ -395,7 +391,18 @@ participanteEventos : () => {
 	
 	$(document).ready( function() {
 		
-
+			//Quita el mouse wheels 
+			try
+			{
+					document.getElementById('fechanacimiento').onwheel = function(){ return false; }	
+			}
+			catch(error)
+			{
+					console.log(error);
+					
+			}
+			
+			
 			$(".Mselect2").select2();
 					
 			var fileInput1 = document.getElementById('fileInput1');

@@ -17,11 +17,6 @@
 
 				<div class="user well" title="{{cliente.nombreCompleto}}" ng-repeat="cliente in pn.participantes" style="width: 100%">
 					<div class="row">
-<!--
-						<div class="col-sm-1">
-							<img class="online" src="{{pn.tieneFoto(cliente.foto)}}">
-						</div>
--->
 						<div class="col-sm-12">
 							<a href="javascript:void(0);"ng-click="pn.ValidaCurpParticipante(cliente.curp);pn.buscando = false;pn.buscar.nombre='';";>
 								{{cliente.nombreCompleto}} 
@@ -32,11 +27,4 @@
 			</div>
 		</div>
 	</div>
-<!--
-	<span> Última actualización: {{pn.hoy | date:"dd-MM-yyyy HH:mm a"}}
-		<button type="button" data-loading-text="<i class='fa fa-refresh fa-spin'></i> Cerrar..." class="btn btn-xs btn-default pull-right" ng-click="pn.buscando = false; pn.buscar.nombre = '';  pn.buscar.numeroCliente = ''">
-			<i class="fa fa-times"></i>
-		</button> 
-	</span>
--->
 </div>

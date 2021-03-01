@@ -28,20 +28,35 @@ function PruebasCtrl($scope, $meteor, $reactive, $state, toastr, $stateParams) {
 	});
 	
 	this.subscribe('deportes',()=>{
-		
-		return [{estatus: true}]
+		if (this.getReactively('buscar.buscarEvento_id') != undefined)
+				return [{evento_id:  this.getReactively('buscar.buscarEvento_id'), 
+								 estatus: true}]
+		if (this.getReactively('prueba.evento_id') != undefined)
+				return [{evento_id:  this.getReactively('prueba.evento_id'), estatus: true}]						 
 	});
 	
 	this.subscribe('categorias',()=>{
-		return [{estatus: true}]
+		if (this.getReactively('buscar.buscarEvento_id') != undefined && this.getReactively('buscar.buscarDeporte_id') != undefined )
+				return [{evento_id:  this.getReactively('buscar.buscarEvento_id')
+					 			,deporte_id: this.getReactively('buscar.buscarDeporte_id')
+					 			,estatus: true
+				}]
+		
+		if (this.getReactively('prueba.evento_id') != undefined && this.getReactively('prueba.deporte_id') != undefined )
+				return [{evento_id:  this.getReactively('prueba.evento_id')
+					 			,deporte_id: this.getReactively('prueba.deporte_id')
+					 			,estatus: true
+				}]
+				
 	});
 	
 	this.subscribe('pruebas',()=>{
-		return [{evento_id:  this.getReactively('buscar.buscarEvento_id')? this.getReactively('buscar.buscarEvento_id'):"" 
-						 ,deporte_id: this.getReactively('buscar.buscarDeporte_id')? this.getReactively('buscar.buscarDeporte_id'):""			
-						 ,categoria_id: this.getReactively('buscar.buscarCategoria_id')? this.getReactively('buscar.buscarCategoria_id'):""
-						 ,rama_id: this.getReactively('buscar.buscarRama_id')? this.getReactively('buscar.buscarRama_id'):""			
-		}]
+		if (this.getReactively('buscar.buscarEvento_id') != undefined && this.getReactively('buscar.buscarDeporte_id') != undefined && this.getReactively('buscar.buscarCategoria_id') != undefined && this.getReactively('buscar.buscarRama_id') != undefined)
+				return [{evento_id:  this.getReactively('buscar.buscarEvento_id')
+								 ,deporte_id: this.getReactively('buscar.buscarDeporte_id')
+								 ,categoria_id: this.getReactively('buscar.buscarCategoria_id')
+								 ,rama_id: this.getReactively('buscar.buscarRama_id')
+				}]
 	});
 	
   
@@ -162,6 +177,38 @@ function PruebasCtrl($scope, $meteor, $reactive, $state, toastr, $stateParams) {
 			if (categoria)
 				 return categoria.nombre;
 				 
+	};
+	
+	this.getDeportes = function()
+	{
+			Meteor.call('getDeportes', this.prueba.evento_id, function(error, result) {
+				  if(error){
+					    console.log('ERROR :', error);
+					    loading(false);
+					    return;
+				  }
+				  if (result)
+					{
+							rc.deportes = result;
+							console.log(result);															
+					}	
+			});			
+	};
+	
+	this.getCategorias = function()
+	{
+			Meteor.call('getCategorias', this.prueba.deporte_id, function(error, result) {
+				  if(error){
+					    console.log('ERROR :', error);
+					    loading(false);
+					    return;
+				  }
+				  if (result)
+					{
+							rc.categorias = result;
+							console.log(result);															
+					}	
+			});			
 	};
 	
 	

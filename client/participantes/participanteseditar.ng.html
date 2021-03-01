@@ -65,7 +65,7 @@
 														</div>
 														<div class="col-sm-4" valida>					    
 												    	<label>Fecha Nacimiento *</label>
-												    	<input name="fechanacimiento" type="date" format="dd/MM/yyyy" class="form-control" placeholder="Fecha" ng-model="pe.participante.fechaNacimiento" required>
+												    	<input id = "fechanacimiento" name="fechanacimiento" type="date" format="dd/MM/yyyy" class="form-control" placeholder="Fecha" ng-model="pe.participante.fechaNacimiento" required>
 											    	</div>		
 														<div class="col-sm-4" valida>
 													    <label for="sexo">Sexo *</label>
@@ -212,7 +212,18 @@
 																</option>
 															</select>
 														</div>	
+														
 											    </div>
+											    <div class="row">
+												   		<div class="col-sm-4" ng-if="pe.participanteEventos.funcionEspecifica == 'DEPORTISTA'" valida>
+																<label >Entrenador *</label>
+																<input name="entrenador" type="text" class="form-control" ng-model="pe.participanteEventos.nombreEntrenador" required capitalize>
+															</div>
+															<div class="col-sm-4" valida>
+																<label >Localidad *</label>
+																<input name="localidad" type="text" class="form-control" ng-model="pe.participanteEventos.localidad" required capitalize>
+															</div>
+											    </div> 
 										  	</div>	
 											</div>
 										</div>
@@ -228,9 +239,11 @@
 															<label>CURP * (máximo 1MB)</label>
 															<div>
 																<input type="file" id="fileInputCurp" accept="application/pdf, image/jpeg">
+<!--
 																<a class="btn btn-primary" href="javascript:void(0);"  ng-if="pe.participante.curpImagen != 's/a'" ng-click="pe.modalDoc(pe.participante.curpImagen)">
 																	<i class="fa fa-eye"></i> Ver
 																</a>
+-->
 																<a class="btn btn-primary" href="javascript:void(0);" ng-if="pe.participante.curpImagen != 's/a'" ng-click="pe.download(pe.participante.curpImagen,1)">
 																	<i class="fa fa-download"></i> Descargar
 																</a>
@@ -240,9 +253,11 @@
 															<label>Acta de Nacimiento * (máximo 1MB)</label>
 															<div>
 																<input type="file" id="fileInputActa" accept="application/pdf, image/jpeg">
+<!--
 																<a class="btn btn-primary" href="javascript:void(0);"  ng-if="pe.participante.actaNacimiento != 's/a'"  ng-click="pe.modalDoc(pe.participante.actaNacimiento)">
 																	<i class="fa fa-eye"></i> Ver
 																</a>
+-->
 																<a class="btn btn-primary" href="javascript:void(0);" ng-if="pe.participante.actaNacimiento != 's/a'" ng-click="pe.download(pe.participante.actaNacimiento,2)">
 																	<i class="fa fa-download"></i> Descargar
 																</a>
@@ -253,9 +268,11 @@
 															<div>
 																<input type="file" id="fileInputIdentificacion" accept="application/pdf, image/jpeg">
 																
+<!--
 																<a class="btn btn-primary" href="javascript:void(0);"  ng-if="pe.participante.identificacion != 's/a'"  ng-click="pe.modalDoc(pe.participante.identificacion)">
 																	<i class="fa fa-eye"></i> Ver
 																</a>
+-->
 																<a class="btn btn-primary" href="javascript:void(0);" ng-if="pe.participante.identificacion != 's/a'" ng-click="pe.download(pe.participante.identificacion,3)">
 																	<i class="fa fa-download"></i> Descargar
 																</a>

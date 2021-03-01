@@ -5,20 +5,28 @@ angular
 function CategoriasCtrl($scope, $meteor, $reactive, $state, toastr) {
 	$reactive(this).attach($scope);
 	
+	let rc = $reactive(this).attach($scope);
+	window.rc = rc;	
+	
 	this.action = true;
 	this.buscar = {};
-	
-	this.subscribe('categorias',()=>{
-		return [{evento_id:  this.getReactively('buscar.buscarEvento_id')? this.getReactively('buscar.buscarEvento_id'):"" 
-						 ,deporte_id: this.getReactively('buscar.buscarDeporte_id')? this.getReactively('buscar.buscarDeporte_id'):""
-					}]
-	});
-	
+		
 	this.subscribe('eventos',()=>{
 		return [{estatus: true}]
 	});
 	this.subscribe('deportes',()=>{
-		return [{estatus: true}]
+		if (this.getReactively('buscar.buscarEvento_id') != undefined)
+				return [{evento_id:  this.getReactively('buscar.buscarEvento_id'), estatus: true}]
+		
+		if (this.getReactively('categoria.evento_id') != undefined)
+				return [{evento_id:  this.getReactively('buscar.buscarEvento_id'), estatus: true}]		
+				
+	});
+	this.subscribe('categorias',()=>{
+		if (this.getReactively('buscar.buscarEvento_id') != undefined && this.getReactively('buscar.buscarDeporte_id') != undefined )
+				return [{evento_id:  this.getReactively('buscar.buscarEvento_id')
+					 			,deporte_id: this.getReactively('buscar.buscarDeporte_id')
+				}]				
 	});
 	  
   this.helpers({
@@ -93,7 +101,6 @@ function CategoriasCtrl($scope, $meteor, $reactive, $state, toastr) {
 			categoria.usuarioActualizo = Meteor.userId(); 
 			Categorias.update({_id:idTemp},{$set:categoria});
 			toastr.success('Actualizado correctamente.');
-			//console.log(ciclo);
 			$('.collapse').collapse('hide');
 			this.nuevo = true;
 			form.$setPristine();
@@ -110,6 +117,23 @@ function CategoriasCtrl($scope, $meteor, $reactive, $state, toastr) {
 			
 			Categorias.update({_id:id}, {$set : {estatus : categoria.estatus}});
 	};	
+	
+	this.getDeportes = function()
+	{
+			Meteor.call('getDeportes', this.categoria.evento_id, function(error, result) {
+				  if(error){
+					    console.log('ERROR :', error);
+					    loading(false);
+					    return;
+				  }
+				  if (result)
+					{
+							rc.deportes = result;
+							console.log(result);															
+					}	
+			});			
+	};	
+	
 	/*
 	this.getEvento = function(evento_id)
 	{		

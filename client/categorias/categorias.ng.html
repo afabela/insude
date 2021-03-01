@@ -25,13 +25,13 @@
 						<div class="row">
 				    	<div class="col-sm-4" valida>
 								<label >Evento</label>
-								<select name="evento" class="form-control select2" placeholder="Seleccione" ng-model="cat.categoria.evento_id" required>
+								<select name="evento" class="form-control select2" placeholder="Seleccione" ng-model="cat.categoria.evento_id" ng-change="cat.getDeportes()" required>
 									<option  value="{{evento._id}}" ng-repeat="evento in cat.eventos">
 										{{evento.nombre}}
 									</option>
 								</select>
 						  </div> 		
-				    	<div class="col-sm-2" valida>
+				    	<div class="col-sm-6" valida>
 								<label >Deporte</label>
 								<select name="deporte" class="form-control select2" placeholder="Seleccione" ng-model="cat.categoria.deporte_id" required>
 									<option  value="{{deporte._id}}" ng-repeat="deporte in cat.deportes">
@@ -80,7 +80,7 @@
 				</option>
 			</select>
 	  </div>
-		<div class="col-sm-2">
+		<div class="col-sm-4">
 			<label >Deporte</label>
 			<select name="buscardeporte" class="form-control select2" placeholder="Seleccione" ng-model="cat.buscar.buscarDeporte_id">
 				<option  value="{{deporte._id}}" ng-repeat="deporte in cat.deportesBuscar">

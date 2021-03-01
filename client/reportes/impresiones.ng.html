@@ -7,6 +7,7 @@
 	</div>
 </div>
 <br>
+<form name="form" class="form-horizontal" role="form" novalidate>
 <div class="well">	    
 	<div class="row">
 		<div class="col-sm-3" valida>
@@ -17,17 +18,17 @@
 					</option>
 			</select>
 		</div>
-		<div class="col-sm-3">
+		<div class="col-sm-3" valida>
 			<label >Municipio</label>
-			<select name="municipio" class="form-control select2" placeholder="Seleccione" ng-model="imp.evento.municipio_id">
+			<select name="municipio" class="form-control select2" placeholder="Seleccione" ng-model="imp.evento.municipio_id" required>
 					<option  value="{{municipio._id}}" ng-repeat="municipio in imp.municipios">
 						{{municipio.nombre}}
 					</option>
 			</select>
 		</div>
-		<div class="col-sm-3">
+		<div class="col-sm-3" valida>
 			<label >Deportes</label>
-			<select name="municipio" class="form-control select2" placeholder="Seleccione" ng-model="imp.evento.deporte_id">
+			<select name="deporte" class="form-control select2" placeholder="Seleccione" ng-model="imp.evento.deporte_id" required>
 					<option  value="{{deporte._id}}" ng-repeat="deporte in imp.deportes">
 						{{deporte.nombre}}
 					</option>
@@ -35,26 +36,31 @@
 		</div>
 	</div>	
 	<div class="row">	
-		<div class="col-sm-3">
+		<div class="col-sm-3" valida>
 			<label >Categoria</label>
-			<select name="municipio" class="form-control select2" placeholder="Seleccione" ng-model="imp.evento.categoria_id">
+			<select name="categoria" class="form-control select2" placeholder="Seleccione" ng-model="imp.evento.categoria_id" required>
 					<option  value="{{categoria._id}}" ng-repeat="categoria in imp.categorias">
 						{{categoria.nombre}}
 					</option>
 			</select>
 		</div>
 		
-		<div class="col-sm-3">
+		<div class="col-sm-3" valida>
 			<label >Rama</label>
-			<select name="rama" class="form-control select2" placeholder="Seleccione" ng-model="imp.evento.rama_id">
+			<select name="rama" class="form-control select2" placeholder="Seleccione" ng-model="imp.evento.rama_id" required>
 					<option  value="{{rama._id}}" ng-repeat="rama in imp.ramas">
 						{{rama.nombre}}
 					</option>
 			</select>
 		</div>
 		
+		<div class="col-sm-2">
+				<br>
+				<input id="buscar" class="btn btn-primary" type="button" ng-click="imp.buscar(form)" value="Buscar" valida-form formulario="form"/>
+		</div>	
 	</div>
 </div>
+</form>
 <div class="well">		
 	<div class="row">
 		<div class="col-sm-3">
@@ -67,9 +73,7 @@
 				  Credenciales
 				</a>
 				-->
-				
 				<input id="registrar1" class="btn btn-primary" type="button" ng-click="imp.download(imp.participantes, 1)" value="Credenciales" ng-disabled="imp.carga==true" />
-				
 		</div>
 		<div class="col-sm-3">
 				<input id="registrar2" class="btn btn-primary" type="button" ng-click="imp.download(imp.participantes, 2)" value="Gafetes" ng-disabled="imp.carga==true" />

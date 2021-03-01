@@ -27,7 +27,7 @@ function listadoCtrl($scope, $meteor, $reactive, $state, toastr, $stateParams) {
 				if (user.roles[0] != "admin")
 						this.evento.municipio_id = user.profile.municipio_id;
 				
-				console.log(this.evento.municipio_id);
+				//console.log(this.evento.municipio_id);
 				
 				if (this.getReactively('evento.municipio_id') != undefined && this.getReactively('evento.evento_id') != undefined && this.getReactively('evento.deporte_id') == undefined)
 				{			
@@ -105,9 +105,9 @@ function listadoCtrl($scope, $meteor, $reactive, $state, toastr, $stateParams) {
 				return;
 		}
 		
-	
+		
 			var participantesArray = [];
-					participantesArray.push(["NUM", "NOMBRE", "APELLIDO PATERNO", "APELLIDO MATERNO", "FECHA NACIMIENTO", "CURP", "DEPORTE", "CATEGORIA", "RAMA", "PRUEBAS","FUNCION ESPECIFICA"]);
+					participantesArray.push(["NUM", "NOMBRE", "APELLIDO PATERNO", "APELLIDO MATERNO", "FECHA NACIMIENTO", "CURP", "DEPORTE", "CATEGORIA", "RAMA", "PRUEBAS","FUNCION ESPECIFICA", "ENTRENADOR", "LOCALIDAD"]);
 					var con = 1;
 			 _.each(rc.participantes, function(participante){
 					
@@ -159,7 +159,7 @@ function listadoCtrl($scope, $meteor, $reactive, $state, toastr, $stateParams) {
 							for	(i=0; i<participante.pruebas.length; i++)
 							{
 									var p = Pruebas.findOne(participante.pruebas[i]);
-									console.log(p);
+									//console.log(p);
 									if (p != undefined)
 									{
 										if (i + 1 == participante.pruebas.length)
@@ -169,9 +169,8 @@ function listadoCtrl($scope, $meteor, $reactive, $state, toastr, $stateParams) {
 									}
 							}
 					}		
-					//console.log(pruebas);
 						
-				 	participantesArray.push([con, participante.nombre, participante.apellidoPaterno, participante.apellidoMaterno, (participante.fechaNacimiento.getUTCDate() +"/"+ (participante.fechaNacimiento.getUTCMonth()+1) +"/"+ participante.fechaNacimiento.getUTCFullYear()), participante.curp, participante.deporte, participante.categoria, participante.rama, pruebas, participante.funcionEspecifica]);
+				 	participantesArray.push([con, participante.nombre, participante.apellidoPaterno, participante.apellidoMaterno, (participante.fechaNacimiento.getUTCDate() +"/"+ (participante.fechaNacimiento.getUTCMonth()+1) +"/"+ participante.fechaNacimiento.getUTCFullYear()), participante.curp, participante.deporte, participante.categoria, participante.rama, pruebas, participante.funcionEspecifica, participante.nombreEntrenador, participante.localidad]);
 				 	con++;
 			})	 
 			

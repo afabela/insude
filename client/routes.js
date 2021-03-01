@@ -51,7 +51,7 @@ angular.module('insude').config(['$injector', function ($injector) {
         'logout': ['$meteor', '$state', 'toastr', function ($meteor, $state, toastr) {
           return $meteor.logout().then(
             function () {
-	            toastr.success("Vuelva pronto.");
+	            //toastr.success("Vuelva pronto.");
               $state.go('anon.login');
             },
             function (error) {
@@ -300,4 +300,26 @@ angular.module('insude').config(['$injector', function ($injector) {
 	      }]
 	    }
     })
+    .state('root.copiarDatos', {
+      url: '/copiarDatos',
+      templateUrl: 'client/copiarDatos/copiarDatos.ng.html',
+      controller: 'CopiarDatosCtrl as obj',
+      resolve: {
+	      "currentUser": ["$meteor", function($meteor){
+	        return $meteor.requireUser();
+	      }]
+	    }
+    }) 
+    
+    .state('root.participantesMunicipio', {
+      url: '/participantesMunicipio',
+      templateUrl: 'client/participantes/participantes.ng.html',
+      controller: 'ParticipantesCtrl as obj',
+      resolve: {
+	      "currentUser": ["$meteor", function($meteor){
+	        return $meteor.requireUser();
+	      }]
+	    }
+    })   
+    
 }]);     

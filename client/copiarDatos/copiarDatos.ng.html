@@ -1,0 +1,34 @@
+<h2>Copiar Deportes, Categorias y Pruebas</h2>
+
+<div class="well">
+	
+	<form name="form" class="form-horizontal" role="form" novalidate>	
+		<div class="row">
+				<div class="col-sm-4" valida>
+					<label >Evento Original</label>
+					<select name="eventoOriginal" class="form-control select2" placeholder="Seleccione" ng-model="obj.eventoOriginal_id" required>
+						<option  value="{{evento._id}}" ng-repeat="evento in obj.eventos">
+							{{evento.nombre}}
+						</option>
+					</select>
+			  </div> 			
+			  
+			  <div class="col-sm-4" valida>
+					<label >Evento Destino</label>
+					<select name="eventoDestino" class="form-control select2" placeholder="Seleccione" ng-model="obj.eventoDestino_id" required>
+						<option  value="{{evento._id}}" ng-repeat="evento in obj.eventos">
+							{{evento.nombre}}
+						</option>
+					</select>
+			  </div> 	
+			  <div class="col-sm-2">
+				  <br>
+				  <input type="submit" value="Copiar" ng-click="obj.guardar(form)" class="btn btn-primary" valida-form formulario="form">
+			  </div>	
+		</div>
+
+	</form>	
+</div>
+
+
+

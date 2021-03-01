@@ -186,7 +186,6 @@ var participantes = [];
 		var imageModule=new ImageModule(opts);
 
 
-
 		_.each(participantes, function(participante){
 				if (participante.foto != "")
 				{											
@@ -428,7 +427,7 @@ var participantes = [];
 
 				var wscols = [
 					{wch:5},
-					{wch:15},
+					{wch:20},
 					{wch:18},
 					{wch:18},
 					{wch:20},
@@ -437,7 +436,9 @@ var participantes = [];
 					{wch:20},
 					{wch:10},
 					{wch:20},
-					{wch:20}
+					{wch:20},
+					{wch:30},
+					{wch:20},
 				];
 				
 				if(typeof require !== 'undefined') 

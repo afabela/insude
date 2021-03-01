@@ -15,10 +15,23 @@ function LoginCtrl($scope, $meteor, $reactive, $state, toastr) {
   this.login = function () {
     $meteor.loginWithPassword(this.credentials.username, this.credentials.password).then(
       function () {
-	      toastr.success("Bienvenido al Sistema");
-        $state.go('root.home');        
-      },
-      function (error) {
+		    
+		      var usuario = Meteor.user();
+		      
+		     	if (Meteor.user().username != "admin" && usuario.profile != undefined && !usuario.profile.estatus )
+		      {
+			      	toastr.error("Usuario Desactivado");
+			      	$state.go('anon.logout');		      	
+		      }
+		      else
+		      {							
+		          toastr.success("Bienvenido al Sistema");
+	            $state.go('root.home'); 
+
+		      }
+			},
+			function (error) {
+		
 	      if(error.reason == "Match failed"){
 		      toastr.error("Escriba su usuario y contraseña para iniciar");
 	      }else if(error.reason == "User not found"){

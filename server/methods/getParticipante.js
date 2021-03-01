@@ -41,6 +41,10 @@ Meteor.methods({
 			return true;
 		
   },
- 
+	
+	getMunicipio: function(municipio_id){	
+			var municipio = Municipios.findOne(municipio_id); 
+			return municipio.nombre;
+	},
   
 });
